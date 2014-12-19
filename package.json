@@ -1,9 +1,11 @@
 {
   "name": "npm-up",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A lightweight tool to check the newest version of npm packages and do whatever you want",
-  "main": "dist/npm-up.js",
-  "bin": "dist/bin.js",
+  "main": "./dist/npm-up.js",
+  "bin": {
+    "npm-up": "./bin/bin.js"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

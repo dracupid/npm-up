@@ -10,5 +10,5 @@ compile = (src, dist)->
 
 
 task 'build', 'Build', ->
-	compile 'libs/bin.coffee', 'dist/bin.js'
+	compile 'libs/cli.coffee', 'dist/cli.js'
 	compile 'libs/npm-up.coffee', 'dist/npm-up.js'
