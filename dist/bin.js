@@ -1,1 +1,0 @@
-require('./npm-up');
