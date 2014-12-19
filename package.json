@@ -1,6 +1,6 @@
 {
   "name": "npm-up",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A lightweight tool to check the newest version of npm packages and do whatever you want",
   "main": "./dist/npm-up.js",
   "bin": {
