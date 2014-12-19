@@ -1,0 +1,14 @@
+coffee = require 'coffee-script'
+kit = require 'nokit'
+
+compile = (src, dist)->
+	kit.readFile src, 'utf8'
+	.then (str)->
+	    coffee.compile str, bare: true
+	.then (js)->
+		kit.writeFile dist, js, 'utf8'
+
+
+task 'build', 'Build', ->
+	compile 'libs/bin.coffee', 'dist/bin.js'
+	compile 'libs/npm-up.coffee', 'dist/npm-up.js'

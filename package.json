@@ -1,0 +1,30 @@
+{
+  "name": "npm-up",
+  "version": "0.0.1",
+  "description": "A lightweight tool to check the newest version of npm packages and do whatever you want",
+  "main": "dist/npm-up.js",
+  "bin": "dist/bin.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dracupid/npm-up.git"
+  },
+  "keywords": [
+    "npm",
+    "update",
+    "version"
+  ],
+  "author": "Dracupid",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dracupid/npm-up/issues"
+  },
+  "homepage": "https://github.com/dracupid/npm-up",
+  "dependencies": {
+    "commander": "^2.5.1",
+    "nokit": "0.0.6",
+    "npm": "^2.1.12"
+  }
+}
