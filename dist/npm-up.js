@@ -1,4 +1,4 @@
-var Promise, deps, format, getNewVersion, kit, npm, pack, print, _;
+var Promise, deps, format, getNewVersion, kit, npm, pack, print, versionFilter, _;
 
 npm = require('npm');
 
@@ -10,16 +10,37 @@ try {
   pack = require(kit.path.join(process.cwd(), './package.json'));
 } catch (_error) {
   kit.err("[404] package.json Not Found".red);
+  process.exit(0);
 }
+
+versionFilter = function(ver) {
+  if (ver === '*' || ver === '') {
+    return '*';
+  } else {
+    return /\D?([\d\.\*]*)\w*/.exec(ver)[1];
+  }
+};
 
 format = function(obj, type) {
   return _.map(obj, function(v, k) {
+    var curVer, installedVer, path;
+    path = kit.path.join(process.cwd(), "./node_modules/" + k + "/package.json");
+    curVer = versionFilter(v);
+    try {
+      installedVer = require(path).version;
+    } catch (_error) {
+      installedVer = curVer === '*' ? 'not installed' : curVer;
+    }
+    curVer === '*' && (curVer = installedVer);
     return {
       packageName: k,
-      curVer: /\D?([\d\.]*)\w*/.exec(v)[1],
+      curVer: curVer,
+      installedVer: installedVer,
       newVer: '',
       type: type,
-      needUpdate: false
+      needUpdateJSON: false,
+      needUpdate: false,
+      packagePath: path
     };
   });
 };
@@ -34,7 +55,10 @@ getNewVersion = function(dep) {
     } else {
       pack.devDependencies[dep.packageName] = dep.newVer;
     }
-    if (dep.newVer !== dep.curVer) {
+    if (dep.installedVer !== dep.curVer) {
+      dep.needUpdateJSON = true;
+    }
+    if (dep.newVer !== dep.installedVer) {
       return dep.needUpdate = true;
     }
   });
@@ -42,11 +66,14 @@ getNewVersion = function(dep) {
 
 print = function() {
   return _.map(deps, function(dep) {
-    return dep.needUpdate && console.log('>> ', dep.packageName.yellow, ': ', dep.curVer.green, '->', dep.newVer.red);
+    dep.needUpdate && console.log('>> ', dep.packageName.yellow, ': ', dep.installedVer.green, '->', dep.newVer.red);
+    if (!dep.needUpdate && dep.needUpdateJSON) {
+      return console.log(">> Your package.json can be updated: ", dep.packageName.yellow, ': ', dep.curVer.green, '->', dep.installedVer.red);
+    }
   });
 };
 
-module.exports = Promise.promisify(npm.load, {
+Promise.promisify(npm.load, {
   loaded: false
 })().then(function() {
   return console.log('Checking npm update...'.green);
