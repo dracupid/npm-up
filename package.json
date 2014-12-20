@@ -25,7 +25,8 @@
   },
   "homepage": "https://github.com/dracupid/npm-up",
   "dependencies": {
-    "nokit": "*",
-    "npm": "*"
+    "commander": "2.5.1",
+    "nokit": "0.1.0",
+    "npm": "2.1.14"
   }
 }
