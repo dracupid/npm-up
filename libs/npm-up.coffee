@@ -48,7 +48,7 @@ parseVersion = (ver)->
     ver = ver.trim()
     if ver is '*' or ver is ''
         '*'
-    else if /^[\^~]?[\d\.]+\w*/.test ver
+    else if /^[\D]?[\d\.]+\w*/.test ver
         new Version ver
     else 
         null
@@ -185,7 +185,7 @@ doUp = ->
 
 class Version
     constructor: (verStr)->
-        arr = /^([\^~])?([\d\.]+)\w*/.exec verStr
+        arr = /^([\D])?([\d\.]+)\w*/.exec verStr
         @prefix = arr[1] or ''
         @verStr = arr[2]
         @version = arr[2].split '.'

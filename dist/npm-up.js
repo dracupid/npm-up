@@ -63,7 +63,7 @@ parseVersion = function(ver) {
   ver = ver.trim();
   if (ver === '*' || ver === '') {
     return '*';
-  } else if (/^[\^~]?[\d\.]+\w*/.test(ver)) {
+  } else if (/^[\D]?[\d\.]+\w*/.test(ver)) {
     return new Version(ver);
   } else {
     return null;
@@ -227,7 +227,7 @@ doUp = function() {
 Version = (function() {
   function Version(verStr) {
     var arr;
-    arr = /^([\^~])?([\d\.]+)\w*/.exec(verStr);
+    arr = /^([\D])?([\d\.]+)\w*/.exec(verStr);
     this.prefix = arr[1] || '';
     this.verStr = arr[2];
     this.version = arr[2].split('.');
