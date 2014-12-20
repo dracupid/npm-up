@@ -28,15 +28,16 @@ For example: `npm-up -ab`
 -o, --only <list>        Only check the packages list, split by comma
 ```
 ## Version Pattern
-Only support number version with prefix, or `*`. Eg:
+Only support number version with prefix and suffix, or `*`. Eg:
 ```
 *
 ^1.5.4
 ~2.3
 0.9.7
 >=0.9.8
+0.5.0-alpha1
 ```
-- However, the semantic meaning of the prefix is **ignored**, because I just want the latest version.
+- However, the semantic meaning of the prefix and suffix is **ignored**, because I just want the latest version.
 - If the version declared in the `package.json` is not recognizable, the corresponding package will be **excluded**.
 ## Rules
 1. Take 3 versions into consideration: 
