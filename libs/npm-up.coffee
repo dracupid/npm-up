@@ -185,14 +185,15 @@ doUp = ->
 
 class Version
     constructor: (verStr)->
-        arr = /^([\D])?([\d\.]+)\w*/.exec verStr
+        arr = /^([\D])?([\d\.]+)(.*)/.exec verStr
         @prefix = arr[1] or ''
         @verStr = arr[2]
         @version = arr[2].split '.'
+        @suffix = arr[3]
         @
 
     toString: ()->
-        @prefix = @version.join '.'
+        @prefix + @version.join('.') + @suffix
 
     compareTo: (ver)->
         arr = _.zip @version, ver.version

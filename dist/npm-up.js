@@ -227,15 +227,16 @@ doUp = function() {
 Version = (function() {
   function Version(verStr) {
     var arr;
-    arr = /^([\D])?([\d\.]+)\w*/.exec(verStr);
+    arr = /^([\D])?([\d\.]+)(.*)/.exec(verStr);
     this.prefix = arr[1] || '';
     this.verStr = arr[2];
     this.version = arr[2].split('.');
+    this.suffix = arr[3];
     this;
   }
 
   Version.prototype.toString = function() {
-    return this.prefix = this.version.join('.');
+    return this.prefix + this.version.join('.') + this.suffix;
   };
 
   Version.prototype.compareTo = function(ver) {
