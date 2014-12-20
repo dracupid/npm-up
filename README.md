@@ -39,6 +39,7 @@ Only support number version with prefix and suffix, or `*`. Eg:
 ```
 - However, the semantic meaning of the prefix and suffix is **ignored**, because I just want the latest version.
 - If the version declared in the `package.json` is not recognizable, the corresponding package will be **excluded**.
+
 ## Rules
 1. Take 3 versions into consideration: 
     - Version declare in `package.json`
