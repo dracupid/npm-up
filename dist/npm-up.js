@@ -120,7 +120,7 @@ prepare = function() {
 };
 
 getNewVersion = function(dep) {
-  return Promise.promisify(npm.commands.v)([dep.packageName, 'dist-tags.latest'], true).then(function(data) {
+  return kit.promisify(npm.commands.v)([dep.packageName, 'dist-tags.latest'], true).then(function(data) {
     dep.newVer = new Version(_(data).keys().first());
     if (dep.declareVer === '*') {
       if (!dep.installedVer) {
@@ -156,7 +156,7 @@ print = function(deps) {
 doUp = function() {
   var chain, deps;
   deps = prepare();
-  return chain = Promise.promisify(npm.load, {
+  return chain = kit.promisify(npm.load, {
     loaded: false
   })().then(function() {
     console.log('Checking npm update...'.green);
@@ -215,7 +215,7 @@ doUp = function() {
     if (option.install) {
       chain.then(function() {
         console.log(("" + toUpdate + " will be updated").cyan);
-        return Promise.promisify(npm.commands.i)(toUpdate).then(function() {
+        return kit.promisify(npm.commands.i)(toUpdate).then(function() {
           return console.log("Newest version of the packages has been installed!".green);
         });
       });

@@ -97,7 +97,7 @@ prepare = ()->
     deps = _.compact deps
 
 getNewVersion = (dep) ->
-    Promise.promisify(npm.commands.v)([dep.packageName, 'dist-tags.latest'], true)
+    kit.promisify(npm.commands.v)([dep.packageName, 'dist-tags.latest'], true)
     .then (data) ->
         dep.newVer = new Version _(data).keys().first()
 
@@ -132,7 +132,7 @@ print = (deps)->
 
 doUp = ->
     deps = prepare()
-    chain = Promise.promisify(npm.load,
+    chain = kit.promisify(npm.load,
         loaded: false
     )()
     .then ->
@@ -178,7 +178,7 @@ doUp = ->
         if option.install
             chain.then ->
                 console.log "#{toUpdate} will be updated".cyan
-                Promise.promisify(npm.commands.i)(toUpdate)
+                kit.promisify(npm.commands.i)(toUpdate)
                 .then ->
                     console.log "Newest version of the packages has been installed!".green
         chain
