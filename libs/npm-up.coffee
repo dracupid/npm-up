@@ -171,7 +171,7 @@ doUp = ->
                         backFile = packageBakFile
                     kit.copy packageFile, backFile
             .then ->
-                kit.writeFile packageFile, JSON.stringify globalPackage, null, 2 
+                kit.writeFile packageFile, JSON.stringify(globalPackage, null, 2) + '\n' 
             .then ->
                 console.log "Package.json has been updated!".cyan
 

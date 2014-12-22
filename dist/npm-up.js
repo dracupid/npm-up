@@ -207,7 +207,7 @@ doUp = function() {
           return kit.copy(packageFile, backFile);
         }
       }).then(function() {
-        return kit.writeFile(packageFile, JSON.stringify(globalPackage, null, 2));
+        return kit.writeFile(packageFile, JSON.stringify(globalPackage, null, 2) + '\n');
       }).then(function() {
         return console.log("Package.json has been updated!".cyan);
       });
