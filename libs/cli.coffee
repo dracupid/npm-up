@@ -2,6 +2,7 @@ cmder = require 'commander'
 
 cmder
     .usage "[options]"
+    .option '-v, --ver', "Display the current version of npm-up"
     .option '-w, --writeback', "Write updated version info back to package.json"
     .option '-i, --install', "Install the newest version of the packages that need to be updated."
     .option '-l, --lock', "Lock the version of the package in package.json, with no version prefix."
@@ -20,6 +21,7 @@ cmder
 cmder.parse process.argv
 
 init = ->
+
     opts = {}
     opts.writeBack = cmder.writeback
     opts.install = cmder.install
@@ -34,7 +36,11 @@ init = ->
 
     if cmder.dep and cmder.dev
         opts.devDep = ops.dep = yes
-    opts
+    opts 
 
-opts = init()
-require('./npm-up')(opts)
+if cmder.ver 
+    pack = require '../package.json'
+    console.log pack.version
+else 
+    opts = init()
+    require('./npm-up')(opts)
