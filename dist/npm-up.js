@@ -188,7 +188,7 @@ doUp = function() {
           if (!option.lock) {
             toWrite = dep.declareVer.prefix + toWrite;
           }
-          if (!option.lock && dep.declareVer === '*') {
+          if (dep.declareVer === '*') {
             toWrite = '*';
           }
           if (dep.type === 'S') {

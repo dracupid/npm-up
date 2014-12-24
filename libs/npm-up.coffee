@@ -157,7 +157,7 @@ doUp = ->
                 _.forEach deps, (dep)->
                     toWrite = dep.newVer.verStr
                     if not option.lock then toWrite = dep.declareVer.prefix + toWrite
-                    if not option.lock and dep.declareVer is '*' then toWrite = '*'
+                    if dep.declareVer is '*' then toWrite = '*'
 
                     if dep.type is 'S'
                         globalPackage.dependencies[dep.packageName] = toWrite
