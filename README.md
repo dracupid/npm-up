@@ -46,7 +46,7 @@ Only support number version with prefix and suffix, or `*`. Eg:
     - Version of the package installed
     - The latest version of the package
 2. If a package is not installed, only `package.json` will be updated, and the package itself won't be installed.
-3. If the version is `*`, it won't be overwrite, unless flag `lock` is set.
+3. If the version is `*` in `package.json`, it will never be overwritten, even the flag `lock` is set.
 4. The preifx of the version will be preserved when write back, unless flag `lock` is set.
 5. If the version installed is not the same as the version declared in `package.json`, there comes a warning.
 6. Installed version is preferred.
