@@ -16,6 +16,8 @@ For example: `npm-up -ab`
 ####Options:
 ```
 -h, --help               output usage information
+-v, --ver                Display the current version of npm-up
+-g, --global             Check global packages
 -w, --writeback          Write updated version info back to package.json
 -i, --install            Install the newest version of the packages that need to be updated.
 -l, --lock               Lock the version of the package in package.json, with no version prefix.

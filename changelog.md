@@ -1,3 +1,7 @@
+v1.0.3
+==================
+- Support checking and update global packages.
+
 v1.0.2
 ===================
 - If the version is `*` in `package.json`, it will never be overwritten, even the flag `lock` is set.
