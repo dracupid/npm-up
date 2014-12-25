@@ -9,7 +9,7 @@ modulesPath = kit.path.join process.cwd(), 'node_modules'
 option = {}
 globalPackage = {}
 
-npmUp = (opts = {})->
+parseOpts = (opts)->
     option = _.defaults opts,
         include: "" # array
         exclude: [] # array
@@ -33,9 +33,7 @@ npmUp = (opts = {})->
 
     if option.silent
         console.log = ->
-
-    doUp()
-
+    
 readPackageFile = (name, onError)->
     path = if name then kit.path.join modulesPath, name, 'package.json' else packageFile
     try
@@ -60,20 +58,23 @@ parsePackage = (name, ver, type)->
     if name in option.exclude
         return null
 
-    # version in package.json
-    declareVer = parseVersion ver
-    if not declareVer then return null
+    if type is 'g'
+        declareVer = installedVer = new Version ver
+    else
+        # version in package.json
+        declareVer = parseVersion ver
+        if not declareVer then return null
 
-    # version installed
-    pack = readPackageFile name
-    installedVer = if pack then new Version pack.version else null
+        # version installed
+        pack = readPackageFile name
+        installedVer = if pack then new Version pack.version else null
 
     {
         packageName: name
         declareVer  
         installedVer
         baseVer: installedVer
-        nerVer: ''
+        newVer: ''
         type
         needUpdate: no
         warnMsg: ''
@@ -130,9 +131,12 @@ print = (deps)->
             dep.baseVer.toString().green, '->', dep.newVer.toString().red
         dep.warnMsg and console.log "WARN: #{dep.warnMsg}".grey
 
-doUp = ->
+npmUp = (opts = {})->
+    parseOpts opts
+
     deps = prepare()
-    chain = kit.promisify(npm.load,
+
+    kit.promisify(npm.load,
         loaded: false
     )()
     .then ->
@@ -204,4 +208,46 @@ class Version
             else return parseInt(i[0], 10) - parseInt(i[1], 10) 
         return 0
 
+npmUpGlobal = (opts)->
+    parseOpts opts
+    
+    kit.promisify(npm.load,
+        loaded: false
+    )()
+    .then ->
+        console.log 'Reading global packages...'.green
+        npm.config.set 'global', true
+        # known issue: only the first dir will be listed in PATH
+        kit.promisify(npm.commands.ls)(null, true)
+    .then (data) ->
+        console.log "Following packages are found: " + ((_.keys data.dependencies).toString()).cyan
+        deps = []
+        _.forEach data.dependencies, (val, key)->
+            deps.push parsePackage key, val.version, 'g'
+        console.log 'Checking npm update...'.green
+        Promise.all _.map _.compact(deps), getNewVersion
+    .then (newDeps)->
+        deps = newDeps
+        print deps
+        console.log 'Check npm update done!'.green
+
+        toUpdate = _.map(_.filter(deps, (dep)->dep.needUpdate and dep.installedVer), 
+            (dep)->"#{dep.packageName}@#{dep.newVer}")
+        if toUpdate.length is 0
+            console.log "No package is updated.".green
+            return
+
+        chain = new Promise (resolve)->
+            resolve()
+
+        if option.install
+            chain.then ->
+                console.log "#{toUpdate} will be updated".cyan
+                npm.config.set 'global', true
+                kit.promisify(npm.commands.i)(toUpdate)
+                .then ->
+                    console.log "Newest version of the packages has been installed!".green
+        chain
+
 module.exports = npmUp
+module.exports.npmUpGlobal = npmUpGlobal

@@ -3,6 +3,7 @@ cmder = require 'commander'
 cmder
     .usage "[options]"
     .option '-v, --ver', "Display the current version of npm-up"
+    .option '-g, --global', "Check global packages"
     .option '-w, --writeback', "Write updated version info back to package.json"
     .option '-i, --install', "Install the newest version of the packages that need to be updated."
     .option '-l, --lock', "Lock the version of the package in package.json, with no version prefix."
@@ -43,4 +44,7 @@ if cmder.ver
     console.log pack.version
 else 
     opts = init()
-    require('./npm-up')(opts)
+    if cmder.global
+        require('./npm-up').npmUpGlobal opts
+    else
+        require('./npm-up') opts
