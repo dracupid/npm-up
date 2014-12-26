@@ -1,4 +1,8 @@
-v1.0.5
+v1.0.5 - v1.0.6
+=================
+- fix stupid mistakes
+
+v1.0.4
 =================
 - Fix: When no package is installed, `package.json` is not able to be overwritten when flag `whiteback` is set.
 
