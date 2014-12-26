@@ -4,7 +4,8 @@
   "description": "A lightweight tool to check the latest version of dependent npm packages for a project and do whatever you want.",
   "main": "./dist/npm-up.js",
   "bin": {
-    "npm-up": "./bin/bin.js"
+    "npm-up": "./bin/bin.js",
+    "prepublish" : "cake build"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

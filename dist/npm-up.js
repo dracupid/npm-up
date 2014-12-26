@@ -176,10 +176,6 @@ npmUp = function(opts) {
     }), function(dep) {
       return "" + dep.packageName + "@" + dep.newVer;
     });
-    if (toUpdate.length === 0) {
-      console.log("No package is updated.".green);
-      return;
-    }
     chain = new Promise(function(resolve) {
       return resolve();
     });
@@ -217,12 +213,16 @@ npmUp = function(opts) {
       });
     }
     if (option.install) {
-      chain.then(function() {
-        console.log(("" + toUpdate + " will be updated").cyan);
-        return kit.promisify(npm.commands.i)(toUpdate).then(function() {
-          return console.log("Newest version of the packages has been installed!".green);
+      if (toUpdate.length !== 0) {
+        chain.then(function() {
+          console.log(("" + toUpdate + " will be updated").cyan);
+          return kit.promisify(npm.commands.i)(toUpdate).then(function() {
+            return console.log("Newest version of the packages has been installed!".green);
+          });
         });
-      });
+      } else {
+        console.log("No package is updated.".green);
+      }
     }
     return chain;
   });
