@@ -33,7 +33,7 @@ parseOpts = (opts)->
 
     if option.silent
         console.log = ->
-    
+
 readPackageFile = (name, onError)->
     path = if name then kit.path.join modulesPath, name, 'package.json' else packageFile
     try
@@ -48,7 +48,7 @@ parseVersion = (ver)->
         '*'
     else if /^[\D]?[\d\.]+\w*/.test ver
         new Version ver
-    else 
+    else
         null
 
 parsePackage = (name, ver, type)->
@@ -71,7 +71,7 @@ parsePackage = (name, ver, type)->
 
     {
         packageName: name
-        declareVer  
+        declareVer
         installedVer
         baseVer: installedVer
         newVer: ''
@@ -110,24 +110,24 @@ getNewVersion = (dep) ->
                 dep.warnMsg = "package #{dep.packageName} is not installed."
             # '*' -> 'x.x.x'
             else
-                dep.needUpdate = dep.installedVer.compareTo(dep.newVer) < 0 
+                dep.needUpdate = dep.installedVer.compareTo(dep.newVer) < 0
         else
             # 'X.X.X' -> 'not installed'
             if not dep.installedVer
-                dep.needUpdate = dep.declareVer.compareTo(dep.newVer) < 0 
+                dep.needUpdate = dep.declareVer.compareTo(dep.newVer) < 0
                 dep.baseVer =  dep.declareVer
                 dep.warnMsg = "package #{dep.packageName} is not installed."
 
             # 'X.X.X' -> 'X.X.X'
             else
-                dep.needUpdate = dep.installedVer.compareTo(dep.newVer) < 0 
+                dep.needUpdate = dep.installedVer.compareTo(dep.newVer) < 0
                 if dep.installedVer.compareTo(dep.declareVer) isnt 0
                     dep.warnMsg = "version info for #{dep.packageName} can be updated. Installed #{dep.installedVer}, declare #{dep.declareVer}"
         dep
 
 print = (deps)->
     _.map deps, (dep)->
-        dep.needUpdate and console.log '>> ', dep.packageName.cyan, '\t', 
+        dep.needUpdate and console.log '>> ', dep.packageName.cyan, '\t',
             dep.baseVer.toString().green, '->', dep.newVer.toString().red
         dep.warnMsg and console.log "WARN: #{dep.warnMsg}".grey
 
@@ -147,11 +147,8 @@ npmUp = (opts = {})->
         print deps
         console.log 'Check npm update done!'.green
     .then ->
-        toUpdate = _.map(_.filter(deps, (dep)->dep.needUpdate and dep.installedVer), 
+        toUpdate = _.map(_.filter(deps, (dep)->dep.needUpdate and dep.installedVer),
             (dep)->"#{dep.packageName}@#{dep.newVer}")
-        if toUpdate.length is 0
-            console.log "No package is updated.".green
-            return
 
         chain = new Promise (resolve)->
             resolve()
@@ -171,20 +168,23 @@ npmUp = (opts = {})->
                 if option.backUp
                     if _.isString option.backUp
                         backFile = kit.join process.cwd(), option.backUp
-                    else 
+                    else
                         backFile = packageBakFile
                     kit.copy packageFile, backFile
             .then ->
-                kit.writeFile packageFile, JSON.stringify(globalPackage, null, 2) + '\n' 
+                kit.writeFile packageFile, JSON.stringify(globalPackage, null, 2) + '\n'
             .then ->
                 console.log "Package.json has been updated!".cyan
 
         if option.install
-            chain.then ->
-                console.log "#{toUpdate} will be updated".cyan
-                kit.promisify(npm.commands.i)(toUpdate)
-                .then ->
-                    console.log "Newest version of the packages has been installed!".green
+            if toUpdate.length isnt 0
+                chain.then ->
+                    console.log "#{toUpdate} will be updated".cyan
+                    kit.promisify(npm.commands.i)(toUpdate)
+                    .then ->
+                        console.log "Newest version of the packages has been installed!".green
+            else
+              console.log "No package is updated.".green
         chain
 
 class Version
@@ -205,12 +205,12 @@ class Version
             if i[0] is i[1] then continue
             else if _.isUndefined i[0] then return -1
             else if _.isUndefined i[1] then return 1
-            else return parseInt(i[0], 10) - parseInt(i[1], 10) 
+            else return parseInt(i[0], 10) - parseInt(i[1], 10)
         return 0
 
 npmUpGlobal = (opts)->
     parseOpts opts
-    
+
     kit.promisify(npm.load,
         loaded: false
     )()
@@ -231,7 +231,7 @@ npmUpGlobal = (opts)->
         print deps
         console.log 'Check npm update done!'.green
 
-        toUpdate = _.map(_.filter(deps, (dep)->dep.needUpdate and dep.installedVer), 
+        toUpdate = _.map(_.filter(deps, (dep)->dep.needUpdate and dep.installedVer),
             (dep)->"#{dep.packageName}@#{dep.newVer}")
         if toUpdate.length is 0
             console.log "No package is updated.".green
