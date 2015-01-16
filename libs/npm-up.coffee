@@ -1,10 +1,11 @@
 npm = require 'npm'
+path = require 'path'
 kit = require 'nokit'
 {_, Promise} = kit
 
-packageFile = kit.path.join process.cwd(), 'package.json'
-packageBakFile = kit.path.join process.cwd(), 'package.bak.json'
-modulesPath = kit.path.join process.cwd(), 'node_modules'
+packageFile = path.join process.cwd(), 'package.json'
+packageBakFile = path.join process.cwd(), 'package.bak.json'
+modulesPath = path.join process.cwd(), 'node_modules'
 
 option = {}
 globalPackage = {}
@@ -36,7 +37,7 @@ parseOpts = (opts)->
         console.log = ->
 
 readPackageFile = (name, onError)->
-    path = if name then kit.path.join modulesPath, name, 'package.json' else packageFile
+    path = if name then path.join modulesPath, name, 'package.json' else packageFile
     try
         require path
     catch
@@ -168,7 +169,7 @@ npmUp = (opts = {})->
 
                 if option.backUp
                     if _.isString option.backUp
-                        backFile = kit.path.join process.cwd(), option.backUp
+                        backFile = path.join process.cwd(), option.backUp
                     else
                         backFile = packageBakFile
                     kit.copy packageFile, backFile
