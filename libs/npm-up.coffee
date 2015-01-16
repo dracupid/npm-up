@@ -224,10 +224,10 @@ npmUpGlobal = (opts)->
         # known issue: only the first dir will be listed in PATH
         Promise.promisify(npm.commands.ls)(null, true)
     .then (data) ->
-        console.log "Following packages are found: " + ((_.keys data.dependencies).toString()).cyan
-        deps = []
-        _.forEach data.dependencies, (val, key)->
-            deps.push parsePackage key, val.version, 'g'
+        globalDep = data.dependencies or data[0].dependencies
+        console.log "Following packages are found: " + ((_.keys globalDep) + '').cyan
+        deps = _.map globalDep, (val, key)->
+            parsePackage key, val.version, 'g'
         console.log 'Checking npm update...'.green
         Promise.all _.map _.compact(deps), getNewVersion
     .then (newDeps)->

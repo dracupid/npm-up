@@ -1,3 +1,7 @@
+v1.0.9
+===============
+- fix: checking global installed packages correctly
+
 v1.0.8
 ===============
 - use nofs directly instead of nokit

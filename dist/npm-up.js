@@ -281,11 +281,11 @@ npmUpGlobal = function(opts) {
     npm.config.set('global', true);
     return Promise.promisify(npm.commands.ls)(null, true);
   }).then(function(data) {
-    var deps;
-    console.log("Following packages are found: " + ((_.keys(data.dependencies)).toString()).cyan);
-    deps = [];
-    _.forEach(data.dependencies, function(val, key) {
-      return deps.push(parsePackage(key, val.version, 'g'));
+    var deps, globalDep;
+    globalDep = data.dependencies || data[0].dependencies;
+    console.log("Following packages are found: " + ((_.keys(globalDep)) + '').cyan);
+    deps = _.map(globalDep, function(val, key) {
+      return parsePackage(key, val.version, 'g');
     });
     console.log('Checking npm update...'.green);
     return Promise.all(_.map(_.compact(deps), getNewVersion));
