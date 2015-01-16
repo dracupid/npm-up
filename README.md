@@ -44,16 +44,15 @@ Only support number version with prefix and suffix, or `*`. Eg:
 - If the version declared in the `package.json` is not recognizable, the corresponding package will be **excluded**.
 
 ## Rules
-1. Take 3 versions into consideration:
-    - Version declare in `package.json`
+1. Take 3 versions into consideration for one package:
+    - Version declared in `package.json`
     - Version of the package installed
     - The latest version of the package
 2. If a package is not installed, only `package.json` will be updated, and the package itself won't be installed.
-3. If the version is `*` in `package.json`, it will not be overwritten, even the flag `lock` is set, if you really want to change a * version, use `--lock-all`.
+3. If the version is `*` in `package.json`, it will not be overwritten, even when the flag `lock` is set. If you really want to change a * version, use `--lock-all`.
 4. The preifx of the version will be preserved when write back, unless flag `lock` is set.
 5. If the version installed is not the same as the version declared in `package.json`, there comes a warning.
 6. Installed version is preferred.
-
 
 ## How to build
 `cake build`
