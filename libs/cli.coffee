@@ -7,6 +7,7 @@ cmder
     .option '-w, --writeback', "Write updated version info back to package.json"
     .option '-i, --install', "Install the newest version of the packages that need to be updated."
     .option '-l, --lock', "Lock the version of the package in package.json, with no version prefix."
+    .option '--lock-all', "Lock, even * version"
     .option '-a, --all', "alias for -wil."
     .option '-b, --backup [fileName]', "BackUp package.json before write back, default is package.bak.json."
     .option '-d, --dep', "Check dependencies only."
@@ -21,12 +22,14 @@ cmder
 
 cmder.parse process.argv
 
+
 init = ->
 
     opts = {}
     opts.writeBack = cmder.writeback
     opts.install = cmder.install
     opts.lock = cmder.lock
+    opts.lockAll = cmder.lockAll
     opts.all = cmder.all
     cmder.dep and opts.devDep = no
     cmder.dev and opts.dep = no
@@ -37,12 +40,12 @@ init = ->
 
     if cmder.dep and cmder.dev
         opts.devDep = ops.dep = yes
-    opts 
+    opts
 
-if cmder.ver 
+if cmder.ver
     pack = require '../package.json'
     console.log pack.version
-else 
+else
     opts = init()
     if cmder.global
         require('./npm-up').npmUpGlobal opts

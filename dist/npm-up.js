@@ -28,7 +28,8 @@ parseOpts = function(opts) {
     devDep: true,
     dep: true,
     silent: false,
-    backUp: false
+    backUp: false,
+    lockAll: false
   });
   if (option.all) {
     _.assign(opts, {
@@ -186,9 +187,9 @@ npmUp = function(opts) {
           var toWrite;
           toWrite = dep.newVer.verStr;
           if (!option.lock) {
-            toWrite = dep.declareVer.prefix + toWrite;
+            toWrite = (dep.declareVer.prefix || '') + toWrite;
           }
-          if (dep.declareVer === '*') {
+          if (!option.lockAll && dep.declareVer === '*') {
             toWrite = '*';
           }
           if (dep.type === 'S') {
@@ -200,7 +201,7 @@ npmUp = function(opts) {
         });
         if (option.backUp) {
           if (_.isString(option.backUp)) {
-            backFile = kit.join(process.cwd(), option.backUp);
+            backFile = kit.path.join(process.cwd(), option.backUp);
           } else {
             backFile = packageBakFile;
           }

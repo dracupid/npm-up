@@ -21,6 +21,7 @@ parseOpts = (opts)->
         dep: yes
         silent: no
         backUp: no
+        lockAll: false
 
     if option.all
         _.assign opts,
@@ -157,8 +158,8 @@ npmUp = (opts = {})->
             chain.then ->
                 _.forEach deps, (dep)->
                     toWrite = dep.newVer.verStr
-                    if not option.lock then toWrite = dep.declareVer.prefix + toWrite
-                    if dep.declareVer is '*' then toWrite = '*'
+                    if not option.lock then toWrite = (dep.declareVer.prefix or '')+ toWrite
+                    if !option.lockAll and dep.declareVer is '*' then toWrite = '*'
 
                     if dep.type is 'S'
                         globalPackage.dependencies[dep.packageName] = toWrite
@@ -167,7 +168,7 @@ npmUp = (opts = {})->
 
                 if option.backUp
                     if _.isString option.backUp
-                        backFile = kit.join process.cwd(), option.backUp
+                        backFile = kit.path.join process.cwd(), option.backUp
                     else
                         backFile = packageBakFile
                     kit.copy packageFile, backFile

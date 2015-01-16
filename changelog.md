@@ -1,3 +1,8 @@
+v1.0.7
+================
+- use `--lock-all` to lock a `*` version
+- fix typos
+
 v1.0.5 - v1.0.6
 =================
 - fix stupid mistakes

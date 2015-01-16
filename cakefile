@@ -4,7 +4,7 @@ kit = require 'nokit'
 compile = (src, dist)->
 	kit.readFile src, 'utf8'
 	.then (str)->
-	    coffee.compile str, bare: true
+        coffee.compile str, bare: true
 	.then (js)->
 		kit.writeFile dist, js, 'utf8'
 
