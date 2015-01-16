@@ -4,7 +4,7 @@ npm-up
 A lightweight tool to check the latest version of dependent npm packages for a project and do whatever you want.
 
 ## Installation
-`npm i npm-up -g` 
+`npm i npm-up -g`
 
 ## Usage
 run `npm-up [options]` in a project directory with a `package.json` file.
@@ -49,7 +49,7 @@ Only support number version with prefix and suffix, or `*`. Eg:
     - Version of the package installed
     - The latest version of the package
 2. If a package is not installed, only `package.json` will be updated, and the package itself won't be installed.
-3. If the version is `*` in `package.json`, it will not be overwritten, even the flag `lock` is set, if you want to change a * version, use `--lock-all`.
+3. If the version is `*` in `package.json`, it will not be overwritten, even the flag `lock` is set, if you really want to change a * version, use `--lock-all`.
 4. The preifx of the version will be preserved when write back, unless flag `lock` is set.
 5. If the version installed is not the same as the version declared in `package.json`, there comes a warning.
 6. Installed version is preferred.

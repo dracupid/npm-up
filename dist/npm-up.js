@@ -1,17 +1,23 @@
-var Promise, Version, formatPackages, getNewVersion, globalPackage, kit, modulesPath, npm, npmUp, npmUpGlobal, option, packageBakFile, packageFile, parseOpts, parsePackage, parseVersion, prepare, print, readPackageFile, _,
+var Promise, Version, formatPackages, fs, getNewVersion, globalPackage, modulesPath, npm, npmUp, npmUpGlobal, option, packageBakFile, packageFile, parseOpts, parsePackage, parseVersion, path, prepare, print, readPackageFile, _,
   __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
+
+require('colors');
 
 npm = require('npm');
 
-kit = require('nokit');
+path = require('path');
 
-_ = kit._, Promise = kit.Promise;
+Promise = require('bluebird');
 
-packageFile = kit.path.join(process.cwd(), 'package.json');
+_ = require('lodash');
 
-packageBakFile = kit.path.join(process.cwd(), 'package.bak.json');
+fs = require('nofs');
 
-modulesPath = kit.path.join(process.cwd(), 'node_modules');
+packageFile = path.join(process.cwd(), 'package.json');
+
+packageBakFile = path.join(process.cwd(), 'package.bak.json');
+
+modulesPath = path.join(process.cwd(), 'node_modules');
 
 option = {};
 
@@ -46,12 +52,12 @@ parseOpts = function(opts) {
 };
 
 readPackageFile = function(name, onError) {
-  var path;
-  path = name ? kit.path.join(modulesPath, name, 'package.json') : packageFile;
+  var filePath;
+  filePath = name ? path.join(modulesPath, name, 'package.json') : packageFile;
   try {
-    return require(path);
+    return require(filePath);
   } catch (_error) {
-    onError && onError(path);
+    onError && onError(filePath);
     return null;
   }
 };
@@ -121,7 +127,7 @@ prepare = function() {
 };
 
 getNewVersion = function(dep) {
-  return kit.promisify(npm.commands.v)([dep.packageName, 'dist-tags.latest'], true).then(function(data) {
+  return Promise.promisify(npm.commands.v)([dep.packageName, 'dist-tags.latest'], true).then(function(data) {
     dep.newVer = new Version(_(data).keys().first());
     if (dep.declareVer === '*') {
       if (!dep.installedVer) {
@@ -161,7 +167,7 @@ npmUp = function(opts) {
   }
   parseOpts(opts);
   deps = prepare();
-  return kit.promisify(npm.load, {
+  return Promise.promisify(npm.load, {
     loaded: false
   })().then(function() {
     console.log('Checking npm update...'.green);
@@ -201,14 +207,14 @@ npmUp = function(opts) {
         });
         if (option.backUp) {
           if (_.isString(option.backUp)) {
-            backFile = kit.path.join(process.cwd(), option.backUp);
+            backFile = path.join(process.cwd(), option.backUp);
           } else {
             backFile = packageBakFile;
           }
-          return kit.copy(packageFile, backFile);
+          return fs.copyP(packageFile, backFile);
         }
       }).then(function() {
-        return kit.writeFile(packageFile, JSON.stringify(globalPackage, null, 2) + '\n');
+        return fs.writeFileP(packageFile, JSON.stringify(globalPackage, null, 2) + '\n');
       }).then(function() {
         return console.log("Package.json has been updated!".cyan);
       });
@@ -217,7 +223,7 @@ npmUp = function(opts) {
       if (toUpdate.length !== 0) {
         chain.then(function() {
           console.log(("" + toUpdate + " will be updated").cyan);
-          return kit.promisify(npm.commands.i)(toUpdate).then(function() {
+          return Promise.promisify(npm.commands.i)(toUpdate).then(function() {
             return console.log("Newest version of the packages has been installed!".green);
           });
         });
@@ -268,12 +274,12 @@ Version = (function() {
 
 npmUpGlobal = function(opts) {
   parseOpts(opts);
-  return kit.promisify(npm.load, {
+  return Promise.promisify(npm.load, {
     loaded: false
   })().then(function() {
     console.log('Reading global packages...'.green);
     npm.config.set('global', true);
-    return kit.promisify(npm.commands.ls)(null, true);
+    return Promise.promisify(npm.commands.ls)(null, true);
   }).then(function(data) {
     var deps;
     console.log("Following packages are found: " + ((_.keys(data.dependencies)).toString()).cyan);
@@ -304,7 +310,7 @@ npmUpGlobal = function(opts) {
       chain.then(function() {
         console.log(("" + toUpdate + " will be updated").cyan);
         npm.config.set('global', true);
-        return kit.promisify(npm.commands.i)(toUpdate).then(function() {
+        return Promise.promisify(npm.commands.i)(toUpdate).then(function() {
           return console.log("Newest version of the packages has been installed!".green);
         });
       });

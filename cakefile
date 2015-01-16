@@ -1,12 +1,14 @@
 coffee = require 'coffee-script'
-kit = require 'nokit'
+fs = require 'nofs'
 
 compile = (src, dist)->
-	kit.readFile src, 'utf8'
+	fs.readFileP src, 'utf8'
 	.then (str)->
         coffee.compile str, bare: true
 	.then (js)->
-		kit.writeFile dist, js, 'utf8'
+		fs.writeFileP dist, js, 'utf8'
+	.then ->
+		console.log 'done: ' + src
 
 
 task 'build', 'Build', ->

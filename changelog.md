@@ -1,7 +1,12 @@
+v1.0.8
+===============
+- use nofs directly instead of nokit
+- fix: lock-all don't lock
+
 v1.0.7
 ================
 - use `--lock-all` to lock a `*` version
-- fix typos
+- fix typo
 
 v1.0.5 - v1.0.6
 =================

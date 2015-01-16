@@ -1,7 +1,9 @@
+require 'colors'
 npm = require 'npm'
 path = require 'path'
-kit = require 'nokit'
-{_, Promise} = kit
+Promise = require 'bluebird'
+_ = require 'lodash'
+fs = require 'nofs'
 
 packageFile = path.join process.cwd(), 'package.json'
 packageBakFile = path.join process.cwd(), 'package.bak.json'
@@ -37,11 +39,11 @@ parseOpts = (opts)->
         console.log = ->
 
 readPackageFile = (name, onError)->
-    path = if name then path.join modulesPath, name, 'package.json' else packageFile
+    filePath = if name then path.join modulesPath, name, 'package.json' else packageFile
     try
-        require path
+        require filePath
     catch
-        onError and onError path
+        onError and onError filePath
         return null
 
 parseVersion = (ver)->
@@ -100,7 +102,7 @@ prepare = ()->
     deps = _.compact deps
 
 getNewVersion = (dep) ->
-    kit.promisify(npm.commands.v)([dep.packageName, 'dist-tags.latest'], true)
+    Promise.promisify(npm.commands.v)([dep.packageName, 'dist-tags.latest'], true)
     .then (data) ->
         dep.newVer = new Version _(data).keys().first()
 
@@ -138,7 +140,7 @@ npmUp = (opts = {})->
 
     deps = prepare()
 
-    kit.promisify(npm.load,
+    Promise.promisify(npm.load,
         loaded: false
     )()
     .then ->
@@ -172,9 +174,9 @@ npmUp = (opts = {})->
                         backFile = path.join process.cwd(), option.backUp
                     else
                         backFile = packageBakFile
-                    kit.copy packageFile, backFile
+                    fs.copyP packageFile, backFile
             .then ->
-                kit.writeFile packageFile, JSON.stringify(globalPackage, null, 2) + '\n'
+                fs.writeFileP packageFile, JSON.stringify(globalPackage, null, 2) + '\n'
             .then ->
                 console.log "Package.json has been updated!".cyan
 
@@ -182,7 +184,7 @@ npmUp = (opts = {})->
             if toUpdate.length isnt 0
                 chain.then ->
                     console.log "#{toUpdate} will be updated".cyan
-                    kit.promisify(npm.commands.i)(toUpdate)
+                    Promise.promisify(npm.commands.i)(toUpdate)
                     .then ->
                         console.log "Newest version of the packages has been installed!".green
             else
@@ -213,14 +215,14 @@ class Version
 npmUpGlobal = (opts)->
     parseOpts opts
 
-    kit.promisify(npm.load,
+    Promise.promisify(npm.load,
         loaded: false
     )()
     .then ->
         console.log 'Reading global packages...'.green
         npm.config.set 'global', true
         # known issue: only the first dir will be listed in PATH
-        kit.promisify(npm.commands.ls)(null, true)
+        Promise.promisify(npm.commands.ls)(null, true)
     .then (data) ->
         console.log "Following packages are found: " + ((_.keys data.dependencies).toString()).cyan
         deps = []
@@ -246,7 +248,7 @@ npmUpGlobal = (opts)->
             chain.then ->
                 console.log "#{toUpdate} will be updated".cyan
                 npm.config.set 'global', true
-                kit.promisify(npm.commands.i)(toUpdate)
+                Promise.promisify(npm.commands.i)(toUpdate)
                 .then ->
                     console.log "Newest version of the packages has been installed!".green
         chain
