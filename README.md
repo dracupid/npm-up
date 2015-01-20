@@ -3,6 +3,8 @@ npm-up
 
 A lightweight tool to check the latest version of dependent npm packages for a project and do whatever you want.
 
+[![NPM version](https://badge.fury.io/js/npm-up.svg)](http://badge.fury.io/js/npm-up)
+[![Deps Up to Date](https://david-dm.org/dracupid/npm-up.svg?style=flat)](https://david-dm.org/dracupid/npm-up)
 ## Installation
 `npm i npm-up -g`
 

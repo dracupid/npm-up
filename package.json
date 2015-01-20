@@ -30,7 +30,7 @@
     "colors": "*",
     "commander": "*",
     "lodash": "2.4.1",
-    "nofs": "^0.2.5",
+    "nofs": "^0.2.8",
     "npm": "^2.2.0"
   },
   "devDependencies": {
