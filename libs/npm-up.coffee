@@ -193,7 +193,7 @@ npmUp = (opts = {})->
 
 class Version
     constructor: (verStr)->
-        arr = /^([\D])?([\d\.]+)(.*)/.exec verStr
+        arr = /^([\D])?([\d\.]+)(.*)/.exec verStr or []
         @prefix = arr[1] or ''
         @verStr = arr[2] or ''
         @version = @verStr.split '.' or ''
