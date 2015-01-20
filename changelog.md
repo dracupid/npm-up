@@ -1,3 +1,7 @@
+Iv1.1.0
+===============
+- fix: UNMET DEPENDENCY and version error
+
 v1.0.9
 ===============
 - fix: checking global installed packages correctly
