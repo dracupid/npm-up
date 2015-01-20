@@ -195,9 +195,9 @@ class Version
     constructor: (verStr)->
         arr = /^([\D])?([\d\.]+)(.*)/.exec verStr
         @prefix = arr[1] or ''
-        @verStr = arr[2]
-        @version = arr[2].split '.'
-        @suffix = arr[3]
+        @verStr = arr[2] or ''
+        @version = @verStr.split '.' or ''
+        @suffix = arr[3] or ''
         @
 
     toString: ()->
