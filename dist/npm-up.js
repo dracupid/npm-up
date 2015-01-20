@@ -240,9 +240,9 @@ Version = (function() {
     var arr;
     arr = /^([\D])?([\d\.]+)(.*)/.exec(verStr);
     this.prefix = arr[1] || '';
-    this.verStr = arr[2];
-    this.version = arr[2].split('.');
-    this.suffix = arr[3];
+    this.verStr = arr[2] || '';
+    this.version = this.verStr.split('.' || '');
+    this.suffix = arr[3] || '';
     this;
   }
 
