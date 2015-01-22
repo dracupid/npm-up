@@ -1,3 +1,7 @@
+v1.1.2
+=============
+- fix: add suffix when write back
+
 v1.1.1
 ===============
 - fix: UNMET DEPENDENCY and version error

@@ -191,7 +191,7 @@ npmUp = function(opts) {
         var backFile;
         _.forEach(deps, function(dep) {
           var toWrite;
-          toWrite = dep.newVer.verStr;
+          toWrite = dep.newVer.verStr + dep.newVer.suffix;
           if (!option.lock) {
             toWrite = (dep.declareVer.prefix || '') + toWrite;
           }

@@ -160,7 +160,7 @@ npmUp = (opts = {})->
         if option.writeBack
             chain.then ->
                 _.forEach deps, (dep)->
-                    toWrite = dep.newVer.verStr
+                    toWrite = dep.newVer.verStr + dep.newVer.suffix
                     if not option.lock then toWrite = (dep.declareVer.prefix or '')+ toWrite
                     if !option.lockAll and dep.declareVer is '*' then toWrite = '*'
 
