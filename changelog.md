@@ -1,3 +1,7 @@
+v1.1.3
+==============
+- Just update dependency
+
 v1.1.2
 =============
 - fix: add suffix when write back
