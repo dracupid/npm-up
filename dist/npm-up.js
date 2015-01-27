@@ -211,10 +211,10 @@ npmUp = function(opts) {
           } else {
             backFile = packageBakFile;
           }
-          return fs.copyP(packageFile, backFile);
+          return fs.copy(packageFile, backFile);
         }
       }).then(function() {
-        return fs.writeFileP(packageFile, JSON.stringify(globalPackage, null, 2) + '\n');
+        return fs.writeFile(packageFile, JSON.stringify(globalPackage, null, 2) + '\n');
       }).then(function() {
         return console.log("Package.json has been updated!".cyan);
       });
@@ -232,6 +232,9 @@ npmUp = function(opts) {
       }
     }
     return chain;
+  })["catch"](function(e) {
+    console.error(e);
+    return process.exit(1);
   });
 };
 

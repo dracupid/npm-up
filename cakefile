@@ -2,11 +2,11 @@ coffee = require 'coffee-script'
 fs = require 'nofs'
 
 compile = (src, dist)->
-	fs.readFileP src, 'utf8'
+	fs.readFile src, 'utf8'
 	.then (str)->
         coffee.compile str, bare: true
 	.then (js)->
-		fs.writeFileP dist, js, 'utf8'
+		fs.writeFile dist, js, 'utf8'
 	.then ->
 		console.log 'done: ' + src
 

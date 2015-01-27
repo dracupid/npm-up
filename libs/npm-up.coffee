@@ -174,9 +174,9 @@ npmUp = (opts = {})->
                         backFile = path.join process.cwd(), option.backUp
                     else
                         backFile = packageBakFile
-                    fs.copyP packageFile, backFile
+                    fs.copy packageFile, backFile
             .then ->
-                fs.writeFileP packageFile, JSON.stringify(globalPackage, null, 2) + '\n'
+                fs.writeFile packageFile, JSON.stringify(globalPackage, null, 2) + '\n'
             .then ->
                 console.log "Package.json has been updated!".cyan
 
@@ -190,6 +190,9 @@ npmUp = (opts = {})->
             else
               console.log "No package is updated.".green
         chain
+    .catch (e)->
+        console.error e
+        process.exit 1
 
 class Version
     constructor: (verStr)->
