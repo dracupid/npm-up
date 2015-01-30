@@ -71,12 +71,12 @@ parsePackage = (name, ver, type)->
     }
 
 formatPackages = (obj, type)->
-    obj.map (version, name)->
+    _.map obj, (version, name)->
         pack = parsePackage name, version, type
 
 prepare = ()->
     globalPackage = util.readPackageFile null, ->
-        console.log "ERROR: package.json Not Found".red
+        console.error "ERROR: package.json Not Found".red
         process.exit 1
 
     deps = []
@@ -97,7 +97,7 @@ getNewVersion = (dep) ->
             if not dep.installedVer
                 dep.needUpdate = yes
                 dep.baseVer =  dep.declareVer
-                dep.warnMsg = "package #{dep.packageName} is not installed."
+                dep.warnMsg = "#{dep.packageName.cyan} is not installed."
             # '*' -> 'x.x.x'
             else
                 dep.needUpdate = dep.installedVer.compareTo(dep.newVer) < 0
@@ -106,13 +106,17 @@ getNewVersion = (dep) ->
             if not dep.installedVer
                 dep.needUpdate = dep.declareVer.compareTo(dep.newVer) < 0
                 dep.baseVer =  dep.declareVer
-                dep.warnMsg = "package #{dep.packageName} is not installed."
+                dep.warnMsg = "#{dep.packageName.cyan} is not installed."
 
             # 'X.X.X' -> 'X.X.X'
             else
                 dep.needUpdate = dep.installedVer.compareTo(dep.newVer) < 0
-                if dep.installedVer.compareTo(dep.declareVer) isnt 0
-                    dep.warnMsg = "version info for #{dep.packageName} can be updated. Installed #{dep.installedVer}, declare #{dep.declareVer}"
+                if dep.installedVer.compareTo(dep.declareVer) < 0
+                    dep.warnMsg = "Installed #{dep.packageName.cyan} is outdated:" +
+                        " Installed #{(dep.installedVer + '').red} --> Declared #{(dep.declareVer + '').green}"
+                else if dep.installedVer.compareTo(dep.declareVer) > 0
+                    dep.warnMsg = "You may want to update #{dep.packageName.cyan}\'s version info:" +
+                        " Installed #{(dep.installedVer + '').red} --> Declared #{(dep.declareVer + '').green}"
         dep
 
 
@@ -122,90 +126,63 @@ npmUp = ->
     Promise.promisify(npm.load)
         loglevel: 'error'
     .then ->
-        console.log 'Checking npm update...'.green
+        util.logInfo 'Checking package\'s version...'
         Promise.all _.map deps, getNewVersion
     .then (newDeps)->
         deps = newDeps
         util.print deps
-        console.log 'Check npm update done!'.green
-    .then ->
+
         toUpdate = _.map(_.filter(deps, (dep)->dep.needUpdate and dep.installedVer),
             (dep)->"#{dep.packageName}@#{dep.newVer}")
 
-        chain = new Promise (resolve)->
-            resolve()
+        chain = Promise.resolve()
 
         if option.writeBack
             chain.then ->
                 deps.forEach (dep)->
                     toWrite = dep.newVer.verStr + dep.newVer.suffix
-                    if not option.lock then toWrite = (dep.declareVer.prefix or '')+ toWrite
+                    unless option.lock then toWrite = (dep.declareVer.prefix or '') + toWrite
                     if !option.lockAll and dep.declareVer is '*' then toWrite = '*'
 
-                    if dep.type is 'S'
-                        globalPackage.dependencies[dep.packageName] = toWrite
-                    if dep.type is 'D'
-                        globalPackage.devDependencies[dep.packageName] = toWrite
+                    switch dep.type
+                        when 'S' then globalPackage.dependencies[dep.packageName] = toWrite
+                        when 'D' then globalPackage.devDependencies[dep.packageName] = toWrite
 
                 if option.backUp
-                    if _.isString option.backUp
-                        backFile = path.join process.cwd(), option.backUp
-                    else
-                        backFile = packageBakFile
+                    backFile = if _.isString option.backUp then util.cwdFilePath option.backUp else packageBakFile
                     fs.copy packageFile, backFile
             .then ->
                 fs.writeFile packageFile, JSON.stringify(globalPackage, null, 2) + '\n'
             .then ->
-                console.log "Package.json has been updated!".cyan
+                util.logInfo "package.json has been updated!"
 
-        if option.install
-            if toUpdate.length isnt 0
-                chain.then ->
-                    console.log "#{toUpdate} will be updated".cyan
-                    Promise.promisify(npm.commands.i)(toUpdate)
-                    .then ->
-                        console.log "Newest version of the packages has been installed!".green
-            else
-              console.log "No package is updated.".green
-        chain
+        if option.install then util.install toUpdate
 
 npmUpGlobal = ->
     Promise.promisify(npm.load)
         loglevel: 'error'
         global: true
     .then ->
-        console.log 'Reading global packages...'.green
+        util.logInfo 'Reading global installed packages...'
         # known issue: only the first dir will be listed in PATH
         Promise.promisify(npm.commands.ls) null, true
     .then (data) ->
         globalDep = data.dependencies or data[0].dependencies
-        console.log "Following packages are found: " + ((_.keys globalDep) + '').cyan
-        deps = globalDep.map (val, key)->
+        console.log ((_.keys globalDep).join ' ').cyan + ' are found.'.green
+
+        deps = _.map globalDep, (val, key)->
             parsePackage key, val.version, 'g'
-        console.log 'Checking npm update...'.green
+        util.logInfo 'Checking package\'s version...'
+
         Promise.all _.map _.compact(deps), getNewVersion
     .then (newDeps)->
         deps = newDeps
         util.print deps
-        console.log 'Check npm update done!'.green
 
         toUpdate = _.map(_.filter(deps, (dep)->dep.needUpdate and dep.installedVer),
             (dep)->"#{dep.packageName}@#{dep.newVer}")
-        if toUpdate.length is 0
-            console.log "No package is updated.".green
-            return
 
-        chain = new Promise (resolve)->
-            resolve()
-
-        if option.install
-            chain.then ->
-                console.log "#{toUpdate} will be updated".cyan
-                npm.config.set 'global', true
-                Promise.promisify(npm.commands.i)(toUpdate)
-                .then ->
-                    console.log "Newest version of the packages has been installed!".green
-        chain
+        if option.install then util.install toUpdate
 
 module.exports = (opt, type)->
     parseOpts opt
@@ -213,7 +190,7 @@ module.exports = (opt, type)->
     promise = if type is 'global' then npmUpGlobal() else npmUp()
 
     promise.catch (e)->
-        console.error e
+        throw e
         process.exit 1
 
 

@@ -4,6 +4,9 @@ Version = require './Version'
 cwdFilePath = (names...)->
     path.join.apply path, [process.cwd()].concat names
 
+logInfo = (str)->
+    console.log '\n>>  '.yellow + str.green
+
 module.exports = {
     cwdFilePath
 
@@ -17,9 +20,10 @@ module.exports = {
 
     print: (deps)->
         deps.map (dep)->
-            dep.needUpdate and console.log '>> ', dep.packageName.cyan, '\t',
+            padding = (new Array 25 - dep.packageName.length).join ' '
+            dep.needUpdate and console.log "[#{dep.type}]".green, dep.packageName.cyan, padding,
                 dep.baseVer.toString().green, '->', dep.newVer.toString().red
-            dep.warnMsg and console.log "WARN: #{dep.warnMsg}".grey
+            dep.warnMsg and console.log " *  Warning: ".yellow + "#{dep.warnMsg}".white
 
     parseVersion: (ver)->
         ver = ver.trim()
@@ -29,4 +33,19 @@ module.exports = {
             new Version ver
         else
             null
+
+    logInfo
+
+    install: (packages)->
+        if packages.length is 0
+            logInfo "No package needs to be updated!"
+            return Promise.resolve()
+
+        logInfo "Start to install..."
+        console.log packages.join(' ').cyan  + " will be updated".green
+
+        Promise.promisify(npm.commands.i) packages
+        .then ->
+            logInfo "Latest version of the packages has been installed!".green
+
 }
