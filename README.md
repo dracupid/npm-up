@@ -55,6 +55,7 @@ Version strings with **ranges** are not supported by now.
 - However, the semantic meaning of the prefix and suffix is **ignored**, because **I just want the latest version**.
 - If the version declared in the `package.json` is not recognizable, the corresponding package will be **excluded**.
 - More info: https://docs.npmjs.com/misc/semver
+
 ## Rules
 1. Take 3 versions into consideration for one package:
     - Version declared in `package.json`
