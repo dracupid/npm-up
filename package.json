@@ -29,9 +29,9 @@
     "bluebird": "^2.9.3",
     "colors": "*",
     "commander": "*",
-    "lodash": "3.0.0",
-    "nofs": "^0.4.2",
-    "npm": "^2.3.0"
+    "lodash": "3.0.1",
+    "nofs": "^0.4.4",
+    "npm": "^2.4.1"
   },
   "devDependencies": {
     "coffee-script": "*"
