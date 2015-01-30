@@ -1,5 +1,7 @@
 path = require 'path'
 Version = require './Version'
+Promise = require 'bluebird'
+npm = require 'npm'
 
 cwdFilePath = (names...)->
     path.join.apply path, [process.cwd()].concat names
@@ -37,10 +39,6 @@ module.exports = {
     logInfo
 
     install: (packages)->
-        if packages.length is 0
-            logInfo "No package needs to be updated!"
-            return Promise.resolve()
-
         logInfo "Start to install..."
         console.log packages.join(' ').cyan  + " will be updated".green
 

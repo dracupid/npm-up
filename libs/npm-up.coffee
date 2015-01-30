@@ -135,6 +135,10 @@ npmUp = ->
         toUpdate = _.map(_.filter(deps, (dep)->dep.needUpdate and dep.installedVer),
             (dep)->"#{dep.packageName}@#{dep.newVer}")
 
+        if toUpdate.length is 0
+            util.logInfo "Everything is new!"
+            return
+
         chain = Promise.resolve()
 
         if option.writeBack
@@ -181,6 +185,10 @@ npmUpGlobal = ->
 
         toUpdate = _.map(_.filter(deps, (dep)->dep.needUpdate and dep.installedVer),
             (dep)->"#{dep.packageName}@#{dep.newVer}")
+
+        if toUpdate.length is 0
+            util.logInfo "Everything is new!"
+            return
 
         if option.install then util.install toUpdate
 
