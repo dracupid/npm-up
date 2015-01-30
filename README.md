@@ -11,10 +11,8 @@ npm i npm-up -g
 ```
 
 ## Usage
-1. run `npm-up [options]` in a project directory with a `package.json` file.
-For example: `npm-up -ab`
-
-> If no options are set, it will only check the latest version and do nothing but display.
+1. run `npm-up [options]` in a project directory with a `package.json` file.For example: `npm-up -ab`
+If no options are set, it will only check the latest version and do nothing but display.
 
 2. run `npm-up -g` to check globally install npm packages.
 
