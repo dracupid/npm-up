@@ -140,9 +140,8 @@ npmUp = (opts = {})->
 
     deps = prepare()
 
-    Promise.promisify(npm.load,
-        loaded: false
-    )()
+    Promise.promisify(npm.load)
+        loglevel: 'error'
     .then ->
         console.log 'Checking npm update...'.green
         Promise.all _.map deps, getNewVersion
@@ -218,12 +217,11 @@ class Version
 npmUpGlobal = (opts)->
     parseOpts opts
 
-    Promise.promisify(npm.load,
-        loaded: false
-    )()
+    Promise.promisify(npm.load)
+        loglevel: 'error'
+        global: true
     .then ->
         console.log 'Reading global packages...'.green
-        npm.config.set 'global', true
         # known issue: only the first dir will be listed in PATH
         Promise.promisify(npm.commands.ls)(null, true)
     .then (data) ->
