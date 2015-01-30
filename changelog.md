@@ -1,3 +1,11 @@
+v1.2.0
+=============
+- opt: usage of npm config
+- use `nokit` to build
+- upd: dep
+- Modularize and clean code
+- More pretty print.
+
 v1.1.3
 ==============
 - Just update dependency
@@ -46,7 +54,7 @@ v1.0.1
 - Add a newline at the end of `package.json` after writing back.
 
 
-> I am sorry that the version is bumped from 0.1.0 to 1.0.1 by mistake. 
+> I am sorry that the version is bumped from 0.1.0 to 1.0.1 by mistake.
 
 v0.1.0
 ===================
