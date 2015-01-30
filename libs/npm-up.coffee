@@ -5,9 +5,12 @@ Promise = require 'bluebird'
 _ = require 'lodash'
 fs = require 'nofs'
 
-packageFile = path.join process.cwd(), 'package.json'
-packageBakFile = path.join process.cwd(), 'package.bak.json'
-modulesPath = path.join process.cwd(), 'node_modules'
+Version = require './Version'
+util = require './util'
+
+packageFile = util.cwdFilePath 'package.json'
+packageBakFile = util.cwdFilePath 'package.bak.json'
+modulesPath = util.cwdFilePath 'node_modules'
 
 option = {}
 globalPackage = {}
@@ -38,25 +41,8 @@ parseOpts = (opts)->
     if option.silent
         console.log = ->
 
-readPackageFile = (name, onError)->
-    filePath = if name then path.join modulesPath, name, 'package.json' else packageFile
-    try
-        require filePath
-    catch
-        onError and onError filePath
-        return null
-
-parseVersion = (ver)->
-    ver = ver.trim()
-    if ver is '*' or ver is ''
-        '*'
-    else if /^[\D]?[\d\.]+\w*/.test ver
-        new Version ver
-    else
-        null
-
 parsePackage = (name, ver, type)->
-    if _.isArray(option.include) and not (name in option.include)
+    if Array.isArray(option.include) and not (name in option.include)
         return null
 
     if name in option.exclude
@@ -66,11 +52,11 @@ parsePackage = (name, ver, type)->
         declareVer = installedVer = new Version ver
     else
         # version in package.json
-        declareVer = parseVersion ver
+        declareVer = util.parseVersion ver
         if not declareVer then return null
 
         # version installed
-        pack = readPackageFile name
+        pack = util.readPackageFile name
         installedVer = if pack then new Version pack.version else null
 
     {
@@ -85,11 +71,11 @@ parsePackage = (name, ver, type)->
     }
 
 formatPackages = (obj, type)->
-    _.map obj, (version, name)->
+    obj.map (version, name)->
         pack = parsePackage name, version, type
 
 prepare = ()->
-    globalPackage = readPackageFile null, ->
+    globalPackage = util.readPackageFile null, ->
         console.log "ERROR: package.json Not Found".red
         process.exit 1
 
@@ -129,15 +115,8 @@ getNewVersion = (dep) ->
                     dep.warnMsg = "version info for #{dep.packageName} can be updated. Installed #{dep.installedVer}, declare #{dep.declareVer}"
         dep
 
-print = (deps)->
-    _.map deps, (dep)->
-        dep.needUpdate and console.log '>> ', dep.packageName.cyan, '\t',
-            dep.baseVer.toString().green, '->', dep.newVer.toString().red
-        dep.warnMsg and console.log "WARN: #{dep.warnMsg}".grey
 
-npmUp = (opts = {})->
-    parseOpts opts
-
+npmUp = ->
     deps = prepare()
 
     Promise.promisify(npm.load)
@@ -147,7 +126,7 @@ npmUp = (opts = {})->
         Promise.all _.map deps, getNewVersion
     .then (newDeps)->
         deps = newDeps
-        print deps
+        util.print deps
         console.log 'Check npm update done!'.green
     .then ->
         toUpdate = _.map(_.filter(deps, (dep)->dep.needUpdate and dep.installedVer),
@@ -158,7 +137,7 @@ npmUp = (opts = {})->
 
         if option.writeBack
             chain.then ->
-                _.forEach deps, (dep)->
+                deps.forEach (dep)->
                     toWrite = dep.newVer.verStr + dep.newVer.suffix
                     if not option.lock then toWrite = (dep.declareVer.prefix or '')+ toWrite
                     if !option.lockAll and dep.declareVer is '*' then toWrite = '*'
@@ -189,51 +168,25 @@ npmUp = (opts = {})->
             else
               console.log "No package is updated.".green
         chain
-    .catch (e)->
-        console.error e
-        process.exit 1
 
-class Version
-    constructor: (verStr)->
-        arr = /^([\D])?([\d\.]+)(.*)/.exec verStr or []
-        @prefix = arr[1] or ''
-        @verStr = arr[2] or ''
-        @version = @verStr.split '.' or ''
-        @suffix = arr[3] or ''
-        @
-
-    toString: ()->
-        @prefix + @version.join('.') + @suffix
-
-    compareTo: (ver)->
-        arr = _.zip @version, ver.version
-        for i in arr
-            if i[0] is i[1] then continue
-            else if _.isUndefined i[0] then return -1
-            else if _.isUndefined i[1] then return 1
-            else return parseInt(i[0], 10) - parseInt(i[1], 10)
-        return 0
-
-npmUpGlobal = (opts)->
-    parseOpts opts
-
+npmUpGlobal = ->
     Promise.promisify(npm.load)
         loglevel: 'error'
         global: true
     .then ->
         console.log 'Reading global packages...'.green
         # known issue: only the first dir will be listed in PATH
-        Promise.promisify(npm.commands.ls)(null, true)
+        Promise.promisify(npm.commands.ls) null, true
     .then (data) ->
         globalDep = data.dependencies or data[0].dependencies
         console.log "Following packages are found: " + ((_.keys globalDep) + '').cyan
-        deps = _.map globalDep, (val, key)->
+        deps = globalDep.map (val, key)->
             parsePackage key, val.version, 'g'
         console.log 'Checking npm update...'.green
         Promise.all _.map _.compact(deps), getNewVersion
     .then (newDeps)->
         deps = newDeps
-        print deps
+        util.print deps
         console.log 'Check npm update done!'.green
 
         toUpdate = _.map(_.filter(deps, (dep)->dep.needUpdate and dep.installedVer),
@@ -254,5 +207,13 @@ npmUpGlobal = (opts)->
                     console.log "Newest version of the packages has been installed!".green
         chain
 
-module.exports = npmUp
-module.exports.npmUpGlobal = npmUpGlobal
+module.exports = (opt, type)->
+    parseOpts opt
+
+    promise = if type is 'global' then npmUpGlobal() else npmUp()
+
+    promise.catch (e)->
+        console.error e
+        process.exit 1
+
+

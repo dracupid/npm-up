@@ -48,6 +48,6 @@ if cmder.ver
 else
     opts = init()
     if cmder.global
-        require('./npm-up').npmUpGlobal opts
+        require('./npm-up') opts, 'global'
     else
         require('./npm-up') opts
