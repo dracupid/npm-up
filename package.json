@@ -7,7 +7,6 @@
     "npm-up": "./bin/bin.js"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "prepublish": "no build"
   },
   "repository": {
@@ -26,7 +25,7 @@
   },
   "homepage": "https://github.com/dracupid/npm-up",
   "dependencies": {
-    "bluebird": "^2.9.3",
+    "bluebird": "^2.9.4",
     "colors": "*",
     "commander": "*",
     "lodash": "3.0.1",
