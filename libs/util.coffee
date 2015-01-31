@@ -46,4 +46,6 @@ module.exports = {
         .then ->
             logInfo "Latest version of the packages has been installed!".green
 
+    curVer: do ->
+        require('../package.json').version
 }

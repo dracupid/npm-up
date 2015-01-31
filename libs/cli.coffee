@@ -1,4 +1,6 @@
 cmder = require 'commander'
+util = require './util'
+checkUpdate = require './updateSelf'
 
 cmder
     .usage "[options]"
@@ -23,7 +25,7 @@ cmder
 cmder.parse process.argv
 
 
-init = ->
+init = (cmder)->
 
     opts = {}
     opts.writeBack = cmder.writeback
@@ -43,11 +45,11 @@ init = ->
     opts
 
 if cmder.ver
-    pack = require '../package.json'
-    console.log pack.version
+    console.log util.curVer
 else
-    opts = init()
-    if cmder.global
-        require('./npm-up') opts, 'global'
-    else
-        require('./npm-up') opts
+    checkUpdate().then (a)->
+        opts = init cmder
+        if cmder.global
+            require('./npm-up') opts, 'global'
+        else
+            require('./npm-up') opts
