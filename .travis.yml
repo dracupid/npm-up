@@ -4,6 +4,7 @@ node_js:
   - "0.10"
   - "0.8"
 before_install:
-  - "npm install npm@1.4.26 nobone@1.2.9 nofs@0.4.0 lodash@2.4.1 coffee-script@1.8.0 mocha"
-  - "npm install npm@1.4.26 nobone@1.2.9 nofs@0.4.0 lodash@2.4.1 coffee-script@1.8.0 mocha -g"
+  - "npm config set loglevel error"
+  - "npm install nobone@1.2.9 nofs@0.4.0 lodash@2.4.1 coffee-script@1.8.0 mocha"
+  - "npm install nobone@1.2.9 nofs@0.4.0 lodash@2.4.1 coffee-script@1.8.0 mocha -g"
   - "npm i . -g"
