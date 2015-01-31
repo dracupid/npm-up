@@ -172,7 +172,7 @@ npmUpGlobal = ->
         Promise.promisify(npm.commands.ls) null, true
     .then (data) ->
         globalDep = data.dependencies or data[0].dependencies
-        console.log ((_.keys globalDep).join ' ').cyan + ' are found.'.green
+        console.log ((_.keys globalDep).join ' ').cyan
 
         deps = _.map globalDep, (val, key)->
             parsePackage key, val.version, 'g'
