@@ -1,3 +1,8 @@
+v1.2.1
+============
+- check latest version of npm-up itself
+- fix minor bugs
+
 v1.2.0
 =============
 - opt: usage of npm config
