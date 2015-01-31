@@ -204,7 +204,7 @@ npmUpGlobal = function() {
   }).then(function(data) {
     var deps, globalDep;
     globalDep = data.dependencies || data[0].dependencies;
-    console.log(((_.keys(globalDep)).join(' ')).cyan + ' are found.'.green);
+    console.log(((_.keys(globalDep)).join(' ')).cyan);
     deps = _.map(globalDep, function(val, key) {
       return parsePackage(key, val.version, 'g');
     });

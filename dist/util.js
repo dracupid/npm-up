@@ -56,5 +56,8 @@ module.exports = {
     return Promise.promisify(npm.commands.i)(packages).then(function() {
       return logInfo("Latest version of the packages has been installed!".green);
     });
-  }
+  },
+  curVer: (function() {
+    return require('../package.json').version;
+  })()
 };
