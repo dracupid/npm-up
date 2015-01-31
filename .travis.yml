@@ -2,9 +2,9 @@ language: node_js
 node_js:
   - "0.11"
   - "0.10"
-  - "0.8"
+
 before_install:
   - "npm config set loglevel error"
   - "npm install nofs@0.4.0 lodash@2.4.1 coffee-script@1.8.0 mocha bluebird@2.9.0"
-  - "npm install nokit nofs@0.4.0 lodash@2.4.1 coffee-script@1.8.0 mocha @2.9.0 -g"
+  - "npm install nokit nofs@0.4.0 lodash@2.4.1 coffee-script@1.8.0 mocha bluebird@2.9.0 -g"
   - "npm i . -g"
