@@ -2,7 +2,7 @@ coffee = require 'coffee-script'
 
 noCoffee = (opt) -> (file) ->
     file.dest = file.dest.replace '.coffee', '.js'
-    file.set coffee.compile file.contents + '', opt
+    file.set coffee.compile file.contents, opt
 
 task 'build', "Build Project", ->
     kit.warp 'libs/**'
