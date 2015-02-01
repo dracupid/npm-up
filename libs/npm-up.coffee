@@ -156,7 +156,7 @@ npmUp = ->
                     backFile = if _.isString option.backUp then util.cwdFilePath option.backUp else packageBakFile
                     fs.copy packageFile, backFile
             .then ->
-                fs.writeFile packageFile, JSON.stringify(globalPackage, null, 2) + '\n'
+                fs.outputJSON packageFile, globalPackage, space: 2
             .then ->
                 util.logInfo "package.json has been updated!"
 

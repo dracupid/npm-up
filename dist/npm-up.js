@@ -183,7 +183,9 @@ npmUp = function() {
           return fs.copy(packageFile, backFile);
         }
       }).then(function() {
-        return fs.writeFile(packageFile, JSON.stringify(globalPackage, null, 2) + '\n');
+        return fs.outputJSON(packageFile, globalPackage, {
+          space: 2
+        });
       }).then(function() {
         return util.logInfo("package.json has been updated!");
       });
