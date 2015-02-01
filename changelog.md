@@ -1,3 +1,9 @@
+v1.2.2
+==========
+- update nofs & nokit
+- fix a promise return value bug
+- overwrite outdated version info
+
 v1.2.1
 ============
 - check latest version of npm-up itself
