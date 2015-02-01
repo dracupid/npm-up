@@ -135,14 +135,13 @@ npmUp = ->
         toUpdate = _.map(_.filter(deps, (dep)->dep.needUpdate and dep.installedVer),
             (dep)->"#{dep.packageName}@#{dep.newVer}")
 
-        if toUpdate.length is 0
-            util.logInfo "Everything is new!"
-            return
-
         chain = Promise.resolve()
 
+        if toUpdate.length is 0
+            util.logInfo "Everything is new!"
+
         if option.writeBack
-            chain.then ->
+            chain = chain.then ->
                 deps.forEach (dep)->
                     toWrite = dep.newVer.verStr + dep.newVer.suffix
                     unless option.lock then toWrite = (dep.declareVer.prefix or '') + toWrite
@@ -160,7 +159,11 @@ npmUp = ->
             .then ->
                 util.logInfo "package.json has been updated!"
 
-        if option.install then util.install toUpdate
+        if option.install
+            chain = chain.then ->
+                util.install toUpdate
+
+        chain
 
 npmUpGlobal = ->
     Promise.promisify(npm.load)
@@ -188,9 +191,10 @@ npmUpGlobal = ->
 
         if toUpdate.length is 0
             util.logInfo "Everything is new!"
-            return
+            return Promise.resolve()
 
-        if option.install then util.install toUpdate
+        if option.install
+            return util.install toUpdate
 
 module.exports = (opt, type)->
     parseOpts opt

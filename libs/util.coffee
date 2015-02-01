@@ -39,6 +39,7 @@ module.exports = {
     logInfo
 
     install: (packages)->
+        if packages.length is 0 then return Promise.resolve()
         logInfo "Start to install..."
         console.log packages.join(' ').cyan  + " will be updated".green
 
