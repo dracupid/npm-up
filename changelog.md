@@ -1,3 +1,7 @@
+v1.2.4
+===========
+- fix typo
+
 v1.2.3
 ==========
 - update bluebird

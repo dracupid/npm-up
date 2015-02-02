@@ -5,7 +5,7 @@ _ = require('lodash');
 Version = (function() {
   function Version(verStr) {
     var arr;
-    arr = /^([\D])?([\d\.]+)(.*)/.exec(verStr || []);
+    arr = /^([\D])?([\d\.]+)(.*)/.exec(verStr) || [];
     this.prefix = arr[1] || '';
     this.verStr = arr[2] || '';
     this.version = this.verStr.split('.' || '');
