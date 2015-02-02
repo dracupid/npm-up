@@ -10,7 +10,7 @@ require 'colors'
 home = if process.platform is 'win32' then process.env.USERPROFILE else process.env.HOME
 rcFile = path.join home, '.npmuprc.json'
 
-interval = 8 * 60 * 3600 * 1000
+interval = 8 * 3600 * 1000
 
 readRc = ->
     try

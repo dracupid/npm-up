@@ -1,3 +1,8 @@
+v1.2.3
+==========
+- update bluebird
+- fix update interval
+
 v1.2.2
 ==========
 - update nofs & nokit
