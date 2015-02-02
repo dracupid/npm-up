@@ -1,12 +1,13 @@
 require 'colors'
 npm = require 'npm'
 path = require 'path'
-Promise = require 'bluebird'
-_ = require 'lodash'
+global.Promise = require 'bluebird'
+global._ = require 'lodash'
 fs = require 'nofs'
 
 Version = require './Version'
 util = require './util'
+checkVer = require './checkVersion'
 
 packageFile = util.cwdFilePath 'package.json'
 packageBakFile = util.cwdFilePath 'package.bak.json'
@@ -87,39 +88,6 @@ prepare = ()->
 
     deps = _.compact deps
 
-getNewVersion = (dep) ->
-    Promise.promisify(npm.commands.v)([dep.packageName, 'dist-tags.latest'], true)
-    .then (data) ->
-        dep.newVer = new Version _(data).keys().first()
-
-        if dep.declareVer is '*'
-            # '*' -> 'not installed'
-            if not dep.installedVer
-                dep.needUpdate = yes
-                dep.baseVer =  dep.declareVer
-                dep.warnMsg = "#{dep.packageName.cyan} is not installed."
-            # '*' -> 'x.x.x'
-            else
-                dep.needUpdate = dep.installedVer.compareTo(dep.newVer) < 0
-        else
-            # 'X.X.X' -> 'not installed'
-            if not dep.installedVer
-                dep.needUpdate = dep.declareVer.compareTo(dep.newVer) < 0
-                dep.baseVer =  dep.declareVer
-                dep.warnMsg = "#{dep.packageName.cyan} is not installed."
-
-            # 'X.X.X' -> 'X.X.X'
-            else
-                dep.needUpdate = dep.installedVer.compareTo(dep.newVer) < 0
-                if dep.installedVer.compareTo(dep.declareVer) < 0
-                    dep.warnMsg = "Installed #{dep.packageName.cyan} is outdated:" +
-                        " Installed #{(dep.installedVer + '').red} --> Declared #{(dep.declareVer + '').green}"
-                else if dep.installedVer.compareTo(dep.declareVer) > 0
-                    dep.warnMsg = "You may want to update #{dep.packageName.cyan}\'s version info:" +
-                        " Installed #{(dep.installedVer + '').red} --> Declared #{(dep.declareVer + '').green}"
-        dep
-
-
 npmUp = ->
     deps = prepare()
 
@@ -127,7 +95,7 @@ npmUp = ->
         loglevel: 'error'
     .then ->
         util.logInfo 'Checking package\'s version...'
-        Promise.all _.map deps, getNewVersion
+        checkVer deps
     .then (newDeps)->
         deps = newDeps
         util.print deps
@@ -181,7 +149,7 @@ npmUpGlobal = ->
             parsePackage key, val.version, 'g'
         util.logInfo 'Checking package\'s version...'
 
-        Promise.all _.map _.compact(deps), getNewVersion
+        checkVer _.compact(deps)
     .then (newDeps)->
         deps = newDeps
         util.print deps

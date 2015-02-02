@@ -1,4 +1,4 @@
-var Promise, Version, checkUpdate, fs, home, interval, npm, path, rcFile, readRc, util, writeRC, _;
+var Promise, Version, checkUpdate, fs, interval, npm, npmuprc, path, util, writeRC, _, _ref;
 
 fs = require('nofs');
 
@@ -16,31 +16,13 @@ Version = require('./Version');
 
 require('colors');
 
-home = process.platform === 'win32' ? process.env.USERPROFILE : process.env.HOME;
+_ref = require('./npmuprc'), npmuprc = _ref.npmuprc, writeRC = _ref.writeRC;
 
-rcFile = path.join(home, '.npmuprc.json');
-
-interval = 8 * 3600 * 1000;
-
-readRc = function() {
-  try {
-    return require(rcFile);
-  } catch (_error) {
-    return {};
-  }
-};
-
-writeRC = function(rc) {
-  return fs.outputJSON(rcFile, rc, {
-    space: 2
-  })["catch"](function(e) {
-    return console.log(e);
-  });
-};
+interval = 12 * 3600 * 1000;
 
 checkUpdate = function() {
   var promise, rc;
-  rc = readRc();
+  rc = npmuprc;
   promise = Promise.resolve();
   if (!rc.lastCheck || +new Date() - rc.lastCheck > interval) {
     promise = Promise.promisify(npm.load)({

@@ -7,24 +7,12 @@ npm = require 'npm'
 Version = require './Version'
 require 'colors'
 
-home = if process.platform is 'win32' then process.env.USERPROFILE else process.env.HOME
-rcFile = path.join home, '.npmuprc.json'
+{npmuprc, writeRC} = require './npmuprc'
 
-interval = 12 * 3600 * 1000
-
-readRc = ->
-    try
-        require rcFile
-    catch
-        {}
-
-writeRC = (rc)->
-    fs.outputJSON rcFile, rc, space: 2
-    .catch (e)->
-        console.log e
+interval = 12 * 3600 * 1000 # 12 hours
 
 checkUpdate = ->
-    rc = readRc()
+    rc = npmuprc
     promise = Promise.resolve()
 
     if not rc.lastCheck or + new Date() - rc.lastCheck > interval

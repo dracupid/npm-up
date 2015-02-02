@@ -1,4 +1,4 @@
-var Promise, Version, formatPackages, fs, getNewVersion, globalPackage, modulesPath, npm, npmUp, npmUpGlobal, option, packageBakFile, packageFile, parseOpts, parsePackage, path, prepare, util, _,
+var Version, checkVer, formatPackages, fs, globalPackage, modulesPath, npm, npmUp, npmUpGlobal, option, packageBakFile, packageFile, parseOpts, parsePackage, path, prepare, util,
   __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
 require('colors');
@@ -7,15 +7,17 @@ npm = require('npm');
 
 path = require('path');
 
-Promise = require('bluebird');
+global.Promise = require('bluebird');
 
-_ = require('lodash');
+global._ = require('lodash');
 
 fs = require('nofs');
 
 Version = require('./Version');
 
 util = require('./util');
+
+checkVer = require('./checkVersion');
 
 packageFile = util.cwdFilePath('package.json');
 
@@ -108,35 +110,6 @@ prepare = function() {
   return deps = _.compact(deps);
 };
 
-getNewVersion = function(dep) {
-  return Promise.promisify(npm.commands.v)([dep.packageName, 'dist-tags.latest'], true).then(function(data) {
-    dep.newVer = new Version(_(data).keys().first());
-    if (dep.declareVer === '*') {
-      if (!dep.installedVer) {
-        dep.needUpdate = true;
-        dep.baseVer = dep.declareVer;
-        dep.warnMsg = dep.packageName.cyan + " is not installed.";
-      } else {
-        dep.needUpdate = dep.installedVer.compareTo(dep.newVer) < 0;
-      }
-    } else {
-      if (!dep.installedVer) {
-        dep.needUpdate = dep.declareVer.compareTo(dep.newVer) < 0;
-        dep.baseVer = dep.declareVer;
-        dep.warnMsg = dep.packageName.cyan + " is not installed.";
-      } else {
-        dep.needUpdate = dep.installedVer.compareTo(dep.newVer) < 0;
-        if (dep.installedVer.compareTo(dep.declareVer) < 0) {
-          dep.warnMsg = ("Installed " + dep.packageName.cyan + " is outdated:") + (" Installed " + (dep.installedVer + '').red + " --> Declared " + (dep.declareVer + '').green);
-        } else if (dep.installedVer.compareTo(dep.declareVer) > 0) {
-          dep.warnMsg = ("You may want to update " + dep.packageName.cyan + "\'s version info:") + (" Installed " + (dep.installedVer + '').red + " --> Declared " + (dep.declareVer + '').green);
-        }
-      }
-    }
-    return dep;
-  });
-};
-
 npmUp = function() {
   var deps;
   deps = prepare();
@@ -144,7 +117,7 @@ npmUp = function() {
     loglevel: 'error'
   }).then(function() {
     util.logInfo('Checking package\'s version...');
-    return Promise.all(_.map(deps, getNewVersion));
+    return checkVer(deps);
   }).then(function(newDeps) {
     var chain, toUpdate;
     deps = newDeps;
@@ -213,7 +186,7 @@ npmUpGlobal = function() {
       return parsePackage(key, val.version, 'g');
     });
     util.logInfo('Checking package\'s version...');
-    return Promise.all(_.map(_.compact(deps), getNewVersion));
+    return checkVer(_.compact(deps));
   }).then(function(newDeps) {
     var deps, toUpdate;
     deps = newDeps;
