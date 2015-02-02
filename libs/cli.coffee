@@ -1,9 +1,23 @@
 cmder = require 'commander'
 util = require './util'
 checkUpdate = require './updateSelf'
+{npmuprc, writeRC} = require './npmuprc'
 
 cmder
-    .usage "[options]"
+    .usage "[command] [options]"
+    .command 'clean'
+    .description 'clean cache'
+    .action ->
+        writeRC {}
+        .then ->
+            process.exit 0
+cmder
+    .command 'cache'
+    .description 'dump cache'
+    .action ->
+        console.log npmuprc
+        process.exit 0
+cmder
     .option '-v, --ver', "Display the current version of npm-up"
     .option '-g, --global', "Check global packages"
     .option '-w, --writeback', "Write updated version info back to package.json"

@@ -16,8 +16,11 @@ npmuprc = (function() {
   }
 })();
 
-writeRC = function() {
-  return fs.outputJSON(rcFile, npmuprc, {
+writeRC = function(rc) {
+  if (rc == null) {
+    rc = npmuprc;
+  }
+  return fs.outputJSON(rcFile, rc, {
     space: 2
   })["catch"](function(e) {
     return console.log(e);

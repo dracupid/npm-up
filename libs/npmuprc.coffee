@@ -11,8 +11,8 @@ npmuprc = do ->
     catch
         {}
 
-writeRC = ()->
-    fs.outputJSON rcFile, npmuprc, space: 2
+writeRC = (rc = npmuprc)->
+    fs.outputJSON rcFile, rc, space: 2
     .catch (e)->
         console.log e
 
