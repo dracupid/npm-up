@@ -20,20 +20,21 @@ If no options are set, it will only check the latest version and do nothing but 
 
 ####Options:
 ```
--h, --help               output usage information
--v, --ver                Display the current version of npm-up
--g, --global             Check global packages
--w, --writeback          Write updated version info back to package.json
--i, --install            Install the newest version of the packages that need to be updated.
--l, --lock               Lock the version of the package in package.json, with no version prefix.
---lock-all               Lock, even * version
--a, --all                alias for -wil.
--b, --backup [fileName]  BackUp package.json before write back, default is package.bak.json.
--d, --dep                Check dependencies only.
--D, --dev                Check devDependencies only.
--s, --silent             Do not log any infomation.
--e, --exclude <list>     Excluded packages list, split by comma
--o, --only <list>        Only check the packages list, split by comma
+    -h, --help               output usage information
+    -v, --ver                Display the current version of npm-up
+    -g, --global             Check global packages
+    -w, --writeback          Write updated version info back to package.json
+    -i, --install            Install the newest version of the packages that need to be updated.
+    -l, --lock               Lock the version of the package in package.json, with no version prefix.
+    --lock-all               Lock, even * version
+    -a, --all                alias for -wil.
+    --no-cache               do not use version cache.
+    -b, --backup [fileName]  BackUp package.json before write back, default is package.bak.json.
+    -d, --dep                Check dependencies only.
+    -D, --dev                Check devDependencies only.
+    -s, --silent             Do not log any infomation.
+    -e, --exclude <list>     Excluded packages list, split by comma
+    -o, --only <list>        Only check the packages list, split by comma
 ```
 
 ## Version Pattern

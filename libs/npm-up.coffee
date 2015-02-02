@@ -29,6 +29,7 @@ parseOpts = (opts)->
         silent: no
         backUp: no
         lockAll: false
+        cache: true
 
     if option.all
         _.assign opts,
@@ -95,7 +96,7 @@ npmUp = ->
         loglevel: 'error'
     .then ->
         util.logInfo 'Checking package\'s version...'
-        checkVer deps
+        checkVer deps, option.cache
     .then (newDeps)->
         deps = newDeps
         util.print deps
@@ -149,7 +150,7 @@ npmUpGlobal = ->
             parsePackage key, val.version, 'g'
         util.logInfo 'Checking package\'s version...'
 
-        checkVer _.compact(deps)
+        checkVer _.compact(deps), option.cache
     .then (newDeps)->
         deps = newDeps
         util.print deps

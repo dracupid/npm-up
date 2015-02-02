@@ -8,14 +8,14 @@ strategy = require('./strategy');
 
 npm = require('npm');
 
-module.exports = function(deps) {
+module.exports = function(deps, useCache) {
   var npmView;
   npmView = Promise.promisify(npm.commands.v);
   return Promise.all(deps.map(function(dep) {
     var name, promise, ver;
     name = dep.packageName;
     ver = cache.get(name);
-    if (ver) {
+    if (ver && useCache) {
       promise = Promise.resolve(ver);
     } else {
       promise = npmView([name, 'dist-tags.latest'], true).then(function(data) {

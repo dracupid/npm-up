@@ -3,13 +3,13 @@ Version = require './Version'
 strategy = require './strategy'
 npm = require 'npm'
 
-module.exports = (deps) ->
+module.exports = (deps, useCache) ->
     npmView = Promise.promisify(npm.commands.v)
 
     Promise.all deps.map (dep)->
         name = dep.packageName
         ver = cache.get name
-        if ver
+        if ver and useCache
             promise = Promise.resolve ver
         else
             promise = npmView([name, 'dist-tags.latest'], true)

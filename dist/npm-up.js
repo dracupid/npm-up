@@ -41,7 +41,8 @@ parseOpts = function(opts) {
     dep: true,
     silent: false,
     backUp: false,
-    lockAll: false
+    lockAll: false,
+    cache: true
   });
   if (option.all) {
     _.assign(opts, {
@@ -117,7 +118,7 @@ npmUp = function() {
     loglevel: 'error'
   }).then(function() {
     util.logInfo('Checking package\'s version...');
-    return checkVer(deps);
+    return checkVer(deps, option.cache);
   }).then(function(newDeps) {
     var chain, toUpdate;
     deps = newDeps;
@@ -186,7 +187,7 @@ npmUpGlobal = function() {
       return parsePackage(key, val.version, 'g');
     });
     util.logInfo('Checking package\'s version...');
-    return checkVer(_.compact(deps));
+    return checkVer(_.compact(deps), option.cache);
   }).then(function(newDeps) {
     var deps, toUpdate;
     deps = newDeps;
