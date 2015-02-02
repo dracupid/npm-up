@@ -154,13 +154,12 @@ npmUp = function() {
     }), function(dep) {
       return dep.packageName + "@" + dep.newVer;
     });
+    chain = Promise.resolve();
     if (toUpdate.length === 0) {
       util.logInfo("Everything is new!");
-      return;
     }
-    chain = Promise.resolve();
     if (option.writeBack) {
-      chain.then(function() {
+      chain = chain.then(function() {
         var backFile;
         deps.forEach(function(dep) {
           var toWrite;
@@ -191,8 +190,11 @@ npmUp = function() {
       });
     }
     if (option.install) {
-      return util.install(toUpdate);
+      chain = chain.then(function() {
+        return util.install(toUpdate);
+      });
     }
+    return chain;
   });
 };
 
@@ -223,7 +225,7 @@ npmUpGlobal = function() {
     });
     if (toUpdate.length === 0) {
       util.logInfo("Everything is new!");
-      return;
+      return Promise.resolve();
     }
     if (option.install) {
       return util.install(toUpdate);

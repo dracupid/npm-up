@@ -51,6 +51,9 @@ module.exports = {
   },
   logInfo: logInfo,
   install: function(packages) {
+    if (packages.length === 0) {
+      return Promise.resolve();
+    }
     logInfo("Start to install...");
     console.log(packages.join(' ').cyan + " will be updated".green);
     return Promise.promisify(npm.commands.i)(packages).then(function() {
