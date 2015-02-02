@@ -33,9 +33,7 @@ module.exports = {
   },
   print: function(deps) {
     return deps.map(function(dep) {
-      var padding;
-      padding = (new Array(25 - dep.packageName.length)).join(' ');
-      dep.needUpdate && console.log(("[" + dep.type + "]").green, dep.packageName.cyan, padding, dep.baseVer.toString().green, '->', dep.newVer.toString().red);
+      dep.needUpdate && console.log(("[" + dep.type + "]").green, _.padRight(dep.packageName.cyan, 40), dep.baseVer.toString().green, '->', dep.newVer.toString().red);
       return dep.warnMsg && console.log(" *  Warning: ".yellow + ("" + dep.warnMsg).white);
     });
   },

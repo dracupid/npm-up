@@ -22,8 +22,7 @@ module.exports = {
 
     print: (deps)->
         deps.map (dep)->
-            padding = (new Array 25 - dep.packageName.length).join ' '
-            dep.needUpdate and console.log "[#{dep.type}]".green, dep.packageName.cyan, padding,
+            dep.needUpdate and console.log "[#{dep.type}]".green, _.padRight(dep.packageName.cyan, 40),
                 dep.baseVer.toString().green, '->', dep.newVer.toString().red
             dep.warnMsg and console.log " *  Warning: ".yellow + "#{dep.warnMsg}".white
 
