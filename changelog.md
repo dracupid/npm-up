@@ -1,3 +1,8 @@
+v1.3.0
+==========
+- opt: update checking interval changed to 12 hours.
+- NEW feature: version cache (expires in 10 minutes)
+
 v1.2.4
 ===========
 - fix typo
