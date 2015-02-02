@@ -18,6 +18,12 @@ If no options are set, it will only check the latest version and do nothing but 
 
 2. run `npm-up -g` to check globally install npm packages.
 
+####commands:
+```
+    clean                   clean cache
+    cahce                   dump cache
+```
+
 ####Options:
 ```
     -h, --help               output usage information
