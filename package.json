@@ -26,11 +26,11 @@
   },
   "homepage": "https://github.com/dracupid/npm-up",
   "dependencies": {
-    "bluebird": "2.9.5",
+    "bluebird": "2.9.6",
     "colors": "1.0.3",
     "commander": "2.6.0",
     "lodash": "3.0.1",
-    "nofs": "0.4.6",
+    "nofs": "0.4.7",
     "npm": "2.4.1",
     "semver": "4.2.0"
   },
