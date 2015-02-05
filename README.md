@@ -21,7 +21,7 @@ If no options are set, it will only check the latest version and do nothing but 
 ####commands:
 ```
     clean                   clean cache
-    cahce                   dump cache
+    cache                   dump cache
 ```
 
 ####Options:
