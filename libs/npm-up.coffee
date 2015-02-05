@@ -41,7 +41,7 @@ parseOpts = (opts)->
     option.include and option.include = _.compact option.include
 
     if option.silent
-        console.log = ->
+        console.log = -> return
 
 parsePackage = (name, ver, type)->
     if Array.isArray(option.include) and not (name in option.include)

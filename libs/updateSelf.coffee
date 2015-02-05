@@ -15,14 +15,14 @@ checkUpdate = ->
     rc = npmuprc
     promise = Promise.resolve()
 
-    if not rc.lastCheck or + new Date() - rc.lastCheck > interval
+    if not rc.lastCheck or +new Date() - rc.lastCheck > interval
         promise = Promise.promisify(npm.load)
             loglevel: 'error'
         .then ->
             Promise.promisify(npm.commands.v)(['npm-up', 'dist-tags.latest'], true)
         .then (data) ->
             rc.latest = _(data).keys().first()
-            rc.lastCheck = + new Date()
+            rc.lastCheck = +new Date()
         .then ->
             writeRC rc
 
