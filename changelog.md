@@ -1,3 +1,8 @@
+v1.3.1
+=========
+- minor fix
+- update nofs
+
 v1.3.0
 ==========
 - opt: update checking interval changed to 12 hours.
