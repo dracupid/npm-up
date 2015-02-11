@@ -28,3 +28,5 @@ node_modules
 .lock-wscript
 .nobone
 .npmuprc.json
+.nokit
+.coffee

@@ -1,13 +1,12 @@
 coffee = require 'coffee-script'
+require 'nokit/global'
 
-noCoffee = (opt) -> (file) ->
-    file.dest.ext = '.js'
-    file.set coffee.compile file.contents, opt
+option '-a, --all', 'build without cache'
 
-task 'build', "Build Project", ->
-    kit.warp 'libs/**'
-    .pipe noCoffee bare: true
-    .to 'dist'
-    .then ->
-        kit.log "build done!"
+task 'build', "Build Project", (opts)->
+    kit.warp 'libs/**', { isCache: not opts.all }
+    .load drives.auto 'lint', '.coffee': config: 'coffeelint-strict.json'
+    .load drives.auto 'compile'
+    .run 'dist'
 
+task 'default', ['build']
