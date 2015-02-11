@@ -1,3 +1,8 @@
+v1.3.2
+=========
+- minor fix
+- upd: dep
+
 v1.3.1
 =========
 - minor fix
