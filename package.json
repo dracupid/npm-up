@@ -19,6 +19,10 @@
     "update",
     "version"
   ],
+  "files": [
+    "dist",
+    "bin"
+  ],
   "author": "Dracupid",
   "license": "MIT",
   "bugs": {
