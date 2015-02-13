@@ -124,7 +124,7 @@ npmUp = ->
         chain = Promise.resolve()
 
         if toUpdate.length is 0
-            util.logInfo "Everything is new!"
+            util.logSucc "Everything is new!"
 
         if option.writeBack
             chain = chain.then ->
@@ -142,7 +142,7 @@ npmUp = ->
                 globalPackage = _.omit globalPackage, _.isEmpty
                 fs.outputJSON packageFile, globalPackage, space: 2
             .then ->
-                util.logInfo "package.json has been updated!"
+                util.logSucc "package.json has been updated!"
 
         if option.install
             chain = chain.then ->
@@ -175,7 +175,7 @@ npmUpGlobal = ->
                     .map (dep)-> "#{dep.packageName}@#{dep.newVer}"
 
         if toUpdate.length is 0
-            util.logInfo "Everything is new!"
+            util.logSucc "Everything is new!"
             return Promise.resolve()
 
         if option.install

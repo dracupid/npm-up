@@ -3,21 +3,24 @@ Promise = require 'bluebird'
 npm = require 'npm'
 
 isWin = process.platform is 'win32'
-warnSign = if isWin then ' * Warning: ' else '⚠ '
-errorSign = if isWin then ' ERROR: ' else '✖ '
-okSign = if isWin then '' else '✔ '
+warnSign = if isWin then ' * Warning: ' else '⚠  '
+errorSign = if isWin then ' ERROR: ' else '✖  '
+okSign = if isWin then ' ^_^Y  ' else '✔  '
 
 cwdFilePath = (names...)->
     path.join.apply path, [process.cwd()].concat names
 
 logInfo = (str)->
     console.log '\n>>  '.yellow + str.green
+logSucc = (str)->
+    console.log "\n#{okSign}#{str}".green
 
 module.exports = {
     cwdFilePath
     errorSign
     warnSign
     okSign
+    logSucc
 
     readPackageFile: (name, onError)->
         filePath = if name then cwdFilePath('node_modules', name, 'package.json') else cwdFilePath 'package.json'
@@ -42,7 +45,7 @@ module.exports = {
 
         Promise.promisify(npm.commands.i) packages
         .then ->
-            logInfo "Latest version of the packages has been installed!".green
+            logSucc "Latest version of the packages has been installed!".green
 
     curVer: do ->
         require('../package.json').version
