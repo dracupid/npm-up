@@ -21,8 +21,8 @@ If no options are set, it will only check the latest version and do nothing but 
 
 ####commands:
 ```
-    clean                   clean cache
-    cache                   dump cache
+    clean          clean cache
+    dump           dump cache
 ```
 
 ####Options:
@@ -45,39 +45,33 @@ If no options are set, it will only check the latest version and do nothing but 
 ```
 
 ## Version Pattern
-Only support number version with prefix and suffix, or `*`. Eg:
+Fully support semantic version. Eg:
 ```
 *
 ^1.5.4
 ~2.3
 0.9.7
->=0.9.8
 0.5.0-alpha1
 '' //regard as *
 ```
-Version strings with **ranges** are not supported by now.
-```
->= 1.0.0    // Version Range
-1.2 - 2.3.4 // Hyphen Ranges
-1.x         // X-Ranges
-```
 
-- However, the semantic meaning of the prefix and suffix is **ignored**, because **I just want the latest version**.
+Notice that **ranges** version may be override by Caret Ranges(^) when written back, and will be updated only when the latest version is greater than all the versions possible in the range.
+```
+>= 1.0.0 <= 1.5.4   // Version Range
+1.2 - 2.3.4         // Hyphen Ranges
+1.x                 // X-Ranges
+```
+- However, the semantic meaning of the prefix and suffix may somehow **ignored**, because **I just want the latest version**.
 - If the version declared in the `package.json` is not recognizable, the corresponding package will be **excluded**.
 - More info: https://docs.npmjs.com/misc/semver
 
 ## Rules
 1. Take 3 versions into consideration for one package:
-    - Version declared in `package.json`
-    - Version of the package installed
-    - The latest version of the package
+    - Version declared in `package.json`.
+    - Version of the package installed.
+    - The latest version of the package.
 2. If a package is not installed, only `package.json` will be updated, and the package itself won't be installed.
-3. If the version is `*` in `package.json`, it will not be overwritten, even when the flag `lock` is set. If you really want to change a * version, use `--lock-all`.
-4. The preifx of the version will be preserved when written back, unless flag `lock` is set.
+3. If the version is `*` in `package.json`, it will not be overwritten, even when the flag `lock` is set. If you really want to change a `*` version, use `--lock-all` flag.
+4. The preifx(only `^ * ~`) of the version will be preserved when written back, unless flag `lock` is set.
 5. If the version installed is not the same as the version declared in `package.json`, there comes a warning.
 6. Installed version is preferred.
-
-## How to build
-`no build`
-
-> You need to install [`nokit`](https://github.com/ysmood/nokit) globally first

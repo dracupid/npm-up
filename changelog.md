@@ -1,3 +1,12 @@
+v1.4.0
+========
+- **BIG CHANGE**: use [semver](https://github.com/npm/node-semver) to parse and compare version.
+- ADD: support all kinds of semantic version.
+- **COMMAND CHANGE**: `npm-up cache` to `npm-up dump`.
+- opt: print
+- bug fix
+- update npm to v2.6.0
+
 v1.3.2
 =========
 - minor fix
