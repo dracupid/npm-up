@@ -6,7 +6,8 @@ A lightweight tool to check the latest version of dependent npm packages for a p
 [![NPM version](https://badge.fury.io/js/npm-up.svg)](http://badge.fury.io/js/npm-up)
 [![Deps Up to Date](https://david-dm.org/dracupid/npm-up.svg?style=flat)](https://david-dm.org/dracupid/npm-up)
 [![Build Status](https://travis-ci.org/dracupid/npm-up.svg)](https://travis-ci.org/dracupid/npm-up)
-[![Build status](https://ci.appveyor.com/api/projects/status/github/dracupid/npm-up)](https://ci.appveyor.com/project/dracupid/npm-up)
+[![Build status](https://ci.appveyor.com/api/projects/status/github/dracupid/npm-up?svg=true)](https://ci.appveyor.com/project/dracupid/npm-up)
+
 ## Installation
 ```bash
 npm i npm-up -g
