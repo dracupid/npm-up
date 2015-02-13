@@ -12,7 +12,7 @@ cmder
         .then ->
             process.exit 0
 cmder
-    .command 'cache'
+    .command 'dump'
     .description 'dump cache'
     .action ->
         console.log npmuprc
