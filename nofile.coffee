@@ -1,7 +1,5 @@
-coffee = require 'coffee-script'
 kit = require 'nokit'
 drives = kit.require 'drives'
-
 
 module.exports = (task, option)->
     option '-a, --all', 'build without cache'

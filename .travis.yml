@@ -6,6 +6,8 @@ node_js:
 
 before_install:
   - "npm config set loglevel error"
+
+post_install:
+  - "npm install js2coffee@0.3.5 mocha@2.0.0 mkdirp@0.4.0 jdb@0.4.0 -g"
   - "npm install js2coffee@0.3.5 mocha@2.0.0 mkdirp@0.4.0 jdb@0.4.0 -D"
-  - "npm install js2coffee@0.3.5 mocha@2.0.0 mkdirp@0.4.0 jdb@0.4.0 nokit commander -g"
   - "npm i . -g"
