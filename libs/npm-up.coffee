@@ -5,7 +5,8 @@ global.Promise = require 'bluebird'
 global._ = require 'lodash'
 fs = require 'nofs'
 
-Version = require './Version'
+semver = require 'semver'
+
 util = require './util'
 checkVer = require './checkVersion'
 
@@ -51,15 +52,16 @@ parsePackage = (name, ver, type)->
         return null
 
     if type is 'g'
-        declareVer = installedVer = new Version ver
+        declareVer = installedVer = ver
     else
         # version in package.json
-        declareVer = util.parseVersion ver
-        if not declareVer then return null
+        declareVer = if semver.validRange ver then ver.trim() else null
+        declareVer is '' and declareVer = '*'
+        return null unless declareVer
 
         # version installed
         pack = util.readPackageFile name
-        installedVer = if pack then new Version pack.version else null
+        installedVer = if pack then pack.version else null
 
     {
         packageName: name
@@ -78,7 +80,7 @@ formatPackages = (obj, type)->
 
 prepare = ()->
     globalPackage = util.readPackageFile null, ->
-        console.error "ERROR: package.json Not Found".red
+        console.error (util.errorSign + " package.json Not Found").red
         process.exit 1
 
     deps = []
@@ -88,6 +90,21 @@ prepare = ()->
         deps = deps.concat formatPackages globalPackage.devDependencies, 'D'
 
     deps = _.compact deps
+
+getToWrite = ({declareVer, newVer}, {lock, lockAll})->
+    if declareVer is '*' or ''
+        if lockAll then return newVer else return '*'
+
+    first = declareVer[0]
+
+    if semver.valid declareVer
+        return newVer
+    else if first[0] is '^' # Caret Ranges
+        if lock then newVer else '^' + newVer
+    else if first[0] is '~' # Tilde Ranges
+        if lock then newVer else '~' + newVer
+    else # other ranges
+        if lock then newVer else '^' + newVer
 
 npmUp = ->
     deps = prepare()
@@ -101,8 +118,8 @@ npmUp = ->
         deps = newDeps
         util.print deps
 
-        toUpdate = _.map(_.filter(deps, (dep)->dep.needUpdate and dep.installedVer),
-            (dep)->"#{dep.packageName}@#{dep.newVer}")
+        toUpdate = deps.filter (dep)-> dep.needUpdate and dep.installedVer
+                        .map (dep)-> "#{dep.packageName}@#{dep.newVer}"
 
         chain = Promise.resolve()
 
@@ -112,9 +129,7 @@ npmUp = ->
         if option.writeBack
             chain = chain.then ->
                 deps.forEach (dep)->
-                    toWrite = dep.newVer.verStr + dep.newVer.suffix
-                    unless option.lock then toWrite = (dep.declareVer.prefix or '') + toWrite
-                    if !option.lockAll and dep.declareVer is '*' then toWrite = '*'
+                    toWrite = getToWrite dep, option
 
                     switch dep.type
                         when 'S' then globalPackage.dependencies[dep.packageName] = toWrite
@@ -124,6 +139,7 @@ npmUp = ->
                     backFile = if _.isString option.backUp then util.cwdFilePath option.backUp else packageBakFile
                     fs.copy packageFile, backFile
             .then ->
+                globalPackage = _.omit globalPackage, _.isEmpty
                 fs.outputJSON packageFile, globalPackage, space: 2
             .then ->
                 util.logInfo "package.json has been updated!"
@@ -144,7 +160,7 @@ npmUpGlobal = ->
         Promise.promisify(npm.commands.ls) null, true
     .then (data) ->
         globalDep = data.dependencies or data[0].dependencies
-        console.log ((_.keys globalDep).join ' ').cyan
+        console.log (Object.keys(globalDep).join ' ').cyan
 
         deps = _.map globalDep, (val, key)->
             parsePackage key, val.version, 'g'
@@ -155,8 +171,8 @@ npmUpGlobal = ->
         deps = newDeps
         util.print deps
 
-        toUpdate = _.map(_.filter(deps, (dep)->dep.needUpdate and dep.installedVer),
-            (dep)->"#{dep.packageName}@#{dep.newVer}")
+        toUpdate = deps.filter (dep)-> dep.needUpdate and dep.installedVer
+                    .map (dep)-> "#{dep.packageName}@#{dep.newVer}"
 
         if toUpdate.length is 0
             util.logInfo "Everything is new!"

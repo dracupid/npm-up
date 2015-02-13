@@ -1,7 +1,11 @@
 path = require 'path'
-Version = require './Version'
 Promise = require 'bluebird'
 npm = require 'npm'
+
+isWin = process.platform is 'win32'
+warnSign = if isWin then ' * Warning: ' else '⚠ '
+errorSign = if isWin then ' ERROR: ' else '✖ '
+okSign = if isWin then '' else '✔ '
 
 cwdFilePath = (names...)->
     path.join.apply path, [process.cwd()].concat names
@@ -11,6 +15,9 @@ logInfo = (str)->
 
 module.exports = {
     cwdFilePath
+    errorSign
+    warnSign
+    okSign
 
     readPackageFile: (name, onError)->
         filePath = if name then cwdFilePath('node_modules', name, 'package.json') else cwdFilePath 'package.json'
@@ -24,16 +31,7 @@ module.exports = {
         deps.map (dep)->
             dep.needUpdate and console.log "[#{dep.type}]".green, _.padRight(dep.packageName.cyan, 40),
                 dep.baseVer.toString().green, '->', dep.newVer.toString().red
-            dep.warnMsg and console.log " *  Warning: ".yellow + "#{dep.warnMsg}".white
-
-    parseVersion: (ver)->
-        ver = ver.trim()
-        if ver is '*' or ver is ''
-            '*'
-        else if /^[\D]?[\d\.]+\w*/.test ver
-            new Version ver
-        else
-            null
+            dep.warnMsg and console.log warnSign.yellow + "#{dep.warnMsg}".white
 
     logInfo
 

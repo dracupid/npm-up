@@ -6,7 +6,7 @@ expire = 10 * 60 * 1000 # 10 min
 
 get = (name)->
     info = npmuprc.verCache[name]
-    now = +new Date()
+    now = Date.now()
     if info
         interval = info.expire or expire
         if now - info.timestamp < interval
@@ -20,7 +20,7 @@ get = (name)->
 set = (name, ver)->
     npmuprc.verCache[name] =
         version: ver
-        timestamp: +new Date()
+        timestamp: Date.now()
 
 module.exports = {
     get

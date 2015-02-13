@@ -2,10 +2,11 @@ cache = require './cache'
 Version = require './Version'
 strategy = require './strategy'
 npm = require 'npm'
+Promise = require 'bluebird'
 
-module.exports = (deps, useCache) ->
+
+module.exports = (deps, useCache)->
     npmView = Promise.promisify(npm.commands.v)
-
     Promise.all deps.map (dep)->
         name = dep.packageName
         ver = cache.get name
@@ -14,12 +15,12 @@ module.exports = (deps, useCache) ->
         else
             promise = npmView([name, 'dist-tags.latest'], true)
             .then (data)->
-                ver = _(data).keys().first()
+                ver = Object.keys(data)[0]
                 cache.set name, ver
                 ver
 
         promise.then (ver)->
-            dep.newVer = new Version ver
+            dep.newVer = ver
             strategy.version dep
     .then (deps)->
         cache.record()
