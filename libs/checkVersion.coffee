@@ -1,5 +1,4 @@
 cache = require './cache'
-Version = require './Version'
 strategy = require './strategy'
 npm = require 'npm'
 Promise = require 'bluebird'
