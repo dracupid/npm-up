@@ -2,7 +2,7 @@
 
 npmuprc.verCache ?= {}
 
-expire = 10 * 60 * 1000 # 10 min
+expire = 20 * 60 * 1000 # 20 min
 
 get = (name)->
     info = npmuprc.verCache[name]
