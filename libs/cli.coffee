@@ -68,3 +68,6 @@ else
             require('./npm-up') opts, 'global'
         else
             require('./npm-up') opts
+    .catch (e)->
+        console.error e.stack or e
+        process.exit 1

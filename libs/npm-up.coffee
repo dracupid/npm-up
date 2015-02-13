@@ -187,7 +187,5 @@ module.exports = (opt, type)->
     promise = if type is 'global' then npmUpGlobal() else npmUp()
 
     promise.catch (e)->
-        throw e
+        console.error e.stack or e
         process.exit 1
-
-
