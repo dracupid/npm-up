@@ -1,7 +1,7 @@
 semver = require 'semver'
 
 module.exports =
-    version: (dep)->
+    version: (dep) ->
         declareVer = dep.declareVer
         if declareVer is '*'
             # '*' -> 'not installed'

@@ -31,16 +31,16 @@ cmder
     .option '-D, --dev', "Check devDependencies only."
     .option '-s, --silent', "Do not log any infomation."
     .option '-e, --exclude <list>', "Excluded packages list, split by comma",
-        (list)->
+        (list) ->
             list.split ','
     .option '-o, --only <list>', "Only check the packages list, split by comma",
-        (list)->
+        (list) ->
             list.split ','
 
 cmder.parse process.argv
 
 
-init = (cmder)->
+init = (cmder) ->
     opts = {}
     opts.writeBack = cmder.writeback
     opts.install = cmder.install
@@ -62,12 +62,12 @@ init = (cmder)->
 if cmder.ver
     console.log util.curVer
 else
-    checkUpdate().then (a)->
+    checkUpdate().then (a) ->
         opts = init cmder
         if cmder.global
             require('./npm-up') opts, 'global'
         else
             require('./npm-up') opts
-    .catch (e)->
+    .catch (e) ->
         console.error e.stack or e
         process.exit 1

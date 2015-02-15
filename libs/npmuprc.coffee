@@ -11,9 +11,9 @@ npmuprc = do ->
     catch
         {}
 
-writeRC = (rc = npmuprc)->
+writeRC = (rc = npmuprc) ->
     fs.outputJSON rcFile, rc, space: 2
-    .catch (e)->
+    .catch (e) ->
         console.log e
 
 module.exports = {

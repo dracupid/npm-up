@@ -7,12 +7,12 @@ warnSign = if isWin then ' * Warning: ' else '⚠  '
 errorSign = if isWin then ' ERROR: ' else '✖  '
 okSign = if isWin then ' ^_^Y  ' else '✔  '
 
-cwdFilePath = (names...)->
+cwdFilePath = (names...) ->
     path.join.apply path, [process.cwd()].concat names
 
-logInfo = (str)->
+logInfo = (str) ->
     console.log '\n>>  '.yellow + str.green
-logSucc = (str)->
+logSucc = (str) ->
     console.log "\n#{okSign}#{str}".green
 
 module.exports = {
@@ -22,7 +22,7 @@ module.exports = {
     okSign
     logSucc
 
-    readPackageFile: (name, onError)->
+    readPackageFile: (name, onError) ->
         filePath = if name then cwdFilePath('node_modules', name, 'package.json') else cwdFilePath 'package.json'
         try
             require filePath
@@ -30,15 +30,15 @@ module.exports = {
             onError and onError filePath
             null
 
-    print: (deps)->
-        deps.map (dep)->
+    print: (deps) ->
+        deps.map (dep) ->
             dep.needUpdate and console.log "[#{dep.type}]".green, _.padRight(dep.packageName.cyan, 40),
                 dep.baseVer.toString().green, '->', dep.newVer.toString().red
             dep.warnMsg and console.log warnSign.yellow + "#{dep.warnMsg}".white
 
     logInfo
 
-    install: (packages)->
+    install: (packages) ->
         if packages.length is 0 then return Promise.resolve()
         logInfo "Start to install..."
         console.log packages.join(' ').cyan  + " will be updated".green

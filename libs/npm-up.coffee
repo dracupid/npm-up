@@ -17,7 +17,7 @@ modulesPath = util.cwdFilePath 'node_modules'
 option = {}
 globalPackage = {}
 
-parseOpts = (opts)->
+parseOpts = (opts) ->
     option = _.defaults opts,
         include: "" # array
         exclude: [] # array
@@ -44,7 +44,7 @@ parseOpts = (opts)->
     if option.silent
         console.log = -> return
 
-parsePackage = (name, ver, type)->
+parsePackage = (name, ver, type) ->
     if Array.isArray(option.include) and not (name in option.include)
         return null
 
@@ -74,11 +74,11 @@ parsePackage = (name, ver, type)->
         warnMsg: ''
     }
 
-formatPackages = (obj, type)->
-    _.map obj, (version, name)->
+formatPackages = (obj, type) ->
+    _.map obj, (version, name) ->
         pack = parsePackage name, version, type
 
-prepare = ()->
+prepare = ->
     globalPackage = util.readPackageFile null, ->
         console.error (util.errorSign + " package.json Not Found").red
         process.exit 1
@@ -91,7 +91,7 @@ prepare = ()->
 
     deps = _.compact deps
 
-getToWrite = ({declareVer, newVer}, {lock, lockAll})->
+getToWrite = ({declareVer, newVer}, {lock, lockAll}) ->
     if declareVer is '*' or ''
         if lockAll then return newVer else return '*'
 
@@ -114,12 +114,12 @@ npmUp = ->
     .then ->
         util.logInfo 'Checking package\'s version...'
         checkVer deps, option.cache
-    .then (newDeps)->
+    .then (newDeps) ->
         deps = newDeps
         util.print deps
 
-        toUpdate = deps.filter (dep)-> dep.needUpdate and dep.installedVer
-                        .map (dep)-> "#{dep.packageName}@#{dep.newVer}"
+        toUpdate = deps.filter (dep) -> dep.needUpdate and dep.installedVer
+                        .map (dep) -> "#{dep.packageName}@#{dep.newVer}"
 
         chain = Promise.resolve()
 
@@ -128,7 +128,7 @@ npmUp = ->
 
         if option.writeBack
             chain = chain.then ->
-                deps.forEach (dep)->
+                deps.forEach (dep) ->
                     toWrite = getToWrite dep, option
 
                     switch dep.type
@@ -162,17 +162,17 @@ npmUpGlobal = ->
         globalDep = data.dependencies or data[0].dependencies
         console.log (Object.keys(globalDep).join ' ').cyan
 
-        deps = _.map globalDep, (val, key)->
+        deps = _.map globalDep, (val, key) ->
             parsePackage key, val.version, 'g'
         util.logInfo 'Checking package\'s version...'
 
         checkVer _.compact(deps), option.cache
-    .then (newDeps)->
+    .then (newDeps) ->
         deps = newDeps
         util.print deps
 
-        toUpdate = deps.filter (dep)-> dep.needUpdate and dep.installedVer
-                    .map (dep)-> "#{dep.packageName}@#{dep.newVer}"
+        toUpdate = deps.filter (dep) -> dep.needUpdate and dep.installedVer
+                    .map (dep) -> "#{dep.packageName}@#{dep.newVer}"
 
         if toUpdate.length is 0
             util.logSucc "Everything is new!"
@@ -181,11 +181,11 @@ npmUpGlobal = ->
         if option.install
             return util.install toUpdate
 
-module.exports = (opt, type)->
+module.exports = (opt, type) ->
     parseOpts opt
 
     promise = if type is 'global' then npmUpGlobal() else npmUp()
 
-    promise.catch (e)->
+    promise.catch (e) ->
         console.error e.stack or e
         process.exit 1
