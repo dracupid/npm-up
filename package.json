@@ -30,17 +30,17 @@
   },
   "homepage": "https://github.com/dracupid/npm-up",
   "dependencies": {
-    "bluebird": "2.9.9",
+    "bluebird": "2.9.12",
     "colors": "1.0.3",
     "commander": "2.6.0",
-    "lodash": "3.2.0",
-    "nofs": "0.5.5",
+    "lodash": "3.3.0",
+    "nofs": "0.5.6",
     "npm": "2.6.0",
     "semver": "4.3.0"
   },
   "devDependencies": {
-    "coffee-script": "1.9.0",
-    "coffeelint": "1.8.1",
-    "nokit": "0.5.2"
+    "coffee-script": "1.9.1",
+    "coffeelint": "1.9.1",
+    "nokit": "0.5.4"
   }
 }
