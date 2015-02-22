@@ -1,3 +1,7 @@
+v1.4.1
+===========
+- upd: dep
+
 v1.4.0
 ========
 - **BIG CHANGE**: use [semver](https://github.com/npm/node-semver) to parse and compare version.
