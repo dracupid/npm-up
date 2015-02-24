@@ -39,8 +39,8 @@
     "semver": "4.3.0"
   },
   "devDependencies": {
-    "coffee-script": "1.9.1",
-    "coffeelint": "1.9.1",
+    "coffee-script": "*",
+    "coffeelint": "*",
     "nokit": "0.5.4"
   }
 }
