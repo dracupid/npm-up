@@ -154,14 +154,14 @@ npmUpSubDir = ->
     dirs = []
 
     fs.eachDir '*',
-        iter: (info)->
+        iter: (info) ->
             if info.isDir
                 dirs.push info.path
     .then ->
         cwd = process.cwd()
         chain = Promise.resolve()
 
-        dirs.forEach (odir)->
+        dirs.forEach (odir) ->
             dir = path.join cwd, odir
             dirPack = path.join dir, 'package.json'
             if fs.fileExistsSync dirPack

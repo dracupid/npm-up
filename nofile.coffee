@@ -12,4 +12,4 @@ module.exports = (task, option)->
         .run 'dist'
         .catch (e) ->
 
-    task 'default', 'build'
+    task 'default', ['build']
