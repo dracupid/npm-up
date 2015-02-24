@@ -1,3 +1,7 @@
+v1.4.2
+=========
+- **ADD: Check all projects in sub directories** `npm-up -A`
+
 v1.4.1
 ===========
 - upd: dep

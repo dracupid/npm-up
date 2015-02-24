@@ -150,6 +150,30 @@ npmUp = ->
 
         chain
 
+npmUpSubDir = ->
+    dirs = []
+
+    fs.eachDir '*',
+        iter: (info)->
+            if info.isDir
+                dirs.push info.path
+    .then ->
+        cwd = process.cwd()
+        chain = Promise.resolve()
+
+        dirs.forEach (odir)->
+            dir = path.join cwd, odir
+            dirPack = path.join dir, 'package.json'
+            if fs.fileExistsSync dirPack
+                chain = chain.then ->
+                    console.log '\n', odir
+                    process.chdir dir
+                    npmUp()
+        chain
+    .then ->
+        console.log 'FINISH'.green
+
+
 npmUpGlobal = ->
     Promise.promisify(npm.load)
         loglevel: 'error'
@@ -181,10 +205,14 @@ npmUpGlobal = ->
         if option.install
             return util.install toUpdate
 
-module.exports = (opt, type) ->
+module.exports = (opt, type = '') ->
     parseOpts opt
 
-    promise = if type is 'global' then npmUpGlobal() else npmUp()
+    promise =
+        switch type
+            when 'global' then npmUpGlobal()
+            when 'subDir' then npmUpSubDir()
+            else npmUp()
 
     promise.catch (e) ->
         console.error e.stack or e

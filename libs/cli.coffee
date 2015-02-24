@@ -30,6 +30,7 @@ cmder
     .option '-d, --dep', "Check dependencies only."
     .option '-D, --dev', "Check devDependencies only."
     .option '-s, --silent', "Do not log any infomation."
+    .option '-A, --ALL', "Check all projects in sub directories, depth is 1"
     .option '-e, --exclude <list>', "Excluded packages list, split by comma",
         (list) ->
             list.split ','
@@ -66,6 +67,8 @@ else
         opts = init cmder
         if cmder.global
             require('./npm-up') opts, 'global'
+        else if cmder.ALL
+            require('./npm-up') opts, 'subDir'
         else
             require('./npm-up') opts
     .catch (e) ->
