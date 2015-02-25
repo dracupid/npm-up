@@ -20,31 +20,18 @@ If no options are configured, it will only check the latest version and do nothi
 2. Run `npm-up -g` to check globally install npm packages.
 
 #### commands:
-
+<%
+function format(str){
+    return str.replace(/\n\n/g, '').replace(/\n    /g, '\n').replace('    ', '')
+}
+%>
 ```
-clean   clean cache
-dump    dump cache
+<%= format(help[2])%>
 ```
 
 #### Options:
 ```
--h, --help               output usage information
--v, --ver                Current version of npm-up.
--g, --global             Check global packages.
--A, --ALL                Check all projects in sub directories, depth is 1.
--w, --writeback          Write updated version info back to package.json.
--i, --install            Install the latest version of the packages need to be updated.
--l, --lock               Lock the version of the package in package.json, with no version prefix.
---lock-all               Lock, even with * version.
--a, --all                Shortcut for -wil.
---no-cache               Disable version cache.
--b, --backup [fileName]  Back up package.json before writing back, default name is package.bak.json.
--d, --dep                Check dependencies only.
--D, --dev                Check devDependencies only.
--s, --silent             Do not print any infomation.
--L, --logLevel <level>   Set loglevel for npm, default is error
--e, --exclude <list>     Excluded packages list, split by comma.
--o, --only <list>        Included packages list, split by comma.
+<%= format(help[3])%>
 ```
 
 ## Version Pattern

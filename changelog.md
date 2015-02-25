@@ -1,3 +1,7 @@
+v1.4.3
+========
+- ADD: set npm loglevel by `-L info`.
+
 v1.4.2
 =========
 - **ADD: Check all projects in sub directories** `npm-up -A`

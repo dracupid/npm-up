@@ -20,6 +20,7 @@ cmder
 cmder
     .option '-v, --ver', "Current version of npm-up."
     .option '-g, --global', "Check global packages."
+    .option '-A, --ALL', "Check all projects in sub directories, depth is 1."
     .option '-w, --writeback', "Write updated version info back to package.json."
     .option '-i, --install', "Install the latest version of the packages need to be updated."
     .option '-l, --lock', "Lock the version of the package in package.json, with no version prefix."
@@ -31,16 +32,12 @@ cmder
     .option '-D, --dev', "Check devDependencies only."
     .option '-s, --silent', "Do not print any infomation."
     .option '-L, --logLevel <level>', "Set loglevel for npm, default is error"
-    .option '-A, --ALL', "Check all projects in sub directories, depth is 1."
     .option '-e, --exclude <list>', "Excluded packages list, split by comma.",
-        (list) ->
-            list.split ','
+        (list) -> list.split ','
     .option '-o, --only <list>', "Included packages list, split by comma.",
-        (list) ->
-            list.split ','
+        (list) -> list.split ','
 
 cmder.parse process.argv
-
 
 init = (cmder) ->
     opts = {}
