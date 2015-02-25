@@ -31,6 +31,7 @@ parseOpts = (opts) ->
         backUp: no
         lockAll: false
         cache: true
+        logLevel: 'error'
 
     if option.all
         _.assign opts,
@@ -110,7 +111,7 @@ npmUp = ->
     deps = prepare()
 
     Promise.promisify(npm.load)
-        loglevel: 'error'
+        loglevel: option.logLevel
     .then ->
         util.logInfo 'Checking package\'s version...'
         checkVer deps, option.cache
@@ -176,7 +177,7 @@ npmUpSubDir = ->
 
 npmUpGlobal = ->
     Promise.promisify(npm.load)
-        loglevel: 'error'
+        loglevel: option.logLevel
         global: true
     .then ->
         util.logInfo 'Reading global installed packages...'

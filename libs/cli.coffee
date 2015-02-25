@@ -30,6 +30,7 @@ cmder
     .option '-d, --dep', "Check dependencies only."
     .option '-D, --dev', "Check devDependencies only."
     .option '-s, --silent', "Do not print any infomation."
+    .option '-L, --logLevel <level>', "Set loglevel for npm, default is error"
     .option '-A, --ALL', "Check all projects in sub directories, depth is 1."
     .option '-e, --exclude <list>', "Excluded packages list, split by comma.",
         (list) ->
@@ -47,6 +48,7 @@ init = (cmder) ->
     opts.install = cmder.install
     opts.lock = cmder.lock or cmder.lockAll
     opts.lockAll = cmder.lockAll
+    opts.logLevel = cmder.logLevel
     opts.all = cmder.all
     opts.cache = cmder.cache
     cmder.dep and opts.devDep = no
