@@ -1,6 +1,7 @@
 path = require 'path'
 Promise = require 'bluebird'
 npm = require 'npm'
+fs = require 'nofs'
 
 isWin = process.platform is 'win32'
 warnSign = if isWin then ' * Warning: ' else '⚠  '
@@ -49,4 +50,15 @@ module.exports = {
 
     curVer: do ->
         require('../package.json').version
+
+    checkPrivilege: ->
+        try
+            fs.removeSync path.join __dirname, '*.temp'
+            fs.linkSync __filename, path.join __dirname, 'linkTest.temp'
+            true
+        catch {errno}
+            if errno is -13
+                false
+            else
+                true
 }

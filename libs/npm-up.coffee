@@ -176,6 +176,10 @@ npmUpSubDir = ->
 
 
 npmUpGlobal = ->
+    if option.install and not util.checkPrivilege()
+        console.error (util.errorSign + " Permission Denied").red
+        console.error "Please try running this command again as root/Administrator".yellow
+
     Promise.promisify(npm.load)
         loglevel: option.logLevel
         global: true

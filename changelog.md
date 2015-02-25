@@ -1,3 +1,7 @@
+v1.4.4
+=========
+- ADD: Detect Permission Denied error when install global packages to avoid incomplete Installations.
+
 v1.4.3
 ========
 - ADD: set npm loglevel by `-L info`.

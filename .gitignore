@@ -30,4 +30,5 @@ node_modules
 .npmuprc.json
 .nokit
 .coffee
+*.temp
 dist
