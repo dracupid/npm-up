@@ -179,6 +179,7 @@ npmUpGlobal = ->
     if option.install and not util.checkPrivilege()
         console.error (util.errorSign + " Permission Denied").red
         console.error "Please try running this command again as root/Administrator".yellow
+        process.exit 1
 
     Promise.promisify(npm.load)
         loglevel: option.logLevel

@@ -1,3 +1,7 @@
+v1.4.5
+==========
+- fix: exit when permission denied
+
 v1.4.4
 =========
 - ADD: Detect Permission Denied error when install global packages to avoid incomplete Installations.
