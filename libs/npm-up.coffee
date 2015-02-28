@@ -80,9 +80,13 @@ formatPackages = (obj, type) ->
         pack = parsePackage name, version, type
 
 prepare = ->
-    globalPackage = util.readPackageFile null, ->
-        console.error (util.errorSign + " package.json Not Found").red
-        process.exit 1
+    try
+        globalPackage = util.readPackageFile null
+    catch e
+        if e.errno? is -2
+            throw new Error 'package.json Not Found!'
+        else
+            throw new Error 'parse package.json failed!'
 
     deps = []
     if option.dep
@@ -108,7 +112,11 @@ getToWrite = ({declareVer, newVer}, {lock, lockAll}) ->
         if lock then newVer else '^' + newVer
 
 npmUp = ->
-    deps = prepare()
+    try
+        deps = prepare()
+    catch e
+        console.error (util.errorSign + " #{e}").red
+        return Promise.reject()
 
     Promise.promisify(npm.load)
         loglevel: option.logLevel
@@ -170,6 +178,7 @@ npmUpSubDir = ->
                     console.log '\n', odir
                     process.chdir dir
                     npmUp()
+                .catch -> return
         chain
     .then ->
         console.log 'FINISH'.green

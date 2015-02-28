@@ -23,13 +23,9 @@ module.exports = {
     okSign
     logSucc
 
-    readPackageFile: (name, onError) ->
+    readPackageFile: (name) ->
         filePath = if name then cwdFilePath('node_modules', name, 'package.json') else cwdFilePath 'package.json'
-        try
-            require filePath
-        catch
-            onError and onError filePath
-            null
+        fs.readJSONSync filePath
 
     print: (deps) ->
         deps.map (dep) ->

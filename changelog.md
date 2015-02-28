@@ -1,3 +1,7 @@
+v1.4.6
+=========
+- fix: `npm-up -A` error strategy.
+
 v1.4.5
 ==========
 - fix: exit when permission denied
