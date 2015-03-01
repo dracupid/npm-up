@@ -1,9 +1,8 @@
 kit = require('nokit');
-which = require('which');
-fs = require('nofs');
+npm = require('./dist/npm')
 
 console.log("TEST START");
-console.log("NPM PATH: " + fs.realpathSync(which.sync('npm')));
+console.log("NPM PATH: " + npm.GLOBAL_NPM_PATH);
 kit.spawn('npm-up', ['-a']).then(function(){
     kit.spawn('npm-up', ['-g'])
 }).then(function(){
