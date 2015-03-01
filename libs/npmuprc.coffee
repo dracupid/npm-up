@@ -16,6 +16,11 @@ writeRC = (rc = npmuprc) ->
     .catch (e) ->
         console.log e
 
+writeRCSync = (rc = npmuprc) ->
+    fs.outputJSONSync rcFile, rc, space: 2
+    .catch (e) ->
+        console.log e
+
 module.exports = {
     npmuprc
     writeRC

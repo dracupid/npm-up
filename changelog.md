@@ -1,3 +1,8 @@
+v1.4.7
+=========
+- fix: error handler.
+- minor optimize and fix
+
 v1.4.6
 =========
 - fix: `npm-up -A` error strategy.

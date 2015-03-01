@@ -8,9 +8,8 @@ cmder
     .command 'clean'
     .description 'clean cache'
     .action ->
-        writeRC {}
-        .then ->
-            process.exit 0
+        writeRCSync {}
+        process.exit 0
 cmder
     .command 'dump'
     .description 'dump cache'

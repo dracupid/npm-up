@@ -61,8 +61,11 @@ parsePackage = (name, ver, type) ->
         return null unless declareVer
 
         # version installed
-        pack = util.readPackageFile name
-        installedVer = if pack then pack.version else null
+        try
+            pack = util.readPackageFile name
+            installedVer = pack.version
+        catch
+            installedVer = null
 
     {
         packageName: name
@@ -230,5 +233,5 @@ module.exports = (opt, type = '') ->
             else npmUp()
 
     promise.catch (e) ->
-        console.error e.stack or e
+        console.error e?.stack or e
         process.exit 1
