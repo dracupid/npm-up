@@ -5,7 +5,7 @@ require 'colors'
 GLOBAL_NPM_BIN = fs.realpathSync which.sync 'npm'
 
 if process.platform is "win32"
-    GLOBAL_NPM_PATH = fs.path.join GLOBAL_NPM_BIN, 'node_modules/npm'
+    GLOBAL_NPM_PATH = fs.path.join GLOBAL_NPM_BIN, '../node_modules/npm'
 else
     GLOBAL_NPM_PATH = fs.path.join GLOBAL_NPM_BIN, '../..'
 
