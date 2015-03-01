@@ -1,7 +1,7 @@
 cache = require './cache'
 strategy = require './strategy'
 npm = require './npm'
-Promise = require 'bluebird'
+{Promise} = require 'nofs'
 
 module.exports = (deps, useCache) ->
     npmView = Promise.promisify(npm.commands.v)

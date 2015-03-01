@@ -1,4 +1,4 @@
-Promise = require 'bluebird'
+{Promise} = require 'nofs'
 util = require './util'
 npm = require './npm'
 semver = require 'semver'

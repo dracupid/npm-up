@@ -1,7 +1,5 @@
-path = require 'path'
-Promise = require 'bluebird'
+{ path, Promise } = fs = require 'nofs'
 npm = require './npm'
-fs = require 'nofs'
 
 isWin = process.platform is 'win32'
 warnSign = if isWin then ' * Warning: ' else '⚠  '

@@ -30,7 +30,6 @@
   },
   "homepage": "https://github.com/dracupid/npm-up",
   "dependencies": {
-    "bluebird": "*",
     "colors": "^1.0.3",
     "commander": "^2.6.0",
     "lodash": "^3.3.1",

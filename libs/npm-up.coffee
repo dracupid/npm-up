@@ -1,12 +1,9 @@
 require 'colors'
-npm = require './npm'
-path = require 'path'
-global.Promise = require 'bluebird'
+{path, Promise: global.Promise} = fs = require 'nofs'
 global._ = require 'lodash'
-fs = require 'nofs'
-
 semver = require 'semver'
 
+npm = require './npm'
 util = require './util'
 checkVer = require './checkVersion'
 
