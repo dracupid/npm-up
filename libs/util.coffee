@@ -1,6 +1,6 @@
 path = require 'path'
 Promise = require 'bluebird'
-npm = require 'npm'
+npm = require './npm'
 fs = require 'nofs'
 
 isWin = process.platform is 'win32'

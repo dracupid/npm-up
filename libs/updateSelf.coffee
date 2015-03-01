@@ -1,6 +1,6 @@
 Promise = require 'bluebird'
 util = require './util'
-npm = require 'npm'
+npm = require './npm'
 semver = require 'semver'
 require 'colors'
 

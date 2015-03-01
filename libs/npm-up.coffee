@@ -1,5 +1,5 @@
 require 'colors'
-npm = require 'npm'
+npm = require './npm'
 path = require 'path'
 global.Promise = require 'bluebird'
 global._ = require 'lodash'
