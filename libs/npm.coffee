@@ -5,7 +5,6 @@ require 'colors'
 GLOBAL_NPM_PATH = fs.path.join fs.realpathSync(which.sync 'npm'), '../..'
 
 try
-    console.log "Global npm install in " + GLOBAL_NPM_PATH
     npm = require GLOBAL_NPM_PATH
 catch
     console.error "npm not found in #{GLOBAL_NPM_PATH}!".red
