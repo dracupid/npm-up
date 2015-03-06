@@ -29,6 +29,7 @@ parseOpts = (opts) ->
         lockAll: false
         cache: true
         logLevel: 'error'
+        cwd: process.cwd()
 
     if option.all
         _.assign opts,
@@ -112,6 +113,8 @@ getToWrite = ({declareVer, newVer}, {lock, lockAll}) ->
         if lock then newVer else '^' + newVer
 
 npmUp = ->
+    process.chdir option.cwd
+
     try
         deps = prepare()
     catch e
@@ -160,6 +163,8 @@ npmUp = ->
         chain
 
 npmUpSubDir = ->
+    process.chdir option.cwd
+
     dirs = []
 
     fs.eachDir '*',
@@ -176,7 +181,7 @@ npmUpSubDir = ->
             if fs.fileExistsSync dirPack
                 chain = chain.then ->
                     console.log '\n', odir
-                    process.chdir dir
+                    option.cwd = dir
                     npmUp()
                 .catch -> return
         chain

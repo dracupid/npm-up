@@ -1,3 +1,7 @@
+v1.5.2
+=========
+- add: cwd option
+
 v1.5.1
 =======
 - fix: error handler

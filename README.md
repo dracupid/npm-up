@@ -44,6 +44,7 @@ dump    dump cache
 -d, --dep                Check dependencies only.
 -D, --dev                Check devDependencies only.
 -s, --silent             Do not print any infomation.
+-c, --cwd <cwd>          Current working directory.
 -L, --logLevel <level>   Set loglevel for npm, default is error
 -e, --exclude <list>     Excluded packages list, split by comma.
 -o, --only <list>        Included packages list, split by comma.
