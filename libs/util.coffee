@@ -28,7 +28,7 @@ module.exports = {
     print: (deps, showWarn = true) ->
         deps.map (dep) ->
             dep.needUpdate and console.log "[#{dep.type}]".green, _.padRight(dep.packageName.cyan, 40),
-                dep.baseVer.toString().green, '->', dep.newVer.toString().red
+                _.padLeft(dep.baseVer.toString(), 8).green, '->', dep.newVer.toString().red
             showWarn and dep.warnMsg and console.log warnSign.yellow + "#{dep.warnMsg}".white
 
     logInfo
