@@ -30,6 +30,7 @@ parseOpts = (opts) ->
         cache: true
         logLevel: 'error'
         cwd: process.cwd()
+        warning: true
 
     if option.all
         _.assign opts,
@@ -128,7 +129,7 @@ npmUp = ->
         checkVer deps, option.cache
     .then (newDeps) ->
         deps = newDeps
-        util.print deps
+        util.print deps, option.warning
 
         toUpdate = deps.filter (dep) -> dep.needUpdate and dep.installedVer
                         .map (dep) -> "#{dep.packageName}@#{dep.newVer}"
@@ -213,7 +214,7 @@ npmUpGlobal = ->
         checkVer _.compact(deps), option.cache
     .then (newDeps) ->
         deps = newDeps
-        util.print deps
+        util.print deps, option.warning
 
         toUpdate = deps.filter (dep) -> dep.needUpdate and dep.installedVer
                     .map (dep) -> "#{dep.packageName}@#{dep.newVer}"

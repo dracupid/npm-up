@@ -40,6 +40,7 @@ dump    dump cache
 --lock-all               Lock, even with * version.
 -a, --all                Shortcut for -wil.
 --no-cache               Disable version cache.
+--no-warning             Disable warning.
 -b, --backup [fileName]  Back up package.json before writing back, default name is package.bak.json.
 -d, --dep                Check dependencies only.
 -D, --dev                Check devDependencies only.

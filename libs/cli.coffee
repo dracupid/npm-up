@@ -26,6 +26,7 @@ cmder
     .option '--lock-all', "Lock, even with * version."
     .option '-a, --all', "Shortcut for -wil."
     .option '--no-cache', "Disable version cache."
+    .option '--no-warning', "Disable warning."
     .option '-b, --backup [fileName]', "Back up package.json before writing back, default name is package.bak.json."
     .option '-d, --dep', "Check dependencies only."
     .option '-D, --dev', "Check devDependencies only."

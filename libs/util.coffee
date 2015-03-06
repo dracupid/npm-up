@@ -25,11 +25,11 @@ module.exports = {
         filePath = if name then cwdFilePath('node_modules', name, 'package.json') else cwdFilePath 'package.json'
         fs.readJSONSync filePath
 
-    print: (deps) ->
+    print: (deps, showWarn = true) ->
         deps.map (dep) ->
             dep.needUpdate and console.log "[#{dep.type}]".green, _.padRight(dep.packageName.cyan, 40),
                 dep.baseVer.toString().green, '->', dep.newVer.toString().red
-            dep.warnMsg and console.log warnSign.yellow + "#{dep.warnMsg}".white
+            showWarn and dep.warnMsg and console.log warnSign.yellow + "#{dep.warnMsg}".white
 
     logInfo
 
