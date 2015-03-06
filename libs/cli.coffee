@@ -70,5 +70,5 @@ else
         else
             require('./npm-up') opts
     .catch (e) ->
-        console.error e.stack or e
+        if e then console.error e.stack or e
         process.exit 1

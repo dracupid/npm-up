@@ -1,3 +1,7 @@
+v1.5.1
+=======
+- fix: error handler
+
 v1.5.0
 ========
 - **Use global npm**

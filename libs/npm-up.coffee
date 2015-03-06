@@ -83,7 +83,7 @@ prepare = ->
     try
         globalPackage = util.readPackageFile null
     catch e
-        if e.errno? is -2
+        if e.errno and e.errno is -2
             throw new Error 'package.json Not Found!'
         else
             throw new Error 'parse package.json failed!'
@@ -228,7 +228,3 @@ module.exports = (opt, type = '') ->
             when 'global' then npmUpGlobal()
             when 'subDir' then npmUpSubDir()
             else npmUp()
-
-    promise.catch (e) ->
-        console.error e?.stack or e
-        process.exit 1
