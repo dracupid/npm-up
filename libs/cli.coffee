@@ -1,6 +1,4 @@
 cmder = require 'commander'
-util = require './util'
-checkUpdate = require './updateSelf'
 {cache, writeCacheSync} = require './data'
 
 cmder
@@ -15,13 +13,14 @@ cmder
     .command 'dump'
     .description 'dump cache'
     .action ->
+        console.log "npm-up cache: "
         console.log cache
         process.exit 0
 cmder
     .option '-v, --ver', "Current version of npm-up."
     .option '-g, --global', "Check global packages."
     .option '-A, --ALL', "Check all projects in sub directories, depth is 1."
-    .option '-w, --writeBack', "Write updated version info back to package.json."
+    .option '-w, --writeback', "Write updated version info back to package.json."
     .option '-i, --install', "Install the latest version of the packages need to be updated."
     .option '-l, --lock', "Lock the version of the package in package.json, with no version prefix."
     .option '--lock-all', "Lock, even with * version."
@@ -54,9 +53,9 @@ init = (cmder) ->
     opts
 
 if cmder.ver
-    console.log util.curVer
+    console.log require('./util').curVer
 else
-    checkUpdate().then (a) ->
+    require('./updateSelf')().then (a) ->
         opts = init cmder
         if cmder.global
             require('./npm-up') opts, 'global'
