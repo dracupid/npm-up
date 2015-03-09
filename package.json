@@ -32,7 +32,7 @@
   "dependencies": {
     "colors": "^1.0.3",
     "commander": "^2.6.0",
-    "lodash": "^3.3.1",
+    "lodash": "^3.4.0",
     "nofs": "0.5.6",
     "semver": "^4.3.1",
     "which": "^1.0.9"
