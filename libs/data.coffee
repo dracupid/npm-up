@@ -11,8 +11,9 @@ cachePath = path.join tmpDir, 'npmUpCache'
 
 cache = do ->
     try
-        require cachePath
-    catch
+        fs.readJSONSync cachePath
+    catch e
+        console.log e
         {}
 
 writeCache = (c = cache) ->
