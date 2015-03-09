@@ -1,7 +1,8 @@
 v1.5.4
 =======
 - fix: npm-up clean
-- move cache to temp dir
+- opt: move cache file to temp dir
+- opt: exclude and include cli arg use space or comma to split
 
 v1.5.3
 ========
