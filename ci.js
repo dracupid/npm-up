@@ -8,6 +8,10 @@ kit.spawn('npm-up', ['-a']).then(function(){
 }).then(function(){
     kit.spawn('npm-up', ['-A', '-c', 'node_modules', '--no-warning'])
 }).then(function(){
+    kit.spawn('npm-up', ['dump'])
+}).then(function(){
+    kit.spawn('npm-up', ['clean'])
+}).then(function(){
     console.log('done');
 }, function(){
     console.error('fail');

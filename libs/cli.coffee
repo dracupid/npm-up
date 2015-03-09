@@ -1,20 +1,21 @@
 cmder = require 'commander'
 util = require './util'
 checkUpdate = require './updateSelf'
-{npmuprc, writeRC} = require './npmuprc'
+{cache, writeCacheSync} = require './data'
 
 cmder
     .usage "[command] [options]"
+cmder
     .command 'clean'
     .description 'clean cache'
     .action ->
-        writeRCSync {}
+        writeCacheSync {}
         process.exit 0
 cmder
     .command 'dump'
     .description 'dump cache'
     .action ->
-        console.log npmuprc
+        console.log cache
         process.exit 0
 cmder
     .option '-v, --ver', "Current version of npm-up."

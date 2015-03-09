@@ -1,3 +1,8 @@
+v1.5.4
+=======
+- fix: npm-up clean
+- move cache to temp dir
+
 v1.5.3
 ========
 - fix: invalid writeback arg

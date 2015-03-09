@@ -1,29 +1,29 @@
-{npmuprc, writeRC} = require './npmuprc'
+{cache, writeCache} = require './data'
 
-npmuprc.verCache ?= {}
+cache.verCache ?= {}
 
 expire = 20 * 60 * 1000 # 20 min
 
 get = (name) ->
-    info = npmuprc.verCache[name]
+    info = cache.verCache[name]
     now = Date.now()
     if info
         interval = info.expire or expire
         if now - info.timestamp < interval
             info.version
         else
-            delete npmuprc.verCache[name]
+            delete cache.verCache[name]
             ''
     else
         ''
 
 set = (name, ver) ->
-    npmuprc.verCache[name] =
+    cache.verCache[name] =
         version: ver
         timestamp: Date.now()
 
 module.exports = {
     get
     set
-    record: writeRC
+    record: writeCache
 }
