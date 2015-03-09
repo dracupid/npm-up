@@ -42,6 +42,7 @@ cmder.parse process.argv
 
 init = (cmder) ->
     opts = cmder
+    opts.writeBack = opts.writeback
     opts.lock = cmder.lock or cmder.lockAll
     cmder.dep and opts.devDep = no
     cmder.dev and opts.dep = no
