@@ -15,14 +15,15 @@ cache = do ->
     catch
         {}
 
-writeCache = (rc = cache) ->
-    fs.outputJSON cachePath, rc, space: 2
+writeCache = (c = cache) ->
+    fs.outputJSON cachePath, c, space: 2
     .catch (e) ->
         console.log e
 
-writeCacheSync = (rc = cache) ->
-    fs.outputJSONSync cachePath, rc, space: 2
-    .catch (e) ->
+writeCacheSync = (c = cache) ->
+    try
+        fs.outputJSONSync cachePath, c, space: 2
+    catch e
         console.log e
 
 module.exports = {
