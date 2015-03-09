@@ -15,7 +15,7 @@ cache = do ->
     catch e
         {}
 
-if cache.lastTime and cache.lastTime - Date.now() < 20 * 60 * 1000 # 20min
+if cache.lastTime and cache.lastTime - Date.now() > 20 * 60 * 1000 # 20min
     cache.verCache = {}
 
 cache.lastTime = Date.now()
