@@ -33,10 +33,10 @@ cmder
     .option '-s, --silent', "Do not print any infomation."
     .option '-c, --cwd <cwd>', "Current working directory."
     .option '-L, --logLevel <level>', "Set loglevel for npm, default is error"
-    .option '-e, --exclude <list>', "Excluded packages list, split by comma.",
-        (list) -> list.split ','
-    .option '-o, --only <list>', "Included packages list, split by comma.",
-        (list) -> list.split ','
+    .option '-e, --exclude <list>', "Excluded packages list, split by comma or space.",
+        (list) -> list.split /,|\s/
+    .option '-o, --only <list>', "Included packages list, split by comma or space.",
+        (list) -> list.split /,|\s/
 
 cmder.parse process.argv
 

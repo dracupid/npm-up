@@ -47,8 +47,8 @@ dump    dump cache
 -s, --silent             Do not print any infomation.
 -c, --cwd <cwd>          Current working directory.
 -L, --logLevel <level>   Set loglevel for npm, default is error
--e, --exclude <list>     Excluded packages list, split by comma.
--o, --only <list>        Included packages list, split by comma.
+-e, --exclude <list>     Excluded packages list, split by comma or space.
+-o, --only <list>        Included packages list, split by comma or space.
 ```
 
 ## Version Pattern
