@@ -13,8 +13,9 @@ cmder
     .command 'dump'
     .description 'dump cache'
     .action ->
-        console.log "npm-up cache: ", cachePath
-        console.log cache
+        require 'colors'
+        console.log "npm-up cache: ".cyan + cachePath.yellow
+        console.log cache.verCache or ''
         process.exit 0
 cmder
     .option '-v, --ver', "Current version of npm-up."
