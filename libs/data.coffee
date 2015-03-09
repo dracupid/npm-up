@@ -4,17 +4,21 @@ home = if process.platform is 'win32' then process.env.USERPROFILE else process.
 rcPath = path.join home, '.npmuprc.json'
 
 do ->
-    fs.outputJSONSync rcPath, {}, space: 2 # clean old cache
+    fs.remove rcPath # clean old cache
 
-tmpDir = require('os').tmpDir()
-cachePath = path.join tmpDir, 'npmUpCache'
+cachePath = path.join home, '.npmupcache'
+
 
 cache = do ->
     try
         fs.readJSONSync cachePath
     catch e
-        console.log e
         {}
+
+if cache.lastTime and cache.lastTime - Date.now() < 20 * 60 * 1000 # 20min
+    cache.verCache = {}
+
+cache.lastTime = Date.now()
 
 writeCache = (c = cache) ->
     fs.outputJSON cachePath, c, space: 2
@@ -31,4 +35,5 @@ module.exports = {
     cache
     writeCache
     writeCacheSync
+    cachePath
 }

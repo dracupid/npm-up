@@ -1,8 +1,8 @@
 v1.5.4
 =======
-- fix: npm-up clean
-- opt: move cache file to temp dir
-- opt: exclude and include cli arg use space or comma to split
+- fix: `npm-up clean`
+- opt: clean cache automatically, rename cache file
+- opt: `exclude` and `include` cli arg use space or comma to split
 - upd: lodash, nofs
 
 v1.5.3

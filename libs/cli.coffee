@@ -1,5 +1,5 @@
 cmder = require 'commander'
-{cache, writeCacheSync} = require './data'
+{cache, writeCacheSync, cachePath} = require './data'
 
 cmder
     .usage "[command] [options]"
@@ -13,7 +13,7 @@ cmder
     .command 'dump'
     .description 'dump cache'
     .action ->
-        console.log "npm-up cache: "
+        console.log "npm-up cache: ", cachePath
         console.log cache
         process.exit 0
 cmder
