@@ -1,3 +1,7 @@
+v1.5.3
+========
+- fix: invalid writeback arg
+
 v1.5.2
 =========
 - add: -c, --cwd option

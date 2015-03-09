@@ -20,7 +20,7 @@ cmder
     .option '-v, --ver', "Current version of npm-up."
     .option '-g, --global', "Check global packages."
     .option '-A, --ALL', "Check all projects in sub directories, depth is 1."
-    .option '-w, --writeback', "Write updated version info back to package.json."
+    .option '-w, --writeBack', "Write updated version info back to package.json."
     .option '-i, --install', "Install the latest version of the packages need to be updated."
     .option '-l, --lock', "Lock the version of the package in package.json, with no version prefix."
     .option '--lock-all', "Lock, even with * version."
