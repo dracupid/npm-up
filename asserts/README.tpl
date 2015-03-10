@@ -22,18 +22,18 @@ If no options are configured, it will only check the latest version and do nothi
 3. Run `npm-up -A` to check all projects in sub directories.
 
 ## Use mirror
-You can use a mirror registry host to speed up the version searching and package downloading, especially for chinese users.
+You can use a mirror registry host to speed up the version searching and package downloading, especially for Chinese users.
 - You can use a built-in host with name:
-    + support: taobao, cnpmjs
+    + support: taobao, cnpmjs, npm(default)
 ```
 npm-up -m taobao
 ```
-- or give a specific host name (only allow `http` now)
+- or give a specific hostname (only allow `http` now)
 ```
 npm-up -m registry.npm.taobao.org
 ```
 
-> **For chinese users, use `-m taobao` to fly up.**
+> **For Chinese users, use `-m taobao` to fly up!**
 
 #### commands:
 <%
