@@ -20,8 +20,8 @@ cmder
 cmder
     .option '-v, --ver', "Current version of npm-up."
     .option '-g, --global', "Check global packages."
-    .option '-A, --ALL', "Check all projects in sub directories, depth is 1."
-    .option '-w, --writeback', "Write updated version info back to package.json."
+    .option '-A, --All', "Check all projects in sub directories, depth is 1."
+    .option '-w, --writeBack', "Write updated version info back to package.json."
     .option '-i, --install', "Install the latest version of the packages need to be updated."
     .option '-l, --lock', "Lock the version of the package in package.json, with no version prefix."
     .option '--lock-all', "Lock, even with * version."
@@ -43,7 +43,6 @@ cmder.parse process.argv
 
 init = (cmder) ->
     opts = cmder
-    opts.writeBack = opts.writeback
     opts.lock = cmder.lock or cmder.lockAll
     cmder.dep and opts.devDep = no
     cmder.dev and opts.dep = no
@@ -59,12 +58,7 @@ if cmder.ver
 else
     require('./updateSelf')().then (a) ->
         opts = init cmder
-        if cmder.global
-            require('./npm-up') opts, 'global'
-        else if cmder.ALL
-            require('./npm-up') opts, 'subDir'
-        else
-            require('./npm-up') opts
+        require('./npm-up') opts
     .catch (e) ->
         if e then console.error e.stack or e
         process.exit 1

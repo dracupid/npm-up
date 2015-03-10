@@ -227,11 +227,9 @@ npmUpGlobal = ->
         if option.install
             return util.install toUpdate
 
-module.exports = (opt, type = '') ->
+module.exports = (opt) ->
     parseOpts opt
 
-    promise =
-        switch type
-            when 'global' then npmUpGlobal()
-            when 'subDir' then npmUpSubDir()
-            else npmUp()
+    if opt.global then npmUpGlobal()
+    else if opt.All then npmUpSubDir()
+    else npmUp()

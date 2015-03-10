@@ -33,8 +33,8 @@ dump    dump cache
 -h, --help               output usage information
 -v, --ver                Current version of npm-up.
 -g, --global             Check global packages.
--A, --ALL                Check all projects in sub directories, depth is 1.
--w, --writeback          Write updated version info back to package.json.
+-A, --All                Check all projects in sub directories, depth is 1.
+-w, --writeBack          Write updated version info back to package.json.
 -i, --install            Install the latest version of the packages need to be updated.
 -l, --lock               Lock the version of the package in package.json, with no version prefix.
 --lock-all               Lock, even with * version.
