@@ -226,6 +226,7 @@ module.exports = (opt) ->
     Promise.promisify(npm.load)
         loglevel: option.logLevel
         global: Boolean opt.global
+        registry: "http://" + util.getRegistry(option.mirror) + '/'
     .then ->
         if opt.global then npmUpGlobal()
         else if opt.All then npmUpSubDir()

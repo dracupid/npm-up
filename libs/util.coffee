@@ -14,12 +14,20 @@ logInfo = (str) ->
 logSucc = (str) ->
     console.log "\n#{okSign}#{str}".green
 
+host =
+    npm: 'registry.npmjs.org'
+    taobao: 'registry.npm.taobao.org'
+    cnpmjs: 'r.cnpmjs.org'
+
 module.exports = {
     cwdFilePath
     errorSign
     warnSign
     okSign
     logSucc
+
+    getRegistry: (name) ->
+        host[name] or name
 
     readPackageFile: (name) ->
         filePath = if name then cwdFilePath('node_modules', name, 'package.json') else cwdFilePath 'package.json'

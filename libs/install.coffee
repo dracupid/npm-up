@@ -1,5 +1,5 @@
 npm = require './npm'
-util = require 'util'
+util = require './util'
 
 module.exports = (packages) ->
     if packages.length is 0 then return Promise.resolve()
@@ -8,4 +8,4 @@ module.exports = (packages) ->
 
     Promise.promisify(npm.commands.i) packages
     .then ->
-        util.logSucc "Latest version of the packages has been installed!".green
+        util.logSucc "Latest packages has been installed!".green
