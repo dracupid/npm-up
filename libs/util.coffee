@@ -27,7 +27,7 @@ module.exports = {
     okSign
     logSucc
 
-    getRegistry: (name) ->
+    getRegistry: (name = 'npm') ->
         host[name] or name
 
     readPackageFile: (name) ->
