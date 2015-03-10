@@ -28,10 +28,17 @@ module.exports = ->
             cache.lastCheck = Date.now()
             writeCache cache
 
-    promise.then ->
+    promise = promise.then ->
         installed = util.curVer
         latest = cache.latest
         if semver.lt installed, latest
-            console.log ">>  A new version of npm-up is available !".yellow,
+            ">>  A new version of npm-up is available:".yellow +
                 " #{('' + installed).green} --> #{('' + latest).red}"
+        else ""
     .catch -> return
+
+    promise.log = ->
+        promise.then (msg)->
+            msg and console.log msg
+
+    promise

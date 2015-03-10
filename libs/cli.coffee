@@ -53,9 +53,12 @@ init = (cmder) ->
         opts.devDep = ops.dep = yes
     opts
 
-require('./updateSelf')().then (a) ->
-    opts = init cmder
-    require('./npm-up') opts
+p = require('./updateSelf')()
+
+opts = init cmder
+require('./npm-up') opts
+.then ->
+    p.log()
 .catch (e) ->
     if e then console.error e.stack or e
     process.exit 1
