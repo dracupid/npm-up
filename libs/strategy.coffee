@@ -30,7 +30,7 @@ module.exports =
                         dep.warnMsg = "Installed #{dep.packageName.cyan} is outdated:" +
                             " Installed #{dep.installedVer.red} --> Declared #{declareVer.green}"
                     else if semver.gt dep.installedVer, declareVer
-                        dep.warnMsg = "You may want to update #{dep.packageName.cyan}\'s version info:" +
+                        dep.warnMsg = "Declared #{dep.packageName.cyan} is outdated:" +
                             " Declared #{declareVer.green} --> Installed #{dep.installedVer.red}"
                 return dep
         # Other Range -> 'not installed'
@@ -46,6 +46,6 @@ module.exports =
                 dep.warnMsg = "Installed #{dep.packageName.cyan} is outdated:" +
                     " Installed #{dep.installedVer.red} --> Declared #{declareVer.green}"
             else if semver.gtr dep.installedVer, declareVer
-                dep.warnMsg = "You may want to update #{dep.packageName.cyan}\'s version info:" +
+                dep.warnMsg = "Declared #{dep.packageName.cyan} is outdated:" +
                     " Declared #{declareVer.green} --> Installed #{dep.installedVer.red}"
         dep
