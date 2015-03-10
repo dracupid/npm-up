@@ -31,7 +31,7 @@
   "homepage": "https://github.com/dracupid/npm-up",
   "dependencies": {
     "colors": "^1.0.3",
-    "commander": "^2.6.0",
+    "commander": "^2.7.0",
     "lodash": "^3.5.0",
     "nofs": "0.5.7",
     "semver": "^4.3.1",
@@ -40,7 +40,7 @@
   "devDependencies": {
     "coffee-script": "*",
     "coffeelint": "*",
-    "nokit": "0.5.5"
+    "nokit": "0.5.7"
   },
   "engines": {
     "node": ">=0.10.0",
