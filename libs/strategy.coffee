@@ -8,7 +8,7 @@ module.exports =
             if not dep.installedVer
                 dep.needUpdate = yes
                 dep.baseVer = declareVer
-                dep.warnMsg = "#{dep.packageName.cyan} may not be installed."
+                # dep.warnMsg = "#{dep.packageName.cyan} may not be installed."
             # '*' -> 'x.x.x'
             else
                 dep.needUpdate = semver.lt dep.installedVer, dep.newVer
@@ -21,7 +21,7 @@ module.exports =
                 if not dep.installedVer
                     dep.needUpdate = semver.lt declareVer, dep.newVer
                     dep.baseVer =  declareVer
-                    dep.warnMsg = "#{dep.packageName.cyan} may not be installed."
+                    # dep.warnMsg = "#{dep.packageName.cyan} may not be installed."
 
                 # 'X.X.X' -> 'X.X.X'
                 else
@@ -37,7 +37,7 @@ module.exports =
         if not dep.installedVer
             dep.needUpdate = semver.gtr dep.newVer, declareVer
             dep.baseVer =  declareVer
-            dep.warnMsg = "#{dep.packageName.cyan} is not installed."
+            # dep.warnMsg = "#{dep.packageName.cyan} may not be installed."
 
         # Other Range -> 'X.X.X'
         else
