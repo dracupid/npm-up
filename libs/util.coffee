@@ -46,8 +46,8 @@ module.exports = {
 
     checkPrivilege: ->
         try
-            fs.removeSync path.join __dirname, '*.temp'
             fs.linkSync __filename, path.join __dirname, 'linkTest.temp'
+            fs.removeSync path.join __dirname, '*.temp'
             true
         catch {errno}
             if errno is -13

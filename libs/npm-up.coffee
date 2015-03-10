@@ -25,7 +25,7 @@ parseOpts = (opts = {}) ->
         logLevel: 'error'
         cwd: process.cwd()
         warning: true
-        mirror: 'npm'
+        mirror: ''
 
     opts.all and
         _.assign opts,
@@ -221,16 +221,19 @@ npmUpGlobal = ->
             return install toUpdate
 
 module.exports = (opt) ->
+    url = require 'url'
     option = parseOpts opt
 
     npmOpt =
         loglevel: option.logLevel
         global: Boolean opt.global
-    if option.mirror isnt 'npm'
+
+    if option.mirror
         npmOpt.registry = "http://" + util.getRegistry(option.mirror) + '/'
 
     Promise.promisify(npm.load) npmOpt
     .then ->
+        option.mirror = url.parse(npm.config.get('registry')).hostname
         if opt.global then npmUpGlobal()
         else if opt.All then npmUpSubDir()
         else npmUp()
