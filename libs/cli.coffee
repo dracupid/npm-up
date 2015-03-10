@@ -41,7 +41,7 @@ cmder
 
 cmder.parse process.argv
 
-init = (cmder) ->
+opts = do (cmder) ->
     opts = cmder
     opts.lock = cmder.lock or cmder.lockAll
     cmder.dep and opts.devDep = no
@@ -54,8 +54,6 @@ init = (cmder) ->
     opts
 
 p = require('./updateSelf')()
-
-opts = init cmder
 require('./npm-up') opts
 .then ->
     p.log()

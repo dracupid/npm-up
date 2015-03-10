@@ -3,8 +3,7 @@
 home = if process.platform is 'win32' then process.env.USERPROFILE else process.env.HOME
 rcPath = path.join home, '.npmuprc.json'
 
-do ->
-    fs.remove rcPath # clean old cache
+do -> fs.remove rcPath # clean old cache
 
 cachePath = path.join home, '.npmupcache'
 
@@ -21,8 +20,7 @@ cache.lastTime = Date.now()
 
 writeCache = (c = cache) ->
     fs.outputJSON cachePath, c, space: 2
-    .catch (e) ->
-        console.log e
+    .catch console.log
 
 writeCacheSync = (c = cache) ->
     try

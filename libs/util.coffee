@@ -1,5 +1,4 @@
 { path, Promise } = fs = require 'nofs'
-npm = require './npm'
 
 isWin = process.platform is 'win32'
 warnSign = if isWin then '‼ ' else '⚠  '
@@ -33,15 +32,6 @@ module.exports = {
             showWarn and dep.warnMsg and console.log warnSign.yellow + "#{dep.warnMsg}".white
 
     logInfo
-
-    install: (packages) ->
-        if packages.length is 0 then return Promise.resolve()
-        logInfo "Start to install..."
-        console.log packages.join(' ').cyan  + " will be updated".green
-
-        Promise.promisify(npm.commands.i) packages
-        .then ->
-            logSucc "Latest version of the packages has been installed!".green
 
     curVer: do ->
         require('../package.json').version

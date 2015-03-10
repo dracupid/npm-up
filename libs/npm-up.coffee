@@ -7,23 +7,17 @@ npm = require './npm'
 util = require './util'
 checkVer = require './checkVersion'
 
-packageFile = util.cwdFilePath 'package.json'
-packageBakFile = util.cwdFilePath 'package.bak.json'
-modulesPath = util.cwdFilePath 'node_modules'
-
 option = {}
 globalPackage = {}
 
-parseOpts = (opts) ->
-    option = _.defaults opts,
-        include: "" # array
-        exclude: [] # array
+parseOpts = (opts = {}) ->
+    _.defaults opts,
+        include: "", exclude: [] # array
         writeBack: no
         install: no
         lock: no
         all: no # w + i + l
-        devDep: yes
-        dep: yes
+        devDep: yes, dep: yes
         silent: no
         backUp: no
         lockAll: false
@@ -32,17 +26,17 @@ parseOpts = (opts) ->
         cwd: process.cwd()
         warning: true
 
-    if option.all
+    opts.all and
         _.assign opts,
             writeBack: yes
             install: yes
             lock: yes
 
-    option.exclude = _.compact option.exclude
-    option.include and option.include = _.compact option.include
+    opts.exclude = _.compact opts.exclude
+    opts.include and opts.include = _.compact opts.include
+    opts.silent and console.log = -> return
 
-    if option.silent
-        console.log = -> return
+    opts
 
 parsePackage = (name, ver, type) ->
     if Array.isArray(option.include) and not (name in option.include)
@@ -122,11 +116,8 @@ npmUp = ->
         console.error (util.errorSign + " #{e}").red
         return Promise.reject()
 
-    Promise.promisify(npm.load)
-        loglevel: option.logLevel
-    .then ->
-        util.logInfo 'Checking package\'s version...'
-        checkVer deps, option.cache
+    util.logInfo 'Checking package\'s version...'
+    checkVer deps, option.cache
     .then (newDeps) ->
         deps = newDeps
         util.print deps, option.warning
@@ -140,6 +131,9 @@ npmUp = ->
             util.logSucc "Everything is new!"
 
         if option.writeBack
+            packageFile = util.cwdFilePath 'package.json'
+            packageBakFile = util.cwdFilePath 'package.bak.json'
+
             chain = chain.then ->
                 deps.forEach (dep) ->
                     toWrite = getToWrite dep, option
@@ -159,8 +153,9 @@ npmUp = ->
                 util.logSucc "package.json has been updated!"
 
         if option.install
+            install = require './install'
             chain = chain.then ->
-                util.install toUpdate
+                install toUpdate
 
         chain
 
@@ -197,13 +192,9 @@ npmUpGlobal = ->
         console.error "Please try running this command again as root/Administrator".yellow
         process.exit 1
 
-    Promise.promisify(npm.load)
-        loglevel: option.logLevel
-        global: true
-    .then ->
-        util.logInfo 'Reading global installed packages...'
-        # known issue: only the first dir will be listed in PATH
-        Promise.promisify(npm.commands.ls) null, true
+    util.logInfo 'Reading global installed packages...'
+
+    Promise.promisify(npm.commands.ls) null, true
     .then (data) ->
         globalDep = data.dependencies or data[0].dependencies
         console.log (Object.keys(globalDep).join ' ').cyan
@@ -225,11 +216,16 @@ npmUpGlobal = ->
             return Promise.resolve()
 
         if option.install
-            return util.install toUpdate
+            install = require './install'
+            return install toUpdate
 
 module.exports = (opt) ->
-    parseOpts opt
+    option = parseOpts opt
 
-    if opt.global then npmUpGlobal()
-    else if opt.All then npmUpSubDir()
-    else npmUp()
+    Promise.promisify(npm.load)
+        loglevel: option.logLevel
+        global: Boolean opt.global
+    .then ->
+        if opt.global then npmUpGlobal()
+        else if opt.All then npmUpSubDir()
+        else npmUp()
