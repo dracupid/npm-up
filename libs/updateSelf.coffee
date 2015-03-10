@@ -1,5 +1,5 @@
-{get} = require 'https'
 require 'colors'
+{get} = require 'https'
 {Promise} = require 'nofs'
 util = require './util'
 semver = require 'semver'
@@ -32,7 +32,7 @@ module.exports = ->
         installed = util.curVer
         latest = cache.latest
         if semver.lt installed, latest
-            ">>  A new version of npm-up is available:".yellow +
+            ">> A new version of npm-up is available:".yellow +
                 " #{('' + installed).green} --> #{('' + latest).red}"
         else ""
     .catch -> return

@@ -8,7 +8,6 @@ do ->
 
 cachePath = path.join home, '.npmupcache'
 
-
 cache = do ->
     try
         fs.readJSONSync cachePath
