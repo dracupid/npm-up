@@ -1,3 +1,8 @@
+v1.6.1
+======
+- opt: If a package is not installed, and declared version is *, nothing will happen.
+- fix: If mirror is not set, don't overwrite it by `http://registry.npmjs.org/`.
+
 v1.6.0
 ======
 - **change**: cli arg name
