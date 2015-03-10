@@ -1,3 +1,8 @@
+v1.5.5
+=======
+- fix: [#2](https://github.com/dracupid/npm-up/issues/2), caused by misusing of `_.isEmpty()` when arg is boolean.
+- opt: cli symbols in windows
+
 v1.5.4
 =======
 - fix: `npm-up clean`
