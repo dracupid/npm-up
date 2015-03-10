@@ -152,7 +152,8 @@ npmUp = ->
                     backFile = if _.isString option.backUp then util.cwdFilePath option.backUp else packageBakFile
                     fs.copy packageFile, backFile
             .then ->
-                globalPackage = _.omit globalPackage, _.isEmpty
+                ['dependencies', 'devDependencies'].forEach (k) ->
+                    delete globalPackage[k] if _.isEmpty globalPackage[k]
                 fs.outputJSON packageFile, globalPackage, space: 2
             .then ->
                 util.logSucc "package.json has been updated!"
