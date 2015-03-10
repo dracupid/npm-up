@@ -9,12 +9,12 @@ getVer = require './latestVersion'
 
 interval = 12 * 3600 * 1000 # 12 hours
 
-module.exports = ->
+module.exports = (mirror) ->
     promise = Promise.resolve()
 
     if not cache.lastCheck or Date.now() - cache.lastCheck > interval
         promise = promise.then ->
-            getVer 'npm-up'
+            getVer 'npm-up', mirror
         .then (ver) ->
             cache.latest = ver
             cache.lastCheck = Date.now()

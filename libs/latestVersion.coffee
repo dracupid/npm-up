@@ -1,9 +1,14 @@
-{get} = require 'https'
+{get} = require 'http'
 {Promise} = require 'nofs'
 
-module.exports = (name) ->
+host =
+    npm: 'registry.npmjs.org'
+    taobao: 'registry.npm.taobao.org'
+    cnpmjs: 'r.cnpmjs.org'
+
+module.exports = (name, mirror = 'npm') ->
     new Promise (resolve, reject) ->
-        get 'https://registry.npmjs.org/-/package/' + name + '/dist-tags', (res) ->
+        get "http://#{host[mirror] or mirror}/-/package/#{name}/dist-tags", (res) ->
             res.setEncoding 'utf8'
             data = ''
             res.on 'data', (d) -> data += d

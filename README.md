@@ -21,6 +21,20 @@ If no options are configured, it will only check the latest version and do nothi
 
 3. Run `npm-up -A` to check all projects in sub directories.
 
+## Use mirror
+You can use a mirror registry host to speed up the version searching, especially for chinese users.
+- You can use a built-in host with name:
+    + support: taobao, cnpmjs
+```
+npm-up -m taobao
+```
+- or give a specific host name (only allow `http` now)
+```
+npm-up -m registry.npm.taobao.org
+```
+
+> **For chinese users, use `-m taobao` to fly up.**
+
 #### commands:
 
 ```
@@ -30,25 +44,26 @@ dump    dump cache
 
 #### Options:
 ```
--h, --help               output usage information
--V, --version            output the version number
--g, --global             Check global packages.
--A, --All                Check all projects in sub directories, depth is 1.
--w, --writeBack          Write updated version info back to package.json.
--i, --install            Install the latest version of the packages need to be updated.
--l, --lock               Lock the version of the package in package.json, with no version prefix.
---lock-all               Lock, even with * version.
--a, --all                Shortcut for -wil.
---no-cache               Disable version cache.
---no-warning             Disable warning.
--b, --backup [fileName]  Back up package.json before writing back, default name is package.bak.json.
--d, --dep                Check dependencies only.
--D, --dev                Check devDependencies only.
--s, --silent             Do not print any infomation.
--c, --cwd <cwd>          Current working directory.
--L, --logLevel <level>   Set loglevel for npm, default is error
--e, --exclude <list>     Excluded packages list, split by comma or space.
--o, --only <list>        Included packages list, split by comma or space.
+-h, --help                          output usage information
+-V, --version                       output the version number
+-g, --global                        Check global packages.
+-A, --All                           Check all projects in sub directories, depth is 1.
+-w, --writeBack                     Write updated version info back to package.json.
+-i, --install                       Install the latest version of the packages need to be updated.
+-l, --lock                          Lock the version of the package in package.json, with no version prefix.
+--lock-all                          Lock, even with * version.
+-a, --all                           Shortcut for -wil.
+-m, --mirror <mirror host or name>  Use a mirror registry server.
+--no-cache                          Disable version cache.
+--no-warning                        Disable warning.
+-b, --backup [fileName]             Back up package.json before writing back, default name is package.bak.json.
+-d, --dep                           Check dependencies only.
+-D, --dev                           Check devDependencies only.
+-s, --silent                        Do not print any infomation.
+-c, --cwd <cwd>                     Current working directory.
+-L, --logLevel <level>              Set loglevel for npm, default is error
+-e, --exclude <list>                Excluded packages list, split by comma or space.
+-o, --only <list>                   Included packages list, split by comma or space.
 ```
 
 ## Version Pattern

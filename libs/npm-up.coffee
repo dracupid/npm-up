@@ -25,6 +25,7 @@ parseOpts = (opts = {}) ->
         logLevel: 'error'
         cwd: process.cwd()
         warning: true
+        mirror: 'npm'
 
     opts.all and
         _.assign opts,
@@ -117,7 +118,7 @@ npmUp = ->
         return Promise.reject()
 
     util.logInfo 'Checking package\'s version...'
-    checkVer deps, option.cache
+    checkVer deps, option.cache, option.mirror
     .then (newDeps) ->
         deps = newDeps
         util.print deps, option.warning
@@ -203,7 +204,7 @@ npmUpGlobal = ->
             parsePackage key, val.version, 'g'
         util.logInfo 'Checking package\'s version...'
 
-        checkVer _.compact(deps), option.cache
+        checkVer _.compact(deps), option.cache, option.mirror
     .then (newDeps) ->
         deps = newDeps
         util.print deps, option.warning

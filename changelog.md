@@ -7,7 +7,7 @@ v1.6.0
 - **Use restful API to check latest version.**
 - opt: performance
 - No warning when a package is not installed.
-
+- Support mirror registry server
 
 v1.5.5
 =======
