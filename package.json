@@ -6,6 +6,7 @@
   "bin": {
     "npm-up": "./bin/bin.js"
   },
+  "preferGlobal": true,
   "scripts": {
     "test": "node ci.js",
     "prepublish": "no build -a"
