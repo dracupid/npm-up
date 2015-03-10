@@ -2,15 +2,16 @@
 npm = require './npm'
 
 isWin = process.platform is 'win32'
-warnSign = if isWin then ' * Warning: ' else '⚠  '
-errorSign = if isWin then ' ERROR: ' else '✖  '
-okSign = if isWin then ' ^_^Y  ' else '✔  '
+warnSign = if isWin then '‼ ' else '⚠  '
+errorSign = if isWin then '× ' else '✖  '
+okSign = if isWin then '√  ' else '✔  '
+infoSign = if isWin then 'i ' else 'ℹ '
 
 cwdFilePath = (names...) ->
     path.join.apply path, [process.cwd()].concat names
 
 logInfo = (str) ->
-    console.log '\n>>  '.yellow + str.green
+    console.log '\n>> '.yellow + str.green
 logSucc = (str) ->
     console.log "\n#{okSign}#{str}".green
 
