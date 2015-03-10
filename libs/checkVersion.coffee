@@ -1,19 +1,16 @@
 cache = require './cache'
 strategy = require './strategy'
-npm = require './npm'
-{Promise} = require 'nofs'
+latestVer = require './latestVersion'
 
-module.exports = (deps, useCache) ->
-    npmView = Promise.promisify(npm.commands.v)
+module.exports = (deps, useCache = true) ->
     Promise.all deps.map (dep) ->
         name = dep.packageName
         ver = cache.get name
         if ver and useCache
             promise = Promise.resolve ver
         else
-            promise = npmView([name, 'dist-tags.latest'], true)
-            .then (data) ->
-                ver = Object.keys(data)[0]
+            promise = latestVer name
+            .then (ver) ->
                 cache.set name, ver
                 ver
 
