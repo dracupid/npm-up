@@ -18,6 +18,7 @@ host =
     npm: 'registry.npmjs.org'
     taobao: 'registry.npm.taobao.org'
     cnpmjs: 'r.cnpmjs.org'
+    skimdb: 'skimdb.npmjs.com/registry'
 
 module.exports = {
     cwdFilePath
