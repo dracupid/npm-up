@@ -1,3 +1,14 @@
+v1.6.0
+======
+- **change**: cli arg name
+    - `--ALL`       --> `--All`
+    - `--writeback` --> `--writeback`
+    - `-v, --ver`   --> `-V, --version` (provided by commander)
+- **Use restful API to check latest version.**
+- opt: performance
+- No warning when a package is not installed.
+
+
 v1.5.5
 =======
 - fix: [#2](https://github.com/dracupid/npm-up/issues/2), caused by misusing of `_.isEmpty()` when arg is boolean.

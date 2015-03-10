@@ -69,6 +69,12 @@ Notice that **ranges** version may be overridden by Caret Ranges(^) when written
 
 0. The prefix `^ ~` of the version will be preserved when written back, unless flag `lock` is set.
 
-0. If the version installed is not the same as the version declared in `package.json`, there comes a warning.
+0. If an installed package's version is not the same as the version declared in `package.json`, there comes a warning.
 
-5. Installed version is preferred.
+0. Installed version is preferred.
+
+## Roadmap
+1. Use a config file to provide some persist options, like npmrc, we can have a real npmuprc.
+
+## License
+MIT
