@@ -31,7 +31,7 @@ dump    dump cache
 #### Options:
 ```
 -h, --help               output usage information
--v, --ver                Current version of npm-up.
+-V, --version            output the version number
 -g, --global             Check global packages.
 -A, --All                Check all projects in sub directories, depth is 1.
 -w, --writeBack          Write updated version info back to package.json.

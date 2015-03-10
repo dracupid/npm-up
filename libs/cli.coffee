@@ -3,6 +3,7 @@ cmder = require 'commander'
 
 cmder
     .usage "[command] [options]"
+    .version require('./util').curVer
 cmder
     .command 'clean'
     .description 'clean cache'
@@ -18,7 +19,6 @@ cmder
         console.log cache.verCache or ''
         process.exit 0
 cmder
-    .option '-v, --ver', "Current version of npm-up."
     .option '-g, --global', "Check global packages."
     .option '-A, --All', "Check all projects in sub directories, depth is 1."
     .option '-w, --writeBack', "Write updated version info back to package.json."
@@ -53,12 +53,9 @@ init = (cmder) ->
         opts.devDep = ops.dep = yes
     opts
 
-if cmder.ver
-    console.log require('./util').curVer
-else
-    require('./updateSelf')().then (a) ->
-        opts = init cmder
-        require('./npm-up') opts
-    .catch (e) ->
-        if e then console.error e.stack or e
-        process.exit 1
+require('./updateSelf')().then (a) ->
+    opts = init cmder
+    require('./npm-up') opts
+.catch (e) ->
+    if e then console.error e.stack or e
+    process.exit 1
