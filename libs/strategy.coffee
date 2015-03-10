@@ -6,7 +6,7 @@ module.exports =
         if declareVer is '*'
             # '*' -> 'not installed'
             if not dep.installedVer
-                dep.needUpdate = yes
+                dep.needUpdate = false
                 dep.baseVer = declareVer
                 # dep.warnMsg = "#{dep.packageName.cyan} may not be installed."
             # '*' -> 'x.x.x'
