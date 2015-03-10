@@ -21,24 +21,6 @@ If no options are configured, it will only check the latest version and do nothi
 
 3. Run `npm-up -A` to check all projects in sub directories.
 
-## Use mirror registry
-
-First of all, You are supposed to use something like `npm config set registry http://registry.npm.taobao.org` to set a npm registry globally if necessary.<br/>
-However, if you don't want to do this, you can use it only in npm-up.
-
-You can use a mirror registry host to speed up the version searching and package downloading, especially for Chinese users.
-- You can use a built-in host with name:
-    + support: taobao, cnpmjs, npm(default)
-```
-npm-up -m taobao
-```
-- or give a specific hostname (only allow `http` now)
-```
-npm-up -m registry.npm.taobao.org
-```
-
-> **For Chinese users, use `-m taobao` to fly up!**
-
 #### commands:
 <%
 function format(str){
@@ -53,6 +35,30 @@ function format(str){
 ```
 <%= format(help[3])%>
 ```
+
+
+## Use mirror registry
+
+First of all, You are supposed to use something like
+```
+npm config set registry http://registry.npm.taobao.org
+```
+to set a npm registry globally if necessary.<br/>
+
+However, if you don't want to do this, you can do this only in npm-up.
+
+You can use a mirror registry host to speed up the version searching and package downloading, especially for Chinese users.
+- You can use a built-in host with name:
+    + support: taobao, cnpmjs, npm(official), skimdb
+```
+npm-up -m taobao
+```
+- or give a specific hostname (only allow `http` now)
+```
+npm-up -m registry.npm.taobao.org
+```
+
+> **For Chinese users, use `-m taobao` to fly up!**
 
 ## Version Pattern
 Fully support semantic version. Eg:
