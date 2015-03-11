@@ -19,25 +19,25 @@ cmder
         console.log cache.verCache or ''
         process.exit 0
 cmder
-    .option '-g, --global', "Check global packages."
-    .option '-A, --All', "Check all projects in sub directories, depth is 1."
-    .option '-w, --writeBack', "Write updated version info back to package.json."
-    .option '-i, --install', "Install the latest version of the packages need to be updated."
-    .option '-l, --lock', "Lock the version of the package in package.json, with no version prefix."
-    .option '--lock-all', "Lock, even with * version."
-    .option '-a, --all', "Shortcut for -wil."
-    .option '-m, --mirror <mirror host or name>', "Use a mirror registry server."
-    .option '--no-cache', "Disable version cache."
-    .option '--no-warning', "Disable warning."
-    .option '-b, --backup [fileName]', "Back up package.json before writing back, default name is package.bak.json."
-    .option '-d, --dep', "Check dependencies only."
-    .option '-D, --dev', "Check devDependencies only."
-    .option '-s, --silent', "Do not print any infomation."
-    .option '-c, --cwd <cwd>', "Current working directory."
+    .option '-g, --global', "Check global packages"
+    .option '-A, --All', "Check all projects in sub directories, depth is 1"
+    .option '-w, --writeBack', "Write updated version back to package.json"
+    .option '-i, --install', "Install the latest version of the packages"
+    .option '-l, --lock', "Use specific versions in package.json, with no ranges. (except *)"
+    .option '--lock-all', "Lock, even for * version"
+    .option '-a, --all', "Shortcut for -wil"
+    .option '-m, --mirror <mirror host or name>', "Use a mirror registry host"
+    .option '--no-cache', "Disable version cache temporarily"
+    .option '--no-warning', "Disable warning"
+    .option '-b, --backup [fileName]', "Backup package.json before writing back, default name is package.bak.json"
+    .option '-d, --dep', "Check dependencies only"
+    .option '-D, --dev', "Check devDependencies only"
+    .option '-s, --silent', "Do not print any log"
+    .option '-c, --cwd <cwd>', "Set current working directory"
     .option '-L, --logLevel <level>', "Set loglevel for npm, default is error"
-    .option '-e, --exclude <list>', "Excluded packages list, split by comma or space.",
+    .option '-e, --exclude <list>', "Excluded packages list, split by comma or space",
         (list) -> list.split /,|\s/
-    .option '-o, --only <list>', "Included packages list, split by comma or space.",
+    .option '-o, --only <list>', "Included packages list, split by comma or space",
         (list) -> list.split /,|\s/
 
 cmder.parse process.argv

@@ -1,10 +1,11 @@
 npm-up
 ======
 
-A lightweight tool to check the latest version of dependent npm packages for a project and do whatever you want.
+Check the latest version of dependencies on [npm](https://www.npmjs.com) gracefully, and do whatever you want.
 
-[![NPM version](https://badge.fury.io/js/npm-up.svg)](http://badge.fury.io/js/npm-up)
-[![Deps Up to Date](https://david-dm.org/dracupid/npm-up.svg?style=flat)](https://david-dm.org/dracupid/npm-up)
+[![NPM version](https://badge.fury.io/js/npm-up.svg)](https://www.npmjs.com/package/npm-up)
+[![Downloads](http://img.shields.io/npm/dm/npm-up.svg)](https://www.npmjs.com/package/npm-up)
+[![Deps](https://david-dm.org/dracupid/npm-up.svg?style=flat)](https://david-dm.org/dracupid/npm-up)
 [![Build Status](https://travis-ci.org/dracupid/npm-up.svg)](https://travis-ci.org/dracupid/npm-up)
 [![Build status](https://ci.appveyor.com/api/projects/status/github/dracupid/npm-up?svg=true)](https://ci.appveyor.com/project/dracupid/npm-up)
 
@@ -39,29 +40,28 @@ function format(str){
 
 ## Use mirror registry
 
-First of all, You are supposed to use something like
+First of all, You can use something like
 ```
 npm config set registry http://registry.npm.taobao.org
 ```
-to set a npm registry globally if necessary.<br/>
+to set a npm registry globally to speed up npm's requests, such as version searching and package downloading, especially for Chinese users.<br/>
 
-However, if you don't want to do this, you can do this only in npm-up.
+However, it may cause some trouble (you can't publish unless use `-reg` every time, because a mirror is usually read-only).
 
-You can use a mirror registry host to speed up the version searching and package downloading, especially for Chinese users.
+In npm-up
 - You can use a built-in host with name:
-    + support: taobao, cnpmjs, npm(official), skimdb
+```bash
+npm-up -m taobao  # also suport cnpmjs, npm(official), skimdb
 ```
-npm-up -m taobao
-```
-- or give a specific hostname (only allow `http` now)
-```
+- or give a specific hostname (only allow `http` now, it is faster.)
+```bash
 npm-up -m registry.npm.taobao.org
 ```
 
 > **For Chinese users, use `-m taobao` to fly up!**
 
-## Version Pattern
-Fully support semantic version. Eg:
+## Version Patterns
+Fully support semantic versions. Eg:
 ```
 *
 ^1.5.4
@@ -71,13 +71,13 @@ Fully support semantic version. Eg:
 '' //regard as *
 ```
 
-Notice that **ranges** version may be overridden by Caret Ranges(^) when written back, and will be updated only when the latest version is greater than all the versions possible in the range.
+Notice that a **ranges** version may be overridden by Caret Ranges(^) when written back, and will be updated only when the latest version is greater than all the versions possible in the range.
 ```
 >= 1.0.0 <= 1.5.4   // Version Range
 1.2 - 2.3.4         // Hyphen Ranges
 1.x                 // X-Ranges
 ```
-- However, the semantic meaning of the prefix and suffix may somehow **ignored**, because **I just want the latest version**.
+- However, the semantic meaning of the prefix and suffix may somehow be **ignored**, because **I just want the latest version**.
 - If the version declared in the `package.json` is not recognizable, the corresponding package will be **excluded**.
 - More info: https://docs.npmjs.com/misc/semver
 
@@ -89,11 +89,11 @@ Notice that **ranges** version may be overridden by Caret Ranges(^) when written
 
 0. If a package is not installed, only `package.json` will be updated, and the package itself won't be installed.
 
-0. If the version is `*` in `package.json`, it will not be overwritten, even when the flag `lock` is set. If you really want to change a `*` version, use `--lock-all` flag.
+0. If the version declared is `*`, it will not be overwritten, even when the flag `--lock` is set. If you really want to change it, use `--lock-all` flag.
 
-0. The prefix `^ ~` of the version will be preserved when written back, unless flag `lock` is set.
+0. The prefix `^ ~` of the version will be preserved when written back, unless flag `--lock` is set.
 
-0. If an installed package's version is not the same as the version declared in `package.json`, there comes a warning.
+0. If an installed package's version is different from the version declared, there comes a warning.
 
 0. Installed version is preferred.
 
