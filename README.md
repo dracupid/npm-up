@@ -93,7 +93,7 @@ Notice that a **ranges** version may be overridden by Caret Ranges(^) when writt
 1.2 - 2.3.4         // Hyphen Ranges
 1.x                 // X-Ranges
 ```
-- However, the semantic meaning of the prefix and suffix may somehow be **ignored**, because **I just want the latest version**.
+- However, the semantic meaning of the ranges may somehow be **ignored**, because **I just want the latest version**.
 - If the version declared in the `package.json` is not recognizable, the corresponding package will be **excluded**.
 - More info: https://docs.npmjs.com/misc/semver
 
