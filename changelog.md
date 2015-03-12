@@ -1,3 +1,7 @@
+v1.6.2
+======
+- fix: cache clean bug
+
 v1.6.1
 ======
 - opt: If a package is not installed, and declared version is *, nothing will happen.
