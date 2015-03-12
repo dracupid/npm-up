@@ -67,11 +67,12 @@ However, it may cause some trouble (you can't publish unless use `-reg` every ti
 In npm-up
 - You can use a built-in host with name:
 ```bash
-npm-up -m taobao  # also suport cnpmjs, npm(official), skimdb
+npm-up -m taobao  # also suport cnpmjs, npm (official)
 ```
-- or give a specific hostname (only allow `http` now, it is faster.)
+- or give a specific hostname
 ```bash
-npm-up -m registry.npm.taobao.org
+npm-up -m http://registry.npm.taobao.org
+npm-up -m registry.npm.taobao.org # http:// is optional
 ```
 
 > **For Chinese users, use `-m taobao` to fly up!**

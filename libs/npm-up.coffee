@@ -229,11 +229,11 @@ module.exports = (opt) ->
         global: Boolean opt.global
 
     if option.mirror
-        npmOpt.registry = "http://" + util.getRegistry(option.mirror) + '/'
+        npmOpt.registry = util.getRegistry(option.mirror)
 
     Promise.promisify(npm.load) npmOpt
     .then ->
-        option.mirror = url.parse(npm.config.get('registry')).hostname
+        option.mirror = npm.config.get('registry')[..-2]
         if opt.global then npmUpGlobal()
         else if opt.All then npmUpSubDir()
         else npmUp()

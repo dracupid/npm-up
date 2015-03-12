@@ -1,6 +1,7 @@
 v1.6.2
 ======
-- fix: cache clean bug
+- fix: cache clean issue
+- opt: mirror supports https now.
 
 v1.6.1
 ======

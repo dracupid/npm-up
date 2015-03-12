@@ -1,4 +1,5 @@
 { path, Promise } = fs = require 'nofs'
+url = require 'url'
 
 isWin = process.platform is 'win32'
 warnSign = if isWin then '‼ ' else '⚠  '
@@ -15,10 +16,11 @@ logSucc = (str) ->
     console.log "\n#{okSign}#{str}".green
 
 host =
-    npm: 'registry.npmjs.org'
-    taobao: 'registry.npm.taobao.org'
-    cnpmjs: 'r.cnpmjs.org'
-    skimdb: 'skimdb.npmjs.com/registry'
+    npm: 'http://registry.npmjs.org'
+    taobao: 'http://registry.npm.taobao.org'
+    cnpmjs: 'http://r.cnpmjs.org'
+
+protocolReg = /^https?:\/\//
 
 module.exports = {
     cwdFilePath
@@ -28,7 +30,12 @@ module.exports = {
     logSucc
 
     getRegistry: (name = 'npm') ->
-        host[name] or name
+        name = name.trim()
+        if host[name] then host[name]
+        else if protocolReg.test name
+            name
+        else
+            'http://' + name
 
     readPackageFile: (name) ->
         filePath = if name then cwdFilePath('node_modules', name, 'package.json') else cwdFilePath 'package.json'

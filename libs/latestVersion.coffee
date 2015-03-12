@@ -1,12 +1,17 @@
-{get} = require 'http'
+get =
+    'http:': require('http').get
+    'https:': require('https').get
+url = require 'url'
 {Promise} = require 'nofs'
 {getRegistry, debug} = require './util'
 
 module.exports = (name, mirror = 'npm') ->
+    link = getRegistry(mirror) + "/-/package/#{name}/dist-tags"
+    debug link
+    getUrl = get[url.parse(link).protocol] or get['http:']
+
     new Promise (resolve, reject) ->
-        url = "http://#{getRegistry mirror}/-/package/#{name}/dist-tags"
-        debug url
-        get url, (res) ->
+        getUrl link, (res) ->
             res.setEncoding 'utf8'
             data = ''
             res.on 'data', (d) -> data += d
