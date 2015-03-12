@@ -18,7 +18,7 @@ npm i npm-up -g
 1. Run `npm-up [options]` in a project directory with a `package.json` file. For example: `npm-up -iw`. <br/>
 If no options are configured, it will only check the latest version and do nothing but display.
 
-2. Run `npm-up -g` to check globally install npm packages.
+2. Run `npm-up -g` to check globally npm packages.
 
 3. Run `npm-up -A` to check all projects in sub directories.
 
