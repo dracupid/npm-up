@@ -1,5 +1,6 @@
 kit = require('nokit');
 npm = require('./dist/npm')
+process.env.DEBUG = 'on'
 
 console.log("TEST START");
 console.log("NPM PATH: " + npm.GLOBAL_NPM_PATH);

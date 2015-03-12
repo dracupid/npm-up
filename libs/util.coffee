@@ -41,6 +41,9 @@ module.exports = {
             showWarn and dep.warnMsg and console.log warnSign.yellow + "#{dep.warnMsg}".white
 
     logInfo
+    debug: ->
+        if process.env.DEBUG is true or process.env.DEBUG is 'on' or process.env.DEBUG is 'true'
+            console.log.apply console, arguments
 
     curVer: do ->
         require('../package.json').version
