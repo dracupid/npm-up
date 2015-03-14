@@ -6,10 +6,9 @@ expire = 20 * 60 * 1000 # 20 min
 
 get = (name) ->
     info = cache.verCache[name]
-    now = Date.now()
     if info
         interval = info.expire or expire
-        if now - info.timestamp < interval
+        if Date.now() - info.timestamp < interval
             info.version
         else
             delete cache.verCache[name]

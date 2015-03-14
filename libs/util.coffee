@@ -49,8 +49,8 @@ module.exports = {
 
     logInfo
     debug: ->
-        if process.env.DEBUG is true or process.env.DEBUG is 'on' or process.env.DEBUG is 'true'
-            console.log.apply console, arguments
+        if process.env.DEBUG in [true, 'on', 'true']
+            console.log arguments...
 
     curVer: do ->
         require('../package.json').version
@@ -61,8 +61,5 @@ module.exports = {
             fs.removeSync path.join __dirname, '*.temp'
             true
         catch {errno}
-            if errno is -13
-                false
-            else
-                true
+            errno isnt -13
 }

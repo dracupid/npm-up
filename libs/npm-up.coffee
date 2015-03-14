@@ -94,19 +94,16 @@ prepare = ->
     deps = _.compact deps
 
 getToWrite = ({declareVer, newVer}, {lock, lockAll}) ->
-    if declareVer is '*' or ''
-        if lockAll then return newVer else return '*'
+    if declareVer in ['*', '']
+        return if lockAll then newVer else '*'
 
-    first = declareVer[0]
-
-    if semver.valid declareVer
-        return newVer
-    else if first[0] is '^' # Caret Ranges
-        if lock then newVer else '^' + newVer
-    else if first[0] is '~' # Tilde Ranges
-        if lock then newVer else '~' + newVer
-    else # other ranges
-        if lock then newVer else '^' + newVer
+    if lock or semver.valid declareVer
+        newVer
+    else
+        first = declareVer[0]
+        switch first
+            when '^', '~' then first + newVer
+            else '^' + newVer
 
 npmUp = ->
     process.chdir option.cwd
@@ -214,11 +211,10 @@ npmUpGlobal = ->
 
         if toUpdate.length is 0
             util.logSucc "Everything is new!"
-            return Promise.resolve()
+            Promise.resolve()
+        else if option.install
+            require('./install') toUpdate
 
-        if option.install
-            install = require './install'
-            return install toUpdate
 
 module.exports = (opt) ->
     url = require 'url'
