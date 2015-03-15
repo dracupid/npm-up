@@ -1,3 +1,7 @@
+v1.6.3
+======
+- fix: null version
+
 v1.6.2
 ======
 - fix: cache clean issue
