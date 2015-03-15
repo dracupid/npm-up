@@ -1,3 +1,5 @@
+"use strict"
+
 cmder = require 'commander'
 {cache, writeCacheSync, cachePath} = require './data'
 

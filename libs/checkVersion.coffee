@@ -1,3 +1,5 @@
+"use strict"
+
 cache = require './cache'
 strategy = require './strategy'
 latestVer = require './latestVersion'

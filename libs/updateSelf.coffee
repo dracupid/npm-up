@@ -1,3 +1,5 @@
+"use strict"
+
 require 'colors'
 {get} = require 'https'
 {Promise} = require 'nofs'

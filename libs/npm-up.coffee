@@ -1,3 +1,5 @@
+"use strict"
+
 require 'colors'
 {path, Promise: global.Promise} = fs = require 'nofs'
 global._ = require 'lodash'

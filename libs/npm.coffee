@@ -2,6 +2,8 @@ require 'colors'
 which = require 'which'
 fs = require 'nofs'
 
+"use strict"
+
 GLOBAL_NPM_BIN = fs.realpathSync which.sync 'npm'
 GLOBAL_NPM_PATH = fs.path.join GLOBAL_NPM_BIN,
     if process.platform is "win32" then '../node_modules/npm' else '../..'

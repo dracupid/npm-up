@@ -1,5 +1,7 @@
+"use strict"
+
 { path, Promise } = fs = require 'nofs'
-url = require 'url'
+
 
 isWin = process.platform is 'win32'
 warnSign = if isWin then '‼ ' else '⚠  '

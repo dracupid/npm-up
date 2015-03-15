@@ -1,3 +1,5 @@
+"use strict"
+
 {cache, writeCache} = require './data'
 
 cache.verCache ?= {}

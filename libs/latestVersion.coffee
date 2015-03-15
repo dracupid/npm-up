@@ -1,3 +1,5 @@
+"use strict"
+
 get =
     'http:': require('http').get
     'https:': require('https').get

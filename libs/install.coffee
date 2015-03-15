@@ -1,3 +1,5 @@
+"use strict"
+
 npm = require './npm'
 util = require './util'
 

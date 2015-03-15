@@ -1,3 +1,5 @@
+"use strict"
+
 semver = require 'semver'
 
 module.exports =
