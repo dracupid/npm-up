@@ -1,7 +1,7 @@
 {
   "name": "npm-up",
   "version": "1.6.3",
-  "description": "A lightweight tool to check the latest version of dependent npm packages for a project and do whatever you want.",
+  "description": "Check the latest version of dependencies on npm gracefully, and do whatever you want.",
   "main": "./dist/npm-up.js",
   "bin": {
     "npm-up": "./bin/bin.js"
