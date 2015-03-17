@@ -100,6 +100,8 @@ Notice that a **ranges** version may be overridden by Caret Ranges(^) when writt
 
 ## Roadmap
 1. Use a config file to provide some persist options, like npmrc, we can have a real npmuprc.
+2. support `>=`, `<=`, `>`, `<` as prefix which will be reserved.
+3. Maybe searching installed packages as `require`
 
 ## License
 MIT
