@@ -80,7 +80,7 @@ Notice that a **ranges** version may be overridden by Caret Ranges(^) when writt
 ```
 - However, the semantic meaning of the ranges may somehow be **ignored**, because **I just want the latest version**.
 - If the version declared in the `package.json` is not recognizable, the corresponding package will be **excluded**.
-- More info: https://docs.npmjs.com/misc/semver
+- More info: [semver](https://github.com/npm/node-semver/blob/master/README.md#ranges)
 
 ## Rules
 0. Take 3 versions into consideration for one package:
