@@ -1,3 +1,9 @@
+v1.6.4
+=======
+- upd: dep
+- typo
+- use strict
+
 v1.6.3
 ======
 - fix: null version
