@@ -24,16 +24,16 @@
     "dist",
     "bin"
   ],
-  "author": "Dracupid",
+  "author": "Dracupid <dracupid@gmail.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/dracupid/npm-up/issues"
   },
   "homepage": "https://github.com/dracupid/npm-up",
   "dependencies": {
-    "colors": "^1.0.3",
-    "commander": "^2.7.1",
-    "lodash": "^3.6.0",
+    "colors": "^1.1.0",
+    "commander": "^2.8.1",
+    "lodash": "^3.7.0",
     "nofs": "0.5.7",
     "semver": "^4.3.3",
     "which": "^1.0.9"
@@ -41,7 +41,7 @@
   "devDependencies": {
     "coffee-script": "*",
     "coffeelint": "*",
-    "nokit": "0.5.9"
+    "nokit": "0.6.0"
   },
   "engines": {
     "node": ">=0.10.0",
