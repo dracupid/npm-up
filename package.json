@@ -33,15 +33,15 @@
   "dependencies": {
     "colors": "^1.1.0",
     "commander": "^2.8.1",
-    "lodash": "^3.7.0",
-    "nofs": "0.5.7",
-    "semver": "^4.3.3",
+    "lodash": "^3.8.0",
+    "nofs": "0.5.9",
+    "semver": "^4.3.4",
     "which": "^1.0.9"
   },
   "devDependencies": {
     "coffee-script": "*",
     "coffeelint": "*",
-    "nokit": "0.6.0"
+    "nokit": "0.6.3"
   },
   "engines": {
     "node": ">=0.10.0",
