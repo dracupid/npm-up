@@ -39,6 +39,7 @@
     "which": "^1.0.9"
   },
   "devDependencies": {
+    "dracupid-no": "git+https://github.com/dracupid/dracupid-no.git",
     "coffee-script": "*",
     "coffeelint": "*",
     "nokit": "0.6.5"
