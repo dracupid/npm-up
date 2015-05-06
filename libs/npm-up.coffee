@@ -1,7 +1,7 @@
 "use strict"
 
 require 'colors'
-{path, Promise: global.Promise} = fs = require 'nofs'
+{path, Promise: global.Promise, promisify} = fs = require 'nofs'
 global._ = require 'lodash'
 semver = require 'semver'
 
@@ -194,7 +194,7 @@ npmUpGlobal = ->
 
     util.logInfo 'Reading global installed packages...'
 
-    Promise.promisify(npm.commands.ls) null, true
+    promisify(npm.commands.ls) null, true
     .then (data) ->
         globalDep = data.dependencies or data[0].dependencies
         console.log (Object.keys(globalDep).join ' ').cyan
@@ -236,7 +236,7 @@ module.exports = (opt) ->
     if option.mirror
         npmOpt.registry = util.getRegistry(option.mirror)
 
-    Promise.promisify(npm.load) npmOpt
+    promisify(npm.load) npmOpt
     .then ->
         option.mirror = npm.config.get('registry')[..-2]
         if opt.global then npmUpGlobal()
