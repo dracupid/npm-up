@@ -1,3 +1,9 @@
+v1.7.0
+=======
+- upd: dep
+- fix: bug for private package
+- question: Don't install npm by npm-up. A broken error may occur and I wonder why.
+
 v1.6.4
 =======
 - upd: dep
