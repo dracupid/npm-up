@@ -1,3 +1,7 @@
+v1.7.1
+=======
+- use [yaku](https://github.com/ysmood/yaku) to replace bluebird
+
 v1.7.0
 =======
 - upd: dep
