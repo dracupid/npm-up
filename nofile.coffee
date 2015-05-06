@@ -6,7 +6,7 @@ module.exports = (task, option)->
     option '-a, --all', 'build without cache'
 
     task 'build', "Build Project", (opts)->
-        $.coffee()
+        $.coffee useCache: not opts.all
 
     task 'help', ->
         kit.exec "coffee src/cli.coffee -h"
