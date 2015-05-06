@@ -16,6 +16,8 @@ logInfo = (str) ->
     console.log '\n>> '.yellow + str.green
 logSucc = (str) ->
     console.log "\n#{okSign}#{str}".green
+logWarn = (str) ->
+    console.log warnSign.yellow + str.white
 
 host =
     npm: 'http://registry.npmjs.org'
@@ -29,7 +31,9 @@ module.exports = {
     errorSign
     warnSign
     okSign
+    logInfo
     logSucc
+    logWarn
 
     getRegistry: (name = 'npm') ->
         name = name.trim()
@@ -47,9 +51,8 @@ module.exports = {
         deps.map (dep) ->
             dep.needUpdate and console.log "[#{dep.type}]".green, _.padRight(dep.packageName.cyan, 40),
                 _.padLeft(dep.baseVer.toString(), 8).green, '->', dep.newVer.toString().red
-            showWarn and dep.warnMsg and console.log warnSign.yellow + "#{dep.warnMsg}".white
+            showWarn and dep.warnMsg and logWarn "#{dep.warnMsg}"
 
-    logInfo
     debug: ->
         if process.env.DEBUG in [true, 'on', 'true']
             console.log arguments...
