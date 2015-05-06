@@ -17,8 +17,11 @@ module.exports = (deps, useCache = true, mirror) ->
                 ver
 
         promise.then (ver) ->
-            dep.newVer = ver
-            strategy.version dep
+            if ver
+                dep.newVer = ver
+                strategy.version dep
+            else
+                dep.needUpdate = false
     .then (deps) ->
         cache.record()
         deps
