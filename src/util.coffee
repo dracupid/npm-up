@@ -1,7 +1,6 @@
 "use strict"
 
-{ path, Promise } = fs = require 'nofs'
-
+{path, Promise} = fs = require 'nofs'
 
 isWin = process.platform is 'win32'
 warnSign = if isWin then '‼ ' else '⚠  '
