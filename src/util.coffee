@@ -44,7 +44,7 @@ module.exports = {
 
     readPackageFile: (name) ->
         filePath = if name then cwdFilePath('node_modules', name, 'package.json') else cwdFilePath 'package.json'
-        fs.readJSONSync filePath
+        require filePath
 
     print: (deps, showWarn = true) ->
         deps.map (dep) ->

@@ -82,10 +82,10 @@ prepare = ->
     try
         globalPackage = util.readPackageFile null
     catch e
-        if e.errno and e.errno is -2
-            throw new Error 'package.json Not Found!'
-        else
+        if e instanceof SyntaxError
             throw new Error 'parse package.json failed!'
+        else
+            throw new Error 'package.json Not Found!'
 
     deps = []
     if option.dep
