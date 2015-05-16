@@ -21,7 +21,9 @@ module.exports = (deps, useCache = true, mirror) ->
                 dep.newVer = ver
                 strategy.version dep
             else
+                dep.newVer = dep.installedVer
                 dep.needUpdate = false
+            dep
     .then (deps) ->
         cache.record()
         deps
