@@ -1,3 +1,8 @@
+v1.7.2
+======
+- upd: nofs & which
+- add: node v0.8 support
+
 v1.7.1
 =======
 - use [yaku](https://github.com/ysmood/yaku) to replace bluebird
