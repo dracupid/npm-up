@@ -17,8 +17,11 @@
   },
   "keywords": [
     "npm",
+    "install",
+    "latest",
     "update",
-    "version"
+    "version",
+    "dependency"
   ],
   "files": [
     "dist",

@@ -104,4 +104,4 @@ Notice that a **ranges** version may be overridden by Caret Ranges(^) when writt
 3. Maybe searching installed packages as `require`
 
 ## License
-MIT
+MIT@Jingchen Zhao

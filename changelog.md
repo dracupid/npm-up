@@ -1,3 +1,7 @@
+v1.8.2
+======
+- update dependency
+
 v1.8.1
 ======
 - fix: bug when latest version is not found
