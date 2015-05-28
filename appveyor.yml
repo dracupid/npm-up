@@ -1,19 +1,45 @@
-build: false
+#---------------------------------#
+#      general configuration      #
+#---------------------------------#
+branches:
+  only:
+    - master
+  except:
+    - gh-pages
+
+skip_tags: true
+
+#---------------------------------#
+#    environment configuration    #
+#---------------------------------#
+shallow_clone: true
+
+clone_depth: 1
 
 environment:
   matrix:
-    - nodejs_version: "0.10"
+    - nodejs_version: 0.10
+
+cache:
+  - node_modules                    # local npm modules
+  - '%APPDATA%\npm-cache'           # npm cache
 
 install:
+  - ps: Install-Product node $env:nodejs_version
   - npm config set loglevel error
   - npm install
   - npm install js2coffee@0.3.5 mocha@2.0.0 mkdirp@0.4.0 jdb@0.4.0 -D
   - npm install js2coffee@0.3.5 mocha@2.0.0 mkdirp@0.4.0 jdb@0.4.0 -g
   - npm i . -g
 
-shallow_clone: true
-clone_depth: 1
+#---------------------------------#
+#       build configuration       #
+#---------------------------------#
+build: off
 
+#---------------------------------#
+#       tests configuration       #
+#---------------------------------#
 test_script:
   - node --version
   - npm --version
