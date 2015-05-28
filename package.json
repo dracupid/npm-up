@@ -33,16 +33,16 @@
   "dependencies": {
     "colors": "^1.1.0",
     "commander": "^2.8.1",
-    "global-npm": "^0.1.0",
-    "lodash": "^3.8.0",
-    "nofs": "0.6.7",
+    "global-npm": "^0.1.1",
+    "lodash": "^3.9.3",
+    "nofs": "0.6.9",
     "semver": "^4.3.4"
   },
   "devDependencies": {
     "dracupid-no": "git+https://github.com/dracupid/dracupid-no.git",
     "coffee-script": "*",
     "coffeelint": "1.9.7",
-    "nokit": "0.7.0"
+    "nokit": "0.7.6"
   },
   "engines": {
     "node": ">=0.8.0",
