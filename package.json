@@ -37,6 +37,7 @@
     "colors": "^1.1.0",
     "commander": "^2.8.1",
     "global-npm": "^0.1.1",
+    "kiss-request": "^0.1.0",
     "lodash": "^3.9.3",
     "nofs": "0.6.9",
     "semver": "^4.3.4"
