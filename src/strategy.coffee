@@ -16,8 +16,8 @@ module.exports =
                 dep.needUpdate = semver.lt dep.installedVer, dep.newVer
             return dep
 
-        else if /^[\w\d^~.-\s]*$/.test declareVer
-            if declareVer[0] in ['^', '~'] then declareVer = declareVer[1...]
+        else if m = declareVer.match /^[><=\s~^]*([\d\w.-\s]*)$/
+            declareVer = m[1]
             if semver.valid declareVer
                 # 'X.X.X' -> 'not installed'
                 if not dep.installedVer
@@ -35,6 +35,7 @@ module.exports =
                         dep.warnMsg = "Declared #{dep.packageName.cyan} is outdated:" +
                             " Declared #{declareVer.green} --> Installed #{dep.installedVer.red}"
                 return dep
+
         # Other Range -> 'not installed'
         if not dep.installedVer
             dep.needUpdate = semver.gtr dep.newVer, declareVer

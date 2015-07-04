@@ -99,13 +99,14 @@ getToWrite = ({declareVer, newVer}, {lock, lockAll}) ->
     if declareVer in ['*', '']
         return if lockAll then newVer else '*'
 
-    if lock or semver.valid declareVer
-        newVer
-    else
-        first = declareVer[0]
-        switch first
-            when '^', '~' then first + newVer
-            else '^' + newVer
+    prefix =
+        if lock or semver.valid declareVer
+            ''
+        else if m = declareVer.match /^([><=\s]+)[\d\w.-\s]*$/
+            m[1]
+        else '^'
+
+    prefix + newVer
 
 npmUp = ->
     process.chdir option.cwd
