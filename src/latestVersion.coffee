@@ -16,5 +16,7 @@ module.exports = (name, mirror = 'npm') ->
     .catch (e) ->
         if e.code is 'TIMEOUT'
             Promise.reject new Error "Request to #{getRegistry(mirror)} timeout. Please use an alternative registry by -m <mirror>"
+        else if e.code is 'UNWANTED_STATUS_CODE'
+            Promise.resolve ''
         else
             Promise.reject e
