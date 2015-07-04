@@ -66,4 +66,6 @@ module.exports = {
             true
         catch {errno}
             errno isnt -13
+
+    promisify: fs.PromiseUtils.promisify
 }

@@ -38,15 +38,15 @@
     "commander": "^2.8.1",
     "global-npm": "^0.1.1",
     "kiss-request": "^0.1.0",
-    "lodash": "^3.9.3",
-    "nofs": "0.6.9",
+    "lodash": "^3.10.0",
+    "nofs": "0.8.2",
     "semver": "^4.3.6"
   },
   "devDependencies": {
     "dracupid-no": "git+https://github.com/dracupid/dracupid-no.git",
     "coffee-script": "*",
     "coffeelint": "1.10.1",
-    "nokit": "0.7.8"
+    "nokit": "0.8.9"
   },
   "engines": {
     "node": ">=0.8.0",
