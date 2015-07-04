@@ -2,7 +2,7 @@
 
 require 'colors'
 {path, Promise: global.Promise} = fs = require 'nofs'
-global._ = require 'lodash'
+global._ = require 'underscore'
 semver = require 'semver'
 
 npm = require './npm'

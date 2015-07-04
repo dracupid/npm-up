@@ -25,6 +25,24 @@ host =
 
 protocolReg = /^https?:\/\//
 
+repeat = (str, n) ->
+    n = parseInt n
+    res = ''
+    return res if n < 1
+    for i in [0..n]
+        res += str
+    res
+
+padRight = (str, n) ->
+    str += ''
+    strLen = str.length
+    if strLen >= n then str else str + repeat ' ', n - strLen
+
+padLeft = (str, n) ->
+    str += ''
+    strLen = str.length
+    if strLen >= n then str else repeat(' ', n - strLen) + str
+
 module.exports = {
     cwdFilePath
     errorSign
@@ -48,8 +66,8 @@ module.exports = {
 
     print: (deps, showWarn = true) ->
         deps.map (dep) ->
-            dep.needUpdate and console.log "[#{dep.type}]".green, _.padRight(dep.packageName.cyan, 40),
-                _.padLeft(dep.baseVer.toString(), 8).green, '->', dep.newVer.toString().red
+            dep.needUpdate and console.log "[#{dep.type}]".green, padRight(dep.packageName.cyan, 40),
+                padLeft(dep.baseVer.toString(), 8).green, '->', dep.newVer.toString().red
             showWarn and dep.warnMsg and logWarn "#{dep.warnMsg}"
 
     debug: ->

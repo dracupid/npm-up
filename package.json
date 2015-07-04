@@ -38,9 +38,9 @@
     "commander": "^2.8.1",
     "global-npm": "^0.1.1",
     "kiss-request": "^0.1.0",
-    "lodash": "^3.10.0",
     "nofs": "0.8.2",
-    "semver": "^4.3.6"
+    "semver": "^4.3.6",
+    "underscore": "^1.8.3"
   },
   "devDependencies": {
     "dracupid-no": "git+https://github.com/dracupid/dracupid-no.git",
