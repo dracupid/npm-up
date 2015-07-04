@@ -1,3 +1,10 @@
+v1.9.0
+========
+- support `> < >= <=`
+- use `kiss-request` to send request.
+- use `underscore`, which is as useful as lodash but smaller.
+- update dependency.
+
 v1.8.2
 ======
 - update dependency
