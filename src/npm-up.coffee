@@ -216,10 +216,11 @@ npmUpGlobal = ->
             util.logSucc "Everything is new!"
             Promise.resolve()
         else if option.install
-            npmStr = _.remove toUpdate, (name) ->
-                name.indexOf('npm@') is 0
+            oldLen = toUpdate.length
+            toUpdate = toUpdate.filter (name) ->
+                name.indexOf('npm@') isnt 0
 
-            if npmStr.length > 0
+            if oldLen isnt toUpdate.length
                 util.logWarn "It may cause a broken error when installing npm by npm-up sometimes. ".yellow +
                     "Please use ".yellow + "[sudo] npm i npm -g".cyan + " instead.".yellow
                 console.log "If you know the reason, please put forward an issue.".green
