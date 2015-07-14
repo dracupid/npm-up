@@ -1,3 +1,7 @@
+v1.9.2
+========
+- update semver and nofs
+
 v1.9.1
 ========
 - fix: _.remove
