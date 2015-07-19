@@ -117,7 +117,7 @@ npmUp = ->
         console.error (util.errorSign + " #{e}").red
         return Promise.reject()
 
-    util.logInfo 'Checking package\'s version...'
+    util.logInfo 'Checking packages\' version...'
     checkVer deps, option.cache, option.mirror
     .then (newDeps) ->
         deps = newDeps
@@ -193,7 +193,7 @@ npmUpGlobal = ->
         console.error "Please try running this command again as root/Administrator".yellow
         process.exit 1
 
-    util.logInfo 'Reading global installed packages...'
+    util.logInfo 'Searching global packages...'
 
     util.promisify(npm.commands.ls) null, true
     .then (data) ->
@@ -202,7 +202,7 @@ npmUpGlobal = ->
 
         deps = _.map globalDep, (val, key) ->
             parsePackage key, val.version, 'g'
-        util.logInfo 'Checking package\'s version...'
+        util.logInfo 'Checking packages\' version...'
 
         checkVer _.compact(deps), option.cache, option.mirror
     .then (newDeps) ->

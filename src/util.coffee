@@ -12,11 +12,11 @@ cwdFilePath = (names...) ->
     path.join.apply path, [process.cwd()].concat names
 
 logInfo = (str) ->
-    console.log '\n>> '.yellow + str.green
+    console.log '\n>> '.yellow.bold + str.green.bold
 logSucc = (str) ->
-    console.log "\n#{okSign}#{str}".green
+    console.log "\n#{okSign}#{str}".green.bold
 logWarn = (str) ->
-    console.log warnSign.yellow + str.white
+    console.log warnSign.yellow.bold + str.white.bold
 
 host =
     npm: 'http://registry.npmjs.org'
