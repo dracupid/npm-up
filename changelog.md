@@ -1,3 +1,8 @@
+v1.9.3
+=======
+- minor fix
+- search package as require does
+
 v1.9.2
 ========
 - update semver and nofs
