@@ -57,11 +57,8 @@ parsePackage = (name, ver, type) ->
         return null unless declareVer
 
         # version installed
-        try
-            pack = util.readPackageFile name
-            installedVer = pack.version
-        catch
-            installedVer = null
+        pack = util.readPackageFile name
+        installedVer = if pack then pack.version else null
 
     {
         packageName: name

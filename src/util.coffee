@@ -1,6 +1,8 @@
 "use strict"
 
 {path, Promise} = fs = require 'nofs'
+Module = require 'module'
+nodeModulesPaths = Module._nodeModulePaths process.cwd()
 
 isWin = process.platform is 'win32'
 warnSign = if isWin then '‼ ' else '⚠  '
@@ -43,7 +45,12 @@ padLeft = (str, n) ->
     strLen = str.length
     if strLen >= n then str else repeat(' ', n - strLen) + str
 
+debug = ->
+    if process.env.DEBUG in [true, 'on', 'true']
+        console.log arguments...
+
 module.exports = {
+    debug
     cwdFilePath
     errorSign
     warnSign
@@ -61,18 +68,22 @@ module.exports = {
             'http://' + name
 
     readPackageFile: (name) ->
-        filePath = if name then cwdFilePath('node_modules', name, 'package.json') else cwdFilePath 'package.json'
-        require filePath
+        if not name
+            require cwdFilePath 'package.json'
+        else
+            nodeModulesPaths = Module._nodeModulePaths process.cwd()
+            for baseDir in nodeModulesPaths
+                packPath = path.join baseDir, name, 'package.json'
+                debug packPath
+                try
+                    return require packPath
+            null
 
     print: (deps, showWarn = true) ->
         deps.map (dep) ->
             dep.needUpdate and console.log "[#{dep.type}]".green, padRight(dep.packageName.cyan, 40),
                 padLeft(dep.baseVer.toString(), 8).green, '->', dep.newVer.toString().red
             showWarn and dep.warnMsg and logWarn "#{dep.warnMsg}"
-
-    debug: ->
-        if process.env.DEBUG in [true, 'on', 'true']
-            console.log arguments...
 
     curVer: do ->
         require('../package.json').version
