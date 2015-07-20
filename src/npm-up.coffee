@@ -153,7 +153,7 @@ npmUp = ->
         if option.install
             install = require './install'
             chain = chain.then ->
-                install toUpdate
+                install toUpdate, option.cwd
 
         chain
 
