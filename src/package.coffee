@@ -38,6 +38,6 @@ module.exports.readPackageFile = (name = '', baseDir = '.') ->
 
 module.exports.getPackageVersion = (name, baseDir) ->
     try
-        readPackageFile(name, baseDir).version
-    catch
+        module.exports.readPackageFile(name, baseDir).version
+    catch e
         null
