@@ -59,9 +59,10 @@ module.exports = {
     logSucc
     logWarn
 
-    getRegistry: (name = 'npm') ->
+    getRegistry: (name) ->
         name = name.trim()
-        if host[name] then host[name]
+        if name is '' then ''
+        else if host[name] then host[name]
         else if protocolReg.test name
             name
         else

@@ -4,9 +4,10 @@ request = require 'kiss-request'
 {Promise} = require 'nofs'
 require.Promise = Promise
 {getRegistry, debug} = require './util'
+url = require 'url'
 
 module.exports = (name, mirror = 'npm') ->
-    link = mirror + "/-/package/#{name}/dist-tags"
+    link = url.resolve mirror, "/-/package/#{name}/dist-tags"
     debug link
 
     request link
