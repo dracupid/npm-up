@@ -67,18 +67,6 @@ module.exports = {
         else
             'http://' + name
 
-    readPackageFile: (name) ->
-        if not name
-            require cwdFilePath 'package.json'
-        else
-            nodeModulesPaths = Module._nodeModulePaths process.cwd()
-            for baseDir in nodeModulesPaths
-                packPath = path.join baseDir, name, 'package.json'
-                debug packPath
-                try
-                    return require packPath
-            null
-
     print: (deps, showWarn = true) ->
         deps.map (dep) ->
             dep.needUpdate and console.log "[#{dep.type}]".green, padRight(dep.packageName.cyan, 40),

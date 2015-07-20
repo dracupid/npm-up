@@ -8,6 +8,7 @@ semver = require 'semver'
 npm = require './npm'
 util = require './util'
 checkVer = require './checkVersion'
+packageMgr = require './package'
 
 option = {}
 globalPackage = {}
@@ -28,6 +29,8 @@ parseOpts = (opts = {}) ->
         cwd: process.cwd()
         warning: true
         mirror: ''
+
+    opts.mirror = util.getRegistry opts.mirror
 
     opts.all and
         _.assign opts,
@@ -57,8 +60,7 @@ parsePackage = (name, ver, type) ->
         return null unless declareVer
 
         # version installed
-        pack = util.readPackageFile name
-        installedVer = if pack then pack.version else null
+        installedVer = packageMgr.getPackageVersion name
 
     {
         packageName: name
@@ -77,12 +79,14 @@ formatPackages = (obj, type) ->
 
 prepare = ->
     try
-        globalPackage = util.readPackageFile null
+        globalPackage = packageMgr.readPackageFile()
     catch e
-        if e instanceof SyntaxError
-            throw new Error 'parse package.json failed!'
-        else
-            throw new Error 'package.json Not Found!'
+        throw new Error (
+            if e instanceof SyntaxError
+                'unvalid package.json!'
+            else
+                'package.json Not Found!'
+        )
 
     deps = []
     if option.dep
@@ -233,7 +237,7 @@ module.exports = (opt) ->
         global: Boolean opt.global
 
     if option.mirror
-        npmOpt.registry = util.getRegistry(option.mirror)
+        npmOpt.registry = option.mirror
 
     util.promisify(npm.load) npmOpt
     .then ->

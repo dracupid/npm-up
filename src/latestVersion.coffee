@@ -6,7 +6,7 @@ require.Promise = Promise
 {getRegistry, debug} = require './util'
 
 module.exports = (name, mirror = 'npm') ->
-    link = getRegistry(mirror) + "/-/package/#{name}/dist-tags"
+    link = mirror + "/-/package/#{name}/dist-tags"
     debug link
 
     request link
@@ -15,7 +15,7 @@ module.exports = (name, mirror = 'npm') ->
         JSON.parse(data).latest or ''
     .catch (e) ->
         if e.code is 'TIMEOUT'
-            Promise.reject new Error "Request to #{getRegistry(mirror)} timeout. Please use an alternative registry by -m <mirror>"
+            Promise.reject new Error "Request to #{mirror} timeout. Please use an alternative registry by -m <mirror>"
         else if e.code is 'UNWANTED_STATUS_CODE'
             Promise.resolve ''
         else
