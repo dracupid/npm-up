@@ -14,6 +14,19 @@ Check the latest version of dependencies on [npm](https://www.npmjs.com) gracefu
 npm i npm-up -g
 ```
 
+## Features
+- Much faseter than npm.
+- Do not depend on a local npm, much smaller.
+- Check the latest version of dependencies either locally or gloablly, and update `package.json`.
+    + dependencies
+    + devDependencies
+    + optionalDependencies
+- Install latest modules.
+- Reasonable warnings for inconsistency.
+- Use a mirror registy to speed up, especially for Chinese users.
+- Cache to speed up repeated operations.
+- Designed for OCD.
+
 ## Usage
 1. Run `npm-up [options]` in a project directory with a `package.json` file. For example: `npm-up -iw`. <br/>
 If no options are configured, it will only check the latest version and do nothing but display.
@@ -21,6 +34,7 @@ If no options are configured, it will only check the latest version and do nothi
 2. Run `npm-up -g` to check globally npm packages.
 
 3. Run `npm-up -A` to check all projects in sub directories.
+
 
 #### commands:
 <%
@@ -37,8 +51,7 @@ function format(str){
 <%= format(help[3])%>
 ```
 
-
-## Use mirror registry
+## Use a mirror registry
 
 First of all, You can use something like
 ```
@@ -46,7 +59,7 @@ npm config set registry http://registry.npm.taobao.org
 ```
 to set a npm registry globally to speed up npm's requests, such as version searching and package downloading, especially for Chinese users.<br/>
 
-However, it may cause some trouble (you can't publish unless use `-reg` every time, because a mirror is usually read-only).
+However, it may cause some trouble (you can't publish unless using `-reg` every time, because a mirror is usually read-only).
 
 In npm-up
 - You can use a built-in host with name:
@@ -66,7 +79,8 @@ Fully support semantic versions. Eg:
 ```
 *
 ^1.5.4
-~2.3
+~2.3.0
+>= 4.4.5
 0.9.7
 0.5.0-alpha1
 '' //regard as *
@@ -78,12 +92,12 @@ Notice that a **ranges** version may be overridden by Caret Ranges(^) when writt
 1.2 - 2.3.4         // Hyphen Ranges
 1.x                 // X-Ranges
 ```
-- However, the semantic meaning of the ranges may somehow be **ignored**, because **I just want the latest version**.
+- [OCD design] However, the semantic meaning of the ranges may somehow be **ignored**, because **I just want the latest version**.
 - If the version declared in the `package.json` is not recognizable, the corresponding package will be **excluded**.
-- More info: [semver](https://github.com/npm/node-semver/blob/master/README.md#ranges)
+- More info about _version_: [semver](https://github.com/npm/node-semver/blob/master/README.md#ranges)
 
 ## Rules
-0. Take 3 versions into consideration for one package:
+0. Take 3 versions about one package into consideration:
     - Version declared in `package.json`.
     - Version of the package installed.
     - The latest version of the package.
@@ -92,7 +106,7 @@ Notice that a **ranges** version may be overridden by Caret Ranges(^) when writt
 
 0. If the version declared is `*`, it will not be overwritten, even when the flag `--lock` is set. If you really want to change it, use `--lock-all` flag.
 
-0. The prefix `^ ~` of the version will be preserved when written back, unless flag `--lock` is set.
+0. The prefix, such as `^ ~ > <`, of the version will be preserved when written back, unless flag `--lock` is set.
 
 0. If an installed package's version is different from the version declared, there comes a warning.
 
