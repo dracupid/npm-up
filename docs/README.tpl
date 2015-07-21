@@ -1,7 +1,7 @@
 npm-up
 ======
 
-Check the latest version of dependencies on [npm](https://www.npmjs.com) gracefully, and do whatever you want.
+Check the latest versions of dependencies on [npm](https://www.npmjs.com) gracefully, and do whatever you want.
 
 [![NPM version](https://badge.fury.io/js/npm-up.svg)](https://www.npmjs.com/package/npm-up)
 [![Downloads](http://img.shields.io/npm/dm/npm-up.svg)](https://www.npmjs.com/package/npm-up)
@@ -17,7 +17,7 @@ npm i npm-up -g
 ## Features
 - Much faseter than npm.
 - Do not depend on a local npm, much smaller.
-- Check the latest version of dependencies either locally or gloablly, and update `package.json`.
+- Check the latest versions of dependencies either locally or gloablly, and update `package.json`.
     + dependencies
     + devDependencies
     + optionalDependencies

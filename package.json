@@ -1,7 +1,7 @@
 {
   "name": "npm-up",
   "version": "1.9.3",
-  "description": "Check the latest version of dependencies on npm gracefully, and do whatever you want.",
+  "description": "Check the latest versions of dependencies on npm gracefully, and do whatever you want.",
   "main": "./dist/npm-up.js",
   "bin": {
     "npm-up": "./bin/bin.js"
