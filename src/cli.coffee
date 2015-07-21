@@ -31,7 +31,6 @@ cmder
     .option '-m, --mirror <mirror host or name>', "Use a mirror registry host"
     .option '--no-cache', "Disable version cache temporarily"
     .option '--no-warning', "Disable warning"
-    .option '-b, --backup [fileName]', "Backup package.json before writing back, default name is package.bak.json"
     .option '-d, --dep', "Check dependencies only"
     .option '-D, --dev', "Check devDependencies only"
     .option '-s, --silent', "Do not print any log"

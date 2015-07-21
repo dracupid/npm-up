@@ -22,7 +22,6 @@ parseOpts = (opts = {}) ->
         all: no # w + i + l
         devDep: yes, dep: yes
         silent: no
-        backUp: no
         lockAll: false
         cache: true
         logLevel: 'error'
@@ -143,10 +142,6 @@ npmUp = ->
                     switch dep.type
                         when 'S' then globalPackage.dependencies[dep.packageName] = toWrite
                         when 'D' then globalPackage.devDependencies[dep.packageName] = toWrite
-
-                if option.backUp
-                    backFile = if _.isString option.backUp then util.cwdFilePath option.backUp else packageBakFile
-                    fs.copy packageFile, backFile
             .then ->
                 ['dependencies', 'devDependencies'].forEach (k) ->
                     delete globalPackage[k] if _.isEmpty globalPackage[k]
