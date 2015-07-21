@@ -20,7 +20,7 @@ parseOpts = (opts = {}) ->
         install: no
         lock: no
         all: no # w + i + l
-        devDep: yes, dep: yes
+        devDep: yes, dep: yes, bundle: yes, optional: yes
         silent: no
         lockAll: false
         cache: true
@@ -92,6 +92,11 @@ prepare = ->
         deps = deps.concat formatPackages globalPackage.dependencies, 'S'
     if option.devDep
         deps = deps.concat formatPackages globalPackage.devDependencies, 'D'
+    if option.bundle
+        deps = deps.concat formatPackages globalPackage.bundledDependencies, 'B'
+        deps = deps.concat formatPackages globalPackage.bundleDependencies, 'B'
+    if option.optional
+        deps = deps.concat formatPackages globalPackage.optionalDependencies, 'O'
 
     deps = _.compact deps
 
@@ -142,8 +147,11 @@ npmUp = ->
                     switch dep.type
                         when 'S' then globalPackage.dependencies[dep.packageName] = toWrite
                         when 'D' then globalPackage.devDependencies[dep.packageName] = toWrite
+                        when 'B' then globalPackage.bundledDependencies[dep.packageName] = toWrite
+                        when 'O' then globalPackage.optionalDependencies[dep.packageName] = toWrite
             .then ->
-                ['dependencies', 'devDependencies'].forEach (k) ->
+                delete globalPackage.bundleDependencies
+                ['dependencies', 'devDependencies', 'bundledDependencies', 'optionalDependencies'].forEach (k) ->
                     delete globalPackage[k] if _.isEmpty globalPackage[k]
                 fs.outputJSON packageFile, globalPackage, space: 2
             .then ->
@@ -228,12 +236,11 @@ npmUpGlobal = ->
             require('./install') toUpdate
 
 module.exports = (opt) ->
-    url = require 'url'
     option = parseOpts opt
 
     npmOpt =
         loglevel: option.logLevel
-        global: Boolean opt.global
+        global: not not opt.global
 
     if option.mirror
         npmOpt.registry = option.mirror

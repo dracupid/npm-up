@@ -43,9 +43,10 @@ dump    dump cache
 -m, --mirror <mirror host or name>  Use a mirror registry host
 --no-cache                          Disable version cache temporarily
 --no-warning                        Disable warning
--b, --backup [fileName]             Backup package.json before writing back, default name is package.bak.json
 -d, --dep                           Check dependencies only
 -D, --dev                           Check devDependencies only
+-b, --bundled                       Check bundledDependencies only
+-o, --optional                      Check optionalDependencies only
 -s, --silent                        Do not print any log
 -c, --cwd <cwd>                     Set current working directory
 -L, --logLevel <level>              Set loglevel for npm, default is error

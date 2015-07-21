@@ -33,6 +33,8 @@ cmder
     .option '--no-warning', "Disable warning"
     .option '-d, --dep', "Check dependencies only"
     .option '-D, --dev', "Check devDependencies only"
+    .option '-b, --bundled', "Check bundledDependencies only"
+    .option '-o, --optional', "Check optionalDependencies only"
     .option '-s, --silent', "Do not print any log"
     .option '-c, --cwd <cwd>', "Set current working directory"
     .option '-L, --logLevel <level>', "Set loglevel for npm, default is error"
@@ -46,13 +48,16 @@ cmder.parse process.argv
 opts = do (cmder) ->
     opts = cmder
     opts.lock = cmder.lock or cmder.lockAll
-    cmder.dep and opts.devDep = no
-    cmder.dev and opts.dep = no
     cmder.exclude and opts.exclude = cmder.exclude
     cmder.only and opts.include = cmder.only
 
-    if cmder.dep and cmder.dev
-        opts.devDep = ops.dep = yes
+    depNames = ['dep', 'dev', 'bundled', 'optional']
+    res = depNames.reduce (res, cur) ->
+        res = res or cur
+    , false
+
+    if res then depNames.forEach (name) -> opts[name] = not not cmder[name]
+
     opts
 
 p = require('./updateSelf')(opts.mirror)
