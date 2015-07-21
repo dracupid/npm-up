@@ -1,3 +1,10 @@
+v2.0.0
+=======
+- faster, more stable
+- **remove** useless backup function
+- support optionalDependencies
+- bug fix and optimization
+
 v1.9.3
 =======
 - minor fix
