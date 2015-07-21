@@ -35,7 +35,6 @@ cmder
     .option '--no-warning', "Disable warning"
     .option '-d, --dep', "Check dependencies only"
     .option '-D, --dev', "Check devDependencies only"
-    .option '-b, --bundled', "Check bundledDependencies only"
     .option '-o, --optional', "Check optionalDependencies only"
     .option '-s, --silent', "Do not print any log"
     .option '-c, --cwd <cwd>', "Set current working directory"
@@ -53,7 +52,7 @@ opts = do (cmder) ->
     cmder.exclude and opts.exclude = cmder.exclude
     cmder.only and opts.include = cmder.only
 
-    depNames = ['dep', 'dev', 'bundled', 'optional']
+    depNames = ['dep', 'dev', 'optional']
     res = depNames.reduce (res, cur) ->
         res = res or cmder[cur]
         res

@@ -45,7 +45,6 @@ dump    dump cache
 --no-warning                        Disable warning
 -d, --dep                           Check dependencies only
 -D, --dev                           Check devDependencies only
--b, --bundled                       Check bundledDependencies only
 -o, --optional                      Check optionalDependencies only
 -s, --silent                        Do not print any log
 -c, --cwd <cwd>                     Set current working directory
