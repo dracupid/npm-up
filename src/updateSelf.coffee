@@ -1,7 +1,6 @@
 "use strict"
 
 require 'colors'
-{Promise} = require 'nofs'
 semver = require 'semver'
 
 util = require './util'
@@ -13,7 +12,6 @@ module.exports = (mirror) ->
     promise = checkVer ['npm-up'], true, mirror, interval
     .then ([latest]) ->
         installed = util.curVer
-        console.log installed, latest
         if semver.lt installed, latest
             "\n>> A new version of npm-up is available:".yellow +
                 " #{('' + installed).green} --> #{('' + latest).red}"

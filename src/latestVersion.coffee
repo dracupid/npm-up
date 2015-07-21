@@ -2,8 +2,7 @@
 
 request = require 'kiss-request'
 {Promise} = require 'nofs'
-require.Promise = Promise
-{getRegistry, debug} = require './util'
+{debug} = require './util'
 url = require 'url'
 
 module.exports = (name, mirror = 'npm') ->
