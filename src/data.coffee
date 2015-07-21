@@ -1,6 +1,7 @@
 "use strict"
 
-{path} = fs = require 'nofs'
+fs = require 'nofs'
+path = require 'path'
 
 home = if process.platform is 'win32' then process.env.USERPROFILE else process.env.HOME
 

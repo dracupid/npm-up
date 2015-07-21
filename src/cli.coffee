@@ -64,10 +64,7 @@ opts = do (cmder) ->
 
     opts
 
-p = require('./updateSelf')(opts.mirror)
-require('./npm-up') opts
-.then ->
-    p.log()
+require('./npm-up') opts, true
 .catch (e) ->
     if e then console.error e.stack or e
     process.exit 1

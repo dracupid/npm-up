@@ -235,7 +235,7 @@ npmUpGlobal = ->
 
             require('./install') toUpdate
 
-module.exports = (opt) ->
+module.exports = (opt, checkUpdate = false) ->
     option = parseOpts opt
 
     npmOpt =
@@ -248,6 +248,10 @@ module.exports = (opt) ->
     util.promisify(npm.load) npmOpt
     .then ->
         option.mirror = npm.config.get('registry')[..-2]
-        if opt.global then npmUpGlobal()
-        else if opt.All then npmUpSubDir()
-        else npmUp()
+        promise =
+            if opt.global then npmUpGlobal()
+            else if opt.All then npmUpSubDir()
+            else npmUp()
+        if checkUpdate
+            p = require('./updateSelf')(option.mirror)
+            promise.then -> p.log()

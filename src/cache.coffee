@@ -4,9 +4,7 @@
 
 cache.verCache ?= {}
 
-expire = 20 * 60 * 1000 # 20 min
-
-get = (name) ->
+get = (name, expire = 1000) ->
     info = cache.verCache[name]
     if info
         interval = info.expire or expire
