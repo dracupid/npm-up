@@ -1,7 +1,6 @@
 "use strict"
 
 cmder = require 'commander'
-{cache, writeCacheSync, cachePath} = require './data'
 
 cmder
     .usage "[command] [options]"
@@ -10,6 +9,7 @@ cmder
     .command 'clean'
     .description 'clean cache'
     .action ->
+        {writeCacheSync} = require './data'
         writeCacheSync {}
         process.exit 0
 cmder
@@ -17,8 +17,10 @@ cmder
     .description 'dump cache'
     .action ->
         require 'colors'
-        console.log "npm-up cache: ".cyan + cachePath.yellow
-        console.log cache.verCache or ''
+        util = require 'util'
+        {cache, cachePath} = require './data'
+        console.log cachePath.yellow
+        console.log util.inspect (cache.verCache or {}), colors: yes
         process.exit 0
 cmder
     .option '-g, --global', "Check global packages"
@@ -53,10 +55,12 @@ opts = do (cmder) ->
 
     depNames = ['dep', 'dev', 'bundled', 'optional']
     res = depNames.reduce (res, cur) ->
-        res = res or cur
+        res = res or cmder[cur]
+        res
     , false
 
     if res then depNames.forEach (name) -> opts[name] = not not cmder[name]
+    else depNames.forEach (name) -> opts[name] = not cmder[name]
 
     opts
 
