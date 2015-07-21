@@ -196,13 +196,17 @@ npmUpGlobal = ->
 
     util.logInfo 'Searching global packages...'
 
-    util.promisify(npm.commands.ls) null, true
-    .then (data) ->
-        globalDep = data.dependencies or data[0].dependencies
+    # In npm@3, global modules is not flatten.
+    util.allPackagesIn npm.globalDir
+    .then (packages) ->
+        globalDep = packages.reduce (obj, pack) ->
+            obj[pack.name] = pack.version
+            obj
+        , {}
         console.log (Object.keys(globalDep).join ' ').cyan
 
         deps = _.map globalDep, (val, key) ->
-            parsePackage key, val.version, 'g'
+            parsePackage key, val, 'g'
         util.logInfo 'Checking packages\' version...'
 
         checkVer _.compact(deps), option.cache, option.mirror

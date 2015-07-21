@@ -85,5 +85,14 @@ module.exports = {
         catch {errno}
             errno isnt -13
 
+    allPackagesIn: (dir) ->
+        fs.glob path.join dir, '*/package.json'
+        .then (files) ->
+            files.map (f) ->
+                try require f
+                catch
+                    null
+            .filter (f) -> not not f
+
     promisify: fs.PromiseUtils.promisify
 }
