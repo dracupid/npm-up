@@ -2,6 +2,9 @@ v2.0.0
 =======
 - faster, more stable
 - **remove** useless backup function
+- **remove** useless slicent option
+- use [chalk](https://github.com/chalk/chalk) to replace [colors](https://github.com/Marak/colors.js)
+- better tips
 - support optionalDependencies
 - bug fix and optimization
 
