@@ -12,7 +12,7 @@ module.exports = (task, option)->
         kit.exec "coffee src/cli.coffee -h"
         .then ({stdout})->
             help = stdout.split /\n\s*\w*:/
-            readme = kit._.template('' + kit.readFileSync('./docs/README.tpl'))(help: help)
+            readme = kit._.template(kit.readFileSync('./docs/README.tpl', encoding: 'utf8'))({help})
             kit.writeFile 'README.md', readme
 
     task 'default', ['build', 'help']
