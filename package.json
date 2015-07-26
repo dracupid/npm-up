@@ -8,24 +8,24 @@
   },
   "preferGlobal": true,
   "scripts": {
-    "test": "node ci.js",
-    "prepublish": "no build -a"
+    "prepublish": "no build -a",
+    "test": "node ci.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/dracupid/npm-up.git"
   },
   "keywords": [
-    "npm",
+    "dependency",
     "install",
     "latest",
+    "npm",
     "update",
-    "version",
-    "dependency"
+    "version"
   ],
   "files": [
-    "dist",
-    "bin"
+    "bin",
+    "dist"
   ],
   "author": "Dracupid <dracupid@gmail.com>",
   "license": "MIT",
@@ -35,18 +35,17 @@
   "homepage": "https://github.com/dracupid/npm-up",
   "dependencies": {
     "chalk": "^1.1.0",
-    "colors": "^1.1.2",
     "commander": "^2.8.1",
     "global-npm": "^0.1.1",
     "kiss-request": "^0.1.0",
-    "nofs": "0.9.2",
+    "nofs": "0.9.4",
     "semver": "^5.0.1",
     "underscore": "^1.8.3"
   },
   "devDependencies": {
-    "dracupid-no": "git+https://github.com/dracupid/dracupid-no.git",
     "coffee-script": "*",
     "coffeelint": "1.10.1",
+    "dracupid-no": "git+https://github.com/dracupid/dracupid-no.git",
     "nokit": "0.9.2"
   },
   "engines": {

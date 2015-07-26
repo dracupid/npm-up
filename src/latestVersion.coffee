@@ -5,7 +5,7 @@ request = require 'kiss-request'
 {debug} = require './util'
 url = require 'url'
 
-module.exports = (name, mirror = 'npm') ->
+module.exports = (name, mirror) ->
     link = url.resolve mirror, "/-/package/#{name}/dist-tags"
     debug link
 
