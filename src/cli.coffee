@@ -16,10 +16,10 @@ cmder
     .command 'dump'
     .description 'dump cache'
     .action ->
-        require 'colors'
+        chalk = require 'chalk'
         util = require 'util'
         {cache, cachePath} = require './data'
-        console.log cachePath.yellow
+        console.log chalk.bold chalk.yellow('Cache path:'), chalk.magenta(cachePath)
         console.log util.inspect (cache.verCache or {}), colors: yes
         process.exit 0
 cmder

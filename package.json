@@ -34,6 +34,7 @@
   },
   "homepage": "https://github.com/dracupid/npm-up",
   "dependencies": {
+    "chalk": "^1.1.0",
     "colors": "^1.1.2",
     "commander": "^2.8.1",
     "global-npm": "^0.1.1",

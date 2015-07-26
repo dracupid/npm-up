@@ -1,6 +1,8 @@
 "use strict"
 
 semver = require 'semver'
+chalk = require 'chalk'
+
 verRe = /^[><=\s~^]*([\d\w.-\s]*)$/
 
 module.exports =
@@ -30,11 +32,11 @@ module.exports =
                 else
                     dep.needUpdate = semver.lt dep.installedVer, dep.newVer
                     if semver.lt dep.installedVer, declareVer
-                        dep.warnMsg = "Installed #{dep.packageName.cyan} is outdated:" +
-                            " Installed #{dep.installedVer.red} --> Declared #{declareVer.green}"
+                        dep.warnMsg = chalk.yellow("updgrade") + " #{chalk.cyan dep.packageName}:" +
+                            " #{chalk.red dep.installedVer}(installed) --> #{chalk.green declareVer}(declared)"
                     else if semver.gt dep.installedVer, declareVer
-                        dep.warnMsg = "Declared #{dep.packageName.cyan} is outdated:" +
-                            " Declared #{declareVer.green} --> Installed #{dep.installedVer.red}"
+                        dep.warnMsg = chalk.yellow("bump") + " #{chalk.cyan dep.packageName}:" +
+                            " #{chalk.red declareVer}(declared) --> #{chalk.green dep.installedVer}(installed)"
                 return dep
 
         # Other Range -> 'not installed'
@@ -47,9 +49,9 @@ module.exports =
         else
             dep.needUpdate = semver.lt dep.installedVer, dep.newVer
             if semver.ltr dep.installedVer, declareVer
-                dep.warnMsg = "Installed #{dep.packageName.cyan} is outdated:" +
-                    " Installed #{dep.installedVer.red} --> Declared #{declareVer.green}"
+                dep.warnMsg = chalk.yellow("updgrade") + " #{chalk.cyan dep.packageName}:" +
+                    " #{chalk.red dep.installedVer}(installed) --> #{chalk.green declareVer}(declared)"
             else if semver.gtr dep.installedVer, declareVer
-                dep.warnMsg = "Declared #{dep.packageName.cyan} is outdated:" +
-                    " Declared #{declareVer.green} --> Installed #{dep.installedVer.red}"
+                dep.warnMsg = chalk.yellow("bump") + " #{chalk.cyan dep.packageName}:" +
+                    " #{chalk.red declareVer}(declared) --> #{chalk.green dep.installedVer}(installed)"
         dep

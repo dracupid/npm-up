@@ -1,6 +1,6 @@
 "use strict"
 
-require 'colors'
+chalk = require 'chalk'
 semver = require 'semver'
 
 util = require './util'
@@ -11,10 +11,10 @@ interval = 12 * 3600 * 1000 # 12 hours
 module.exports = (mirror) ->
     promise = checkVer ['npm-up'], true, mirror, interval
     .then ([latest]) ->
-        installed = util.curVer
+        installed = util.curVer + ''
         if semver.lt installed, latest
-            "\n>> A new version of npm-up is available:".yellow +
-                " #{('' + installed).green} --> #{('' + latest).red}"
+            chalk.yellow.bold "\n>> New npm-up available:",
+                chalk.green(installed), chalk.grey "(current: #{latest})"
         else ""
     .catch -> return
 

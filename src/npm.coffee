@@ -1,5 +1,5 @@
 npm = require 'global-npm'
-require 'colors'
-console.log "npm version:".yellow.bold,  "#{npm.version or 'Unknown'}".magenta.bold
+chalk = require 'chalk'
+console.log chalk.bold chalk.yellow("npm version:"),  chalk.magenta("#{npm.version or 'Unknown'}")
 
 module.exports = npm

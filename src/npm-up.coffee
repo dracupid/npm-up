@@ -1,6 +1,6 @@
 "use strict"
 
-require 'colors'
+chalk = require 'chalk'
 {path, Promise: global.Promise} = fs = require 'nofs'
 global._ = require 'underscore'
 semver = require 'semver'
@@ -115,7 +115,7 @@ npmUp = ->
     try
         deps = prepare()
     catch e
-        console.error (util.errorSign + " #{e}").red
+        console.error chalk.red (util.errorSign + " #{e}")
         return Promise.reject()
 
     util.logInfo 'Checking packages\' version...'
@@ -173,13 +173,13 @@ npmUpSubDir = ->
             .catch -> return
         , Promise.resolve()
     .then ->
-        console.log 'FINISH'.green
+        console.log chalk.green 'FINISH'
 
 
 npmUpGlobal = ->
     if option.install and not util.checkPrivilege()
-        console.error (util.errorSign + " Permission Denied").red
-        console.error "Please try running this command again as root/Administrator".yellow
+        console.error chalk.red (util.errorSign + " Permission Denied")
+        console.error chalk.yellow "Please try running this command again as root/Administrator"
         process.exit 1
 
     util.logInfo 'Searching global packages...'
@@ -191,7 +191,7 @@ npmUpGlobal = ->
             obj[pack.name] = pack.version
             obj
         , {}
-        console.log (Object.keys(globalDep).join ' ').cyan
+        console.log chalk.cyan Object.keys(globalDep).join ' '
 
         deps = _.map globalDep, (val, key) ->
             parsePackage key, val, 'g'
@@ -214,9 +214,9 @@ npmUpGlobal = ->
                 name.indexOf('npm@') isnt 0
 
             if oldLen isnt toUpdate.length
-                util.logWarn "It may cause a broken error when installing npm by npm-up sometimes. ".yellow +
-                    "Please use ".yellow + "[sudo] npm i npm -g".cyan + " instead.".yellow
-                console.log "If you know the reason, please put forward an issue.".green
+                util.logWarn chalk.yellow "It may cause a broken error to install npm by npm-up sometimes.",
+                    "Please use", chalk.cyan("[sudo] npm i npm -g"), "instead."
+                console.log chalk.green "   If you know the reason, please put forward an issue."
 
             require('./install') toUpdate
 

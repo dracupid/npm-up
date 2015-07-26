@@ -2,6 +2,7 @@
 
 {path, Promise} = fs = require 'nofs'
 Module = require 'module'
+chalk = require 'chalk'
 nodeModulesPaths = Module._nodeModulePaths process.cwd()
 
 isWin = process.platform is 'win32'
@@ -14,11 +15,11 @@ cwdFilePath = (names...) ->
     path.join.apply path, [process.cwd()].concat names
 
 logInfo = (str) ->
-    console.log '\n>> '.yellow.bold + str.green.bold
+    console.log chalk.bold chalk.yellow('\n>> ') + chalk.green(str)
 logSucc = (str) ->
-    console.log "\n#{okSign}#{str}".green.bold
+    console.log chalk.green.bold "\n#{okSign}#{str}"
 logWarn = (str) ->
-    console.log warnSign.yellow.bold + str.white.bold
+    console.log chalk.grey chalk.yellow(warnSign) + str
 
 host =
     npm: 'http://registry.npmjs.org'
@@ -70,8 +71,8 @@ module.exports = {
 
     print: (deps, showWarn = true) ->
         deps.map (dep) ->
-            dep.needUpdate and console.log "[#{dep.type}]".green, padRight(dep.packageName.cyan, 40),
-                padLeft(dep.baseVer.toString(), 8).green, '->', dep.newVer.toString().red
+            dep.needUpdate and console.log chalk.green("[#{dep.type}]"), padRight(chalk.cyan(dep.packageName), 35),
+                chalk.red(padLeft(dep.baseVer.toString(), 8)), '->', chalk.green(dep.newVer.toString())
             showWarn and dep.warnMsg and logWarn "#{dep.warnMsg}"
 
     curVer: do ->
