@@ -39,7 +39,6 @@ parseOpts = (opts = {}) ->
 
     opts.exclude = _.compact opts.exclude
     opts.include and opts.include = _.compact opts.include
-    opts.silent and console.log = -> return
 
     opts
 
