@@ -162,26 +162,17 @@ npmUp = ->
 npmUpSubDir = ->
     process.chdir option.cwd
 
-    dirs = []
-
-    fs.eachDir '*',
-        iter: (info) ->
-            if info.isDir
-                dirs.push info.path
-    .then ->
-        cwd = process.cwd()
-        chain = Promise.resolve()
-
-        dirs.forEach (odir) ->
-            dir = path.join cwd, odir
-            dirPack = path.join dir, 'package.json'
-            if fs.fileExistsSync dirPack
-                chain = chain.then ->
-                    console.log '\n', odir
-                    option.cwd = dir
-                    npmUp()
-                .catch -> return
-        chain
+    fs.glob '*/package.json'
+    .then (packs) ->
+        packs.reduce (prev, cur) ->
+            cwd = process.cwd()
+            dir = path.dirname cur
+            prev.then ->
+                console.log '\n', path.basename dir
+                option.cwd = path.join cwd, dir
+                npmUp()
+            .catch -> return
+        , Promise.resolve()
     .then ->
         console.log 'FINISH'.green
 
