@@ -172,8 +172,6 @@ npmUpSubDir = ->
                 npmUp()
             .catch -> return
         , Promise.resolve()
-    .then ->
-        console.log chalk.green 'FINISH'
 
 
 npmUpGlobal = ->
