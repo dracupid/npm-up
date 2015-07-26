@@ -1,6 +1,7 @@
 "use strict"
 
 semver = require 'semver'
+verRe = /^[><=\s~^]*([\d\w.-\s]*)$/
 
 module.exports =
     version: (dep) ->
@@ -16,7 +17,7 @@ module.exports =
                 dep.needUpdate = semver.lt dep.installedVer, dep.newVer
             return dep
 
-        else if m = declareVer.match /^[><=\s~^]*([\d\w.-\s]*)$/
+        else if m = declareVer.match verRe
             declareVer = m[1]
             if semver.valid declareVer
                 # 'X.X.X' -> 'not installed'
