@@ -3,7 +3,7 @@
 fs = require 'nofs'
 path = require 'path'
 
-home = if process.platform is 'win32' then process.env.USERPROFILE else process.env.HOME
+home = process.env[if process.platform is 'win32' then 'USERPROFILE' else 'HOME']
 
 cachePath = path.join home, '.npmupcache'
 

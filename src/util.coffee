@@ -72,7 +72,7 @@ module.exports = {
     print: (deps, showWarn = true) ->
         deps.map (dep) ->
             dep.needUpdate and console.log chalk.green("[#{dep.type}]"), padRight(chalk.cyan.bold(dep.packageName), 40),
-                chalk.red(padLeft(dep.baseVer.toString(), 8)), '->', chalk.green(dep.newVer.toString())
+                chalk.red(padLeft(dep.baseVer.toString(), 8)), '→', chalk.green(dep.newVer.toString())
             showWarn and dep.warnMsg and logWarn "#{dep.warnMsg}"
 
     curVer: do ->

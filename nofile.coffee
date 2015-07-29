@@ -15,4 +15,8 @@ module.exports = (task, option)->
             readme = kit._.template(kit.readFileSync('./docs/README.tpl', encoding: 'utf8'))({help})
             kit.writeFile 'README.md', readme
 
+    task 'dev', 'run coffee source', ->
+        kit.spawn 'coffee', ['src/cli.coffee']
+
+
     task 'default', ['build', 'help']

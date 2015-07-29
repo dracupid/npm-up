@@ -181,7 +181,7 @@ npmUpGlobal = ->
 
     util.logInfo 'Searching global packages...'
 
-    # In npm@3, global modules is not flatten.
+    # Even in npm@3, global modules is not flatten.
     util.allPackagesIn npm.globalDir
     .then (packages) ->
         globalDep = packages.reduce (obj, pack) ->
