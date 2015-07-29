@@ -26,7 +26,7 @@ writeCacheSync = (c = cache) ->
     try
         fs.outputJSONSync cachePath, c, space: 2
     catch e
-        console.log e
+        console.error e
 
 module.exports = {
     cache

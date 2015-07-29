@@ -73,7 +73,7 @@ parsePackage = (name, ver, type) ->
 
 formatPackages = (obj, type) ->
     _.map obj, (version, name) ->
-        pack = parsePackage name, version, type
+        parsePackage name, version, type
 
 prepare = ->
     try
@@ -134,7 +134,6 @@ npmUp = ->
 
         if option.writeBack
             packageFile = util.cwdFilePath 'package.json'
-            packageBakFile = util.cwdFilePath 'package.bak.json'
 
             chain = chain.then ->
                 deps.forEach (dep) ->
