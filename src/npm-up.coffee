@@ -4,6 +4,9 @@ chalk = require 'chalk'
 {path, Promise: global.Promise} = fs = require 'nofs'
 global._ = require 'underscore'
 semver = require 'semver'
+spinner = require './spinner'
+readline = require 'readline'
+
 
 npm = require './npm'
 util = require './util'
@@ -118,9 +121,12 @@ npmUp = ->
         console.error chalk.red (util.errorSign + " #{e}")
         return Promise.reject()
 
-    util.logInfo 'Checking packages\' version...'
+    spinner.start()
+
     checkVer deps, option.cache, option.mirror
     .then (newDeps) ->
+        spinner.stop()
+
         deps = newDeps
         util.print deps, option.warning
 
@@ -166,7 +172,7 @@ npmUpSubDir = ->
             cwd = process.cwd()
             dir = path.dirname cur
             prev.then ->
-                console.log '\n', path.basename dir
+                console.log '\n' + util.circleSign, chalk.bold.underline path.basename dir
                 option.cwd = path.join cwd, dir
                 npmUp()
             .catch -> return
@@ -192,10 +198,12 @@ npmUpGlobal = ->
 
         deps = _.map globalDep, (val, key) ->
             parsePackage key, val, 'g'
-        util.logInfo 'Checking packages\' version...'
 
+        spinner.start()
         checkVer _.compact(deps), option.cache, option.mirror
     .then (newDeps) ->
+        spinner.stop()
+
         deps = newDeps
         util.print deps, option.warning
 

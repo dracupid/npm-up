@@ -10,6 +10,7 @@ warnSign = if isWin then '‼ ' else '⚠  '
 errorSign = if isWin then '× ' else '✖  '
 okSign = if isWin then '√  ' else '✔  '
 infoSign = if isWin then 'i ' else 'ℹ '
+circleSign = if isWin then '*' else '●'
 
 cwdFilePath = (names...) ->
     path.join.apply path, [process.cwd()].concat names
@@ -56,6 +57,7 @@ module.exports = {
     errorSign
     warnSign
     okSign
+    circleSign
     logInfo
     logSucc
     logWarn
@@ -70,10 +72,20 @@ module.exports = {
             'http://' + name
 
     print: (deps, showWarn = true) ->
-        deps.map (dep) ->
-            dep.needUpdate and console.log chalk.green("[#{dep.type}]"), padRight(chalk.cyan.bold(dep.packageName), 40),
-                chalk.red(padLeft(dep.baseVer.toString(), 8)), '→', chalk.green(dep.newVer.toString())
-            showWarn and dep.warnMsg and logWarn "#{dep.warnMsg}"
+        depsObj = _.groupBy deps, 'type'
+        for type, deps of depsObj
+            if (deps.filter (dep) -> dep.needUpdate or (showWarn and deps.warning)).length
+                console.log chalk.bold.white do ->
+                    switch type
+                        when 'S' then 'dependencies'
+                        when 'D' then 'devDependencies'
+                        when 'O' then 'optionalDependencies'
+                        when 'g' then 'Global Dependencies'
+
+            deps.map (dep) ->
+                dep.needUpdate and console.log '  ', chalk.green(circleSign), padRight(chalk.cyan.bold(dep.packageName), 40),
+                        chalk.red(padLeft(dep.baseVer.toString(), 8)), '→', chalk.green(dep.newVer.toString())
+                showWarn and dep.warnMsg and logWarn "#{dep.warnMsg}"
 
     curVer: do ->
         require('../package.json').version
