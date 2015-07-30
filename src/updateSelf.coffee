@@ -14,7 +14,7 @@ module.exports = (mirror) ->
         installed = util.curVer + ''
         if semver.lt installed, latest
             chalk.yellow.bold "\n>> New npm-up available:",
-                chalk.green(installed), chalk.grey "(current: #{latest})"
+                chalk.green(latest), chalk.grey "(current: #{installed})"
         else ""
     .catch -> return
 

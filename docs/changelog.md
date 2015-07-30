@@ -1,3 +1,7 @@
+v2.0.1
+======
+- minor fix
+
 v2.0.0
 =======
 - faster, more stable
