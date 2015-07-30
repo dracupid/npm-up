@@ -1,9 +1,11 @@
+'use strict'
+
 readline = require 'readline'
 chalk = require 'chalk'
 
 Spinner = require('cli-spinner').Spinner
 
-spinner = new Spinner chalk.green.bold 'Checking... %s'
+spinner = new Spinner chalk.green.bold '>> Fetching... %s'
 
 module.exports =
     start: -> spinner.start()

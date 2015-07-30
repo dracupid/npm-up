@@ -31,7 +31,7 @@ cmder
     .option '--lock-all', "Lock, even for * version"
     .option '-a, --all', "Shortcut for -wil"
     .option '-m, --mirror <mirror host or name>', "Use a mirror registry host"
-    .option '--no-cache', "Disable version cache temporarily"
+    .option '--no-cache', "Disable version cache"
     .option '--no-warning', "Disable warning"
     .option '-d, --dep', "Check dependencies only"
     .option '-D, --dev', "Check devDependencies only"
@@ -54,7 +54,6 @@ opts = do (cmder) ->
     depNames = ['dep', 'dev', 'optional']
     res = depNames.reduce (res, cur) ->
         res = res or cmder[cur]
-        res
     , false
 
     if res then depNames.forEach (name) -> opts[name] = not not cmder[name]

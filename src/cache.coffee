@@ -8,7 +8,7 @@ get = (name, expire = 1000) ->
     info = cache.verCache[name]
     if info
         interval = info.expire or expire
-        if Date.now() - info.timestamp < interval
+        if Date.now() - info.t < interval
             info.version
         else
             delete cache.verCache[name]
@@ -19,7 +19,7 @@ get = (name, expire = 1000) ->
 set = (name, ver) ->
     cache.verCache[name] =
         version: ver
-        timestamp: Date.now()
+        t: Date.now()
 
 module.exports = {
     get

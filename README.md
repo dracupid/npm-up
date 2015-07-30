@@ -55,7 +55,7 @@ dump    dump cache
 --lock-all                          Lock, even for * version
 -a, --all                           Shortcut for -wil
 -m, --mirror <mirror host or name>  Use a mirror registry host
---no-cache                          Disable version cache temporarily
+--no-cache                          Disable version cache
 --no-warning                        Disable warning
 -d, --dep                           Check dependencies only
 -D, --dev                           Check devDependencies only

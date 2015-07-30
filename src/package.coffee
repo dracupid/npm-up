@@ -1,4 +1,4 @@
-'use strict'
+"use strict"
 
 Module = require 'module'
 path = require 'path'

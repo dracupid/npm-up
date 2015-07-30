@@ -5,8 +5,6 @@ chalk = require 'chalk'
 global._ = require 'underscore'
 semver = require 'semver'
 spinner = require './spinner'
-readline = require 'readline'
-
 
 npm = require './npm'
 util = require './util'
@@ -139,7 +137,6 @@ npmUp = ->
             util.logSucc "Everything is new!"
 
         if option.writeBack
-            packageFile = util.cwdFilePath 'package.json'
 
             chain = chain.then ->
                 deps.forEach (dep) ->
@@ -152,6 +149,7 @@ npmUp = ->
             .then ->
                 ['dependencies', 'devDependencies', 'optionalDependencies'].forEach (k) ->
                     delete globalPackage[k] if _.isEmpty globalPackage[k]
+                packageFile = path.join process.cwd(), 'package.json'
                 fs.outputJSON packageFile, globalPackage, space: 2
             .then ->
                 util.logSucc "package.json has been updated!"
@@ -203,6 +201,7 @@ npmUpGlobal = ->
         checkVer _.compact(deps), option.cache, option.mirror
     .then (newDeps) ->
         spinner.stop()
+        console.log ''
 
         deps = newDeps
         util.print deps, option.warning

@@ -1,9 +1,7 @@
 "use strict"
 
 {path, Promise} = fs = require 'nofs'
-Module = require 'module'
 chalk = require 'chalk'
-nodeModulesPaths = Module._nodeModulePaths process.cwd()
 
 isWin = process.platform is 'win32'
 warnSign = if isWin then '‼ ' else '⚠  '
@@ -74,7 +72,7 @@ module.exports = {
     print: (deps, showWarn = true) ->
         depsObj = _.groupBy deps, 'type'
         for type, deps of depsObj
-            if (deps.filter (dep) -> dep.needUpdate or (showWarn and deps.warning)).length
+            if (deps.filter (dep) -> dep.needUpdate or (showWarn and dep.warnMsg)).length
                 console.log chalk.bold.white do ->
                     switch type
                         when 'S' then 'dependencies'
@@ -83,8 +81,14 @@ module.exports = {
                         when 'g' then 'Global Dependencies'
 
             deps.map (dep) ->
-                dep.needUpdate and console.log '  ', chalk.green(circleSign), padRight(chalk.cyan.bold(dep.packageName), 40),
-                        chalk.red(padLeft(dep.baseVer.toString(), 8)), '→', chalk.green(dep.newVer.toString())
+                dep.needUpdate and console.log(
+                    '  '
+                    chalk.green circleSign
+                    chalk.cyan.bold padRight dep.packageName, 40
+                    chalk.red padLeft dep.baseVer.toString(), 8
+                    '→'
+                    chalk.green dep.newVer.toString()
+                )
                 showWarn and dep.warnMsg and logWarn "#{dep.warnMsg}"
 
     curVer: do ->

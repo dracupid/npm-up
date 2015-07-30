@@ -2,10 +2,15 @@
 
 fs = require 'nofs'
 path = require 'path'
+os = require 'os'
 
-home = process.env[if process.platform is 'win32' then 'USERPROFILE' else 'HOME']
+homedir = do ->
+    if typeof os.homedir is 'function'
+        os.homedir()
+    else
+        process.env[if process.platform is 'win32' then 'USERPROFILE' else 'HOME']
 
-cachePath = path.join home, '.npmupcache'
+cachePath = path.join homedir, '.npmupcache'
 
 cache = do ->
     try
@@ -20,7 +25,7 @@ cache.lastTime = Date.now()
 
 writeCache = (c = cache) ->
     fs.outputJSON cachePath, c, space: 2
-    .catch console.log
+    .catch console.error
 
 writeCacheSync = (c = cache) ->
     try
