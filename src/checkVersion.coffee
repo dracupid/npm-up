@@ -4,6 +4,7 @@ cache = require './cache'
 strategy = require './strategy'
 latestVer = require './latestVersion'
 EXPIRE = 20 * 60 * 1000 # 20 min
+{Promise} = require 'nofs'
 
 module.exports = (deps, useCache = true, mirror, expire = EXPIRE) ->
     Promise.all deps.map (dep) ->

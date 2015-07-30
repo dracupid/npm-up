@@ -1,8 +1,8 @@
 "use strict"
 
 chalk = require 'chalk'
-{path, Promise: global.Promise} = fs = require 'nofs'
-global._ = require 'underscore'
+{path, Promise} = fs = require 'nofs'
+_ = require 'underscore'
 semver = require 'semver'
 spinner = require './spinner'
 
@@ -170,7 +170,7 @@ npmUpSubDir = ->
             cwd = process.cwd()
             dir = path.dirname cur
             prev.then ->
-                console.log '\n' + util.circleSign, chalk.bold.underline path.basename dir
+                console.log '\n' + chalk.magenta.bold util.circleSign, chalk.underline path.basename dir
                 option.cwd = path.join cwd, dir
                 npmUp()
             .catch -> return

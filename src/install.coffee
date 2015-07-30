@@ -3,6 +3,7 @@
 npm = require './npm'
 util = require './util'
 chalk = require 'chalk'
+{Promise} = require 'nofs'
 
 module.exports = (packages, cwd = null) ->
     unless packages.length then return Promise.resolve()

@@ -2,6 +2,7 @@
 
 {path, Promise} = fs = require 'nofs'
 chalk = require 'chalk'
+_ = require 'underscore'
 
 isWin = process.platform is 'win32'
 warnSign = if isWin then '‼ ' else '⚠  '
@@ -18,7 +19,7 @@ logInfo = (str) ->
 logSucc = (str) ->
     console.log chalk.green.bold "\n#{okSign}#{str}"
 logWarn = (str) ->
-    console.log chalk.grey chalk.yellow(warnSign) + str
+    console.log ' ', chalk.grey chalk.yellow(warnSign) + str
 
 host =
     npm: 'http://registry.npmjs.org'
