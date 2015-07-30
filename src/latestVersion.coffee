@@ -5,6 +5,8 @@ request = require 'kiss-request'
 {debug} = require './util'
 url = require 'url'
 
+request.Promise = Promise
+
 module.exports = (name, mirror) ->
     link = url.resolve mirror, "/-/package/#{name}/dist-tags"
     debug link
