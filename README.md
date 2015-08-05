@@ -59,7 +59,7 @@ dump    dump cache
 --no-warning                        Disable warning
 -d, --dep                           Check dependencies only
 -D, --dev                           Check devDependencies only
--o, --optional                      Check optionalDependencies only
+-O, --optional                      Check optionalDependencies only
 -c, --cwd <cwd>                     Set current working directory
 -L, --logLevel <level>              Set loglevel for npm, default is error
 -e, --exclude <list>                Excluded packages list, split by comma or space

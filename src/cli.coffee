@@ -35,7 +35,7 @@ cmder
     .option '--no-warning', "Disable warning"
     .option '-d, --dep', "Check dependencies only"
     .option '-D, --dev', "Check devDependencies only"
-    .option '-o, --optional', "Check optionalDependencies only"
+    .option '-O, --optional', "Check optionalDependencies only"
     .option '-c, --cwd <cwd>', "Set current working directory"
     .option '-L, --logLevel <level>', "Set loglevel for npm, default is error"
     .option '-e, --exclude <list>', "Excluded packages list, split by comma or space",
