@@ -1,3 +1,7 @@
+v2.1.0
+=======
+- **Notable** important fix: version prefix lost.
+
 v2.0.2
 ======
 - fix -ig bug

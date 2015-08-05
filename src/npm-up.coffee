@@ -104,7 +104,7 @@ getToWrite = ({declareVer, newVer}, {lock, lockAll}) ->
     prefix =
         if lock or semver.valid declareVer
             ''
-        else if m = declareVer.match /^([><=\s]+)[\d\w.-\s]*$/
+        else if m = declareVer.match /^([><=\s^~]+)[\d\w.-\s]*$/
             m[1]
         else '^'
 
