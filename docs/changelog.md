@@ -1,3 +1,9 @@
+v2.1.1
+=======
+- fix: `-o`
+- better spinner
+- update chalk
+
 v2.1.0
 =======
 - **Notable** important fix: version prefix lost.
