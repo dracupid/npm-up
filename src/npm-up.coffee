@@ -237,6 +237,10 @@ module.exports = (opt, checkUpdate = false) ->
     util.promisify(npm.load) npmOpt
     .then ->
         option.mirror = npm.config.get('registry')[..-2]
+
+        if option.mirror.indexOf('.npmjs.org') < 0
+            util.logWarn "Please ensure that the mirror is in sync with #{util.getRegistry "npm"}"
+
         promise =
             if opt.global then npmUpGlobal()
             else if opt.All then npmUpSubDir()

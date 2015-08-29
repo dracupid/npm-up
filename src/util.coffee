@@ -24,7 +24,7 @@ logWarn = (str) ->
 host =
     npm: 'http://registry.npmjs.org'
     taobao: 'http://registry.npm.taobao.org'
-    cnpmjs: 'http://r.cnpmjs.org'
+    cnpmjs: 'http://registry.cnpmjs.org'
 
 protocolReg = /^https?:\/\//
 

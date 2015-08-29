@@ -1,3 +1,8 @@
+v2.2.0
+=======
+- add: warn when use a mirror.
+- upd: nofs
+
 v2.1.1
 =======
 - fix: `-o`
