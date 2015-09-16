@@ -34,20 +34,20 @@
   },
   "homepage": "https://github.com/dracupid/npm-up",
   "dependencies": {
-    "chalk": "^1.1.1",
+    "chalk": "latest",
     "cli-spinner": "^0.2.1",
     "commander": "^2.8.1",
     "global-npm": "^0.1.2",
     "kiss-request": "^0.1.0",
-    "nofs": "0.10.1",
-    "semver": "^5.0.1",
+    "nofs": "0.10.2",
+    "semver": "latest",
     "underscore": "^1.8.3"
   },
   "devDependencies": {
-    "coffee-script": "*",
+    "coffee-script": "latest",
     "coffeelint": "1.11.1",
     "dracupid-no": "git+https://github.com/dracupid/dracupid-no.git",
-    "nokit": "0.12.3"
+    "nokit": "0.13.0"
   },
   "engines": {
     "node": ">=0.8.0",
