@@ -1,3 +1,7 @@
+v2.2.1
+=======
+- update nofs & semver
+
 v2.2.0
 =======
 - add: warn when use a mirror.
