@@ -45,9 +45,9 @@
   },
   "devDependencies": {
     "coffee-script": "latest",
-    "coffeelint": "1.11.1",
+    "coffeelint": "1.12.0",
     "dracupid-no": "git+https://github.com/dracupid/dracupid-no.git",
-    "nokit": "0.13.0"
+    "nokit": "0.14.2"
   },
   "engines": {
     "node": ">=0.8.0",
