@@ -1,3 +1,7 @@
+v2.2.2
+=======
+- upd dep
+
 v2.2.1
 =======
 - update nofs & semver

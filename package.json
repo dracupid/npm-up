@@ -36,18 +36,18 @@
   "dependencies": {
     "chalk": "latest",
     "cli-spinner": "^0.2.1",
-    "commander": "^2.8.1",
-    "global-npm": "^0.1.2",
+    "commander": "^2.9.0",
+    "global-npm": "^0.2.0",
     "kiss-request": "^0.1.0",
-    "nofs": "0.10.4",
+    "nofs": "0.10.9",
     "semver": "latest",
     "underscore": "^1.8.3"
   },
   "devDependencies": {
     "coffee-script": "latest",
-    "coffeelint": "1.12.1",
+    "coffeelint": "1.13.1",
     "dracupid-no": "git+https://github.com/dracupid/dracupid-no.git",
-    "nokit": "0.14.7"
+    "nokit": "0.15.0"
   },
   "engines": {
     "node": ">=0.8.0",
