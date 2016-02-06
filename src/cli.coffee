@@ -38,6 +38,7 @@ cmder
     .option '-O, --optional', "Check optionalDependencies only"
     .option '-c, --cwd <cwd>', "Set current working directory"
     .option '-L, --logLevel <level>', "Set loglevel for npm, default is error"
+    .option '-t, --tag <tag>', "Dist-tag used as the version to be updated"
     .option '-e, --exclude <list>', "Excluded packages list, split by comma or space",
         (list) -> list.split /,|\s/
     .option '-o, --only <list>', "Included packages list, split by comma or space",

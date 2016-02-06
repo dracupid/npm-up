@@ -9,16 +9,19 @@ get = (name, expire = 1000) ->
     if info
         interval = info.expire or expire
         if Date.now() - info.t < interval
-            info.version
+            if typeof info.version == 'string' # cleanup cache from previous version
+                null
+            else
+                info.version
         else
             delete cache.verCache[name]
-            ''
+            null
     else
-        ''
+        null
 
-set = (name, ver) ->
+set = (name, verObj) ->
     cache.verCache[name] =
-        version: ver
+        version: verObj
         t: Date.now()
 
 module.exports = {

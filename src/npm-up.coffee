@@ -29,6 +29,7 @@ parseOpts = (opts = {}) ->
         cwd: process.cwd()
         warning: true
         mirror: ''
+        tag: 'latest'
 
     opts.mirror = util.getRegistry opts.mirror
 
@@ -121,7 +122,7 @@ npmUp = ->
 
     spinner.start()
 
-    checkVer deps, option.cache, option.mirror
+    checkVer deps, option.cache, option.mirror, undefined, option.tag
     .then (newDeps) ->
         spinner.stop()
 
@@ -198,7 +199,7 @@ npmUpGlobal = ->
             parsePackage key, val, 'g'
 
         spinner.start()
-        checkVer _.compact(deps), option.cache, option.mirror
+        checkVer _.compact(deps), option.cache, option.mirror, undefined, option.tag
     .then (newDeps) ->
         spinner.stop()
         console.log ''

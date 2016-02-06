@@ -6,19 +6,23 @@ latestVer = require './latestVersion'
 EXPIRE = 20 * 60 * 1000 # 20 min
 {Promise} = require 'nofs'
 
-module.exports = (deps, useCache = true, mirror, expire = EXPIRE) ->
+resolveVerTag = (verObj, tag = 'latest') ->
+    return '' if not verObj
+    verObj[tag] or verObj.latest or ''
+
+module.exports = (deps, useCache = true, mirror, expire = EXPIRE, tag) ->
     Promise.all deps.map (dep) ->
         name = if typeof dep is 'object' then dep.packageName else dep
-        ver = cache.get name, expire
+        verObj = cache.get name, expire
 
         promise =
-            if ver and useCache
-                Promise.resolve ver
+            if verObj and useCache
+                Promise.resolve resolveVerTag verObj, tag
             else
                 latestVer name, mirror
-                .then (ver) ->
-                    cache.set name, ver
-                    ver
+                .then (verObj) ->
+                    cache.set name, verObj
+                    resolveVerTag verObj, tag
 
         if typeof dep is 'object'
             promise.then (ver) ->
