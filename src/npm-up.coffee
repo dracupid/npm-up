@@ -193,7 +193,7 @@ npmUpGlobal = ->
             obj[pack.name] = pack.version
             obj
         , {}
-        console.log chalk.cyan Object.keys(globalDep).join ' '
+        console.log chalk.cyan Object.keys(globalDep).sort().join ' '
 
         deps = _.map globalDep, (val, key) ->
             parsePackage key, val, 'g'
