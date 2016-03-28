@@ -62,6 +62,7 @@ dump    dump cache
 -O, --optional                      Check optionalDependencies only
 -c, --cwd <cwd>                     Set current working directory
 -L, --logLevel <level>              Set loglevel for npm, default is error
+-t, --tag <tag>                     Dist-tag used as the version to be updated
 -e, --exclude <list>                Excluded packages list, split by comma or space
 -o, --only <list>                   Included packages list, split by comma or space
 ```

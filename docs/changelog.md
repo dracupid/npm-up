@@ -1,3 +1,7 @@
+v2.2.3
+========
+- sort global dependencies
+
 v2.2.2
 =======
 - upd dep
