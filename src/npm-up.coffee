@@ -21,7 +21,7 @@ parseOpts = (opts = {}) ->
         install: no
         lock: no
         all: no # w + i + l
-        devDep: yes, dep: yes, optional: yes
+        dev: yes, dep: yes, optional: yes
         silent: no
         lockAll: false
         cache: true
@@ -91,7 +91,7 @@ prepare = ->
     deps = []
     if option.dep
         deps = deps.concat formatPackages globalPackage.dependencies, 'S'
-    if option.devDep
+    if option.dev
         deps = deps.concat formatPackages globalPackage.devDependencies, 'D'
     if option.optional
         deps = deps.concat formatPackages globalPackage.optionalDependencies, 'O'
