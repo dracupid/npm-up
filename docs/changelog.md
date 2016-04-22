@@ -1,3 +1,7 @@
+v2.2.4
+========
+- fix: `-d` invalide
+
 v2.2.3
 ========
 - sort global dependencies
