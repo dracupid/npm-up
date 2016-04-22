@@ -21,10 +21,6 @@ environment:
     - nodejs_version: 0.12
     - nodejs_version: MAJOR
 
-cache:
-  - node_modules                    # local npm modules
-  - '%APPDATA%\npm-cache'           # npm cache
-
 install:
   - ps: Install-Product node $env:nodejs_version
   - npm config set loglevel error
