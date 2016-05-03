@@ -4,7 +4,7 @@ node_js:
   - 'stable'
 
 before_install:
-  - "npm install -g npm@1.4.26"
+  # - "npm install -g npm@1.4.26"
   - "npm config set loglevel error"
 
 before_script:
