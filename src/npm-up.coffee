@@ -51,18 +51,22 @@ parsePackage = (name, ver, type) ->
     if name in option.exclude
         return null
 
+    res = {}
+
     if type is 'g'
         declareVer = installedVer = ver
     else
         # version in package.json
         declareVer = if semver.validRange ver then ver.trim() else null
         declareVer is '' and declareVer = '*'
-        return null unless declareVer
+        unless declareVer
+            res.declareVer = ver
+            res.tryTag = yes
 
         # version installed
         installedVer = packageMgr.getPackageVersion name
 
-    {
+    _.assign {
         packageName: name
         declareVer
         installedVer
@@ -71,7 +75,8 @@ parsePackage = (name, ver, type) ->
         type
         needUpdate: no
         warnMsg: ''
-    }
+        tryTag: no
+    }, res
 
 formatPackages = (obj, type) ->
     _.map obj, (version, name) ->
@@ -98,9 +103,11 @@ prepare = ->
 
     deps = _.compact deps
 
-getToWrite = ({declareVer, newVer}, {lock, lockAll}) ->
+getToWrite = ({declareVer, newVer, tryTag}, {lock, lockAll}) ->
     if declareVer in ['*', '']
         return if lockAll then newVer else '*'
+
+    if tryTag then return null
 
     prefix =
         if lock or semver.valid declareVer
@@ -142,6 +149,8 @@ npmUp = ->
             chain = chain.then ->
                 deps.forEach (dep) ->
                     toWrite = getToWrite dep, option
+
+                    return if not toWrite
 
                     switch dep.type
                         when 'S' then globalPackage.dependencies[dep.packageName] = toWrite

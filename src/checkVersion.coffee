@@ -8,12 +8,13 @@ EXPIRE = 20 * 60 * 1000 # 20 min
 
 resolveVerTag = (verObj, tag = 'latest') ->
     return '' if not verObj
-    verObj[tag] or verObj.latest or ''
+    verObj[tag] or ''
 
 module.exports = (deps, useCache = true, mirror, expire = EXPIRE, tag) ->
     Promise.all deps.map (dep) ->
         name = if typeof dep is 'object' then dep.packageName else dep
         verObj = cache.get name, expire
+        tag = if (typeof dep is 'object' and dep.tryTag) then dep.declareVer else 'latest'
 
         promise =
             if verObj and useCache
@@ -28,6 +29,7 @@ module.exports = (deps, useCache = true, mirror, expire = EXPIRE, tag) ->
             promise.then (ver) ->
                 if ver
                     dep.newVer = ver
+                    if dep.tryTag then dep.declareVer = ver
                     strategy.version dep
                 else
                     dep.newVer = dep.installedVer
