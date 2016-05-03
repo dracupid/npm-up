@@ -72,6 +72,7 @@ parsePackage = (name, ver, type) ->
         installedVer
         baseVer: installedVer
         newVer: ''
+        installName: ''
         type
         needUpdate: no
         warnMsg: ''
@@ -137,7 +138,7 @@ npmUp = ->
         util.print deps, option.warning
 
         toUpdate = deps.filter (dep) -> dep.needUpdate and dep.installedVer
-                        .map (dep) -> "#{dep.packageName}@#{dep.newVer}"
+                        .map (dep) -> "#{dep.packageName}@#{dep.installName}"
 
         chain = Promise.resolve()
 

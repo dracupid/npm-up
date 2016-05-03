@@ -29,10 +29,11 @@ module.exports = (deps, useCache = true, mirror, expire = EXPIRE, tag) ->
             promise.then (ver) ->
                 if ver
                     dep.newVer = ver
+                    dep.installName = if dep.tryTag then tag else ver
                     if dep.tryTag then dep.declareVer = ver
                     strategy.version dep
                 else
-                    dep.newVer = dep.installedVer
+                    dep.installName = dep.newVer = dep.installedVer
                     dep.needUpdate = false
                 dep
         else
