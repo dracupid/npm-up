@@ -1,3 +1,8 @@
+v2.3.0
+=======
+- add: support tag as version
+- remove node v0.8.x support
+
 v2.2.4
 ========
 - fix: `-d` invalide
