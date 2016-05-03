@@ -1,7 +1,8 @@
 language: node_js
 node_js:
   - "0.12"
-  - 'stable'
+  - "stable"
+  - "current"
 
 before_install:
   # - "npm install -g npm@1.4.26"
