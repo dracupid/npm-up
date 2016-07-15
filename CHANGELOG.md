@@ -1,3 +1,9 @@
+v2.4.0
+======
+- fix: broken -t param
+- ipt: ignore packages with URL version, like `git://`, `file://`.
+- update dependencies
+
 v2.3.0
 =======
 - add: support tag as version

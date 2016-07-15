@@ -75,7 +75,7 @@ npm-up -m registry.npm.taobao.org # http:// is optional
 > **For Chinese users, use `-m taobao` to fly up!**
 
 ## Version Patterns
-Fully support semantic versions. Eg:
+Fully support semantic versions and tags. Eg:
 ```
 *
 ^1.5.4
@@ -83,7 +83,8 @@ Fully support semantic versions. Eg:
 >= 4.4.5
 0.9.7
 0.5.0-alpha1
-'' //regard as *
+''     //regard as *
+latest // dist-tag
 ```
 
 Notice that a **ranges** version may be overridden by Caret Ranges(^) when written back, and will be updated only when the latest version is greater than all the versions possible in the range.
