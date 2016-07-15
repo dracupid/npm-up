@@ -51,6 +51,9 @@ parsePackage = (name, ver, type) ->
     if name in option.exclude
         return null
 
+    if ver.indexOf('//') > 0
+        return null
+
     res = {}
 
     if type is 'g'
