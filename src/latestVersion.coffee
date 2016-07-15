@@ -13,7 +13,7 @@ module.exports = (name, mirror) ->
 
     request link
     .then (data) ->
-        debug '[Version Data]', data
+        debug '[Version Data]', name + ":", data
         JSON.parse(data) or null
     .catch (e) ->
         if e.code is 'TIMEOUT'

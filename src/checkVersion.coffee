@@ -10,11 +10,11 @@ resolveVerTag = (verObj, tag = 'latest') ->
     return '' if not verObj
     verObj[tag] or ''
 
-module.exports = (deps, useCache = true, mirror, expire = EXPIRE, tag) ->
+module.exports = (deps, useCache = true, mirror, expire = EXPIRE, wantedTag = 'latest') ->
     Promise.all deps.map (dep) ->
         name = if typeof dep is 'object' then dep.packageName else dep
         verObj = cache.get name, expire
-        tag = if (typeof dep is 'object' and dep.tryTag) then dep.declareVer else 'latest'
+        tag = if (typeof dep is 'object' and dep.tryTag) then dep.declareVer else wantedTag
 
         promise =
             if verObj and useCache
