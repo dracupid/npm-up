@@ -15,4 +15,4 @@ module.exports = (packages, cwd = null) ->
         else
             util.promisify(npm.commands.i) packages
     ).then ->
-        util.logSucc chalk.green "Latest packages has been installed!"
+        util.logSucc chalk.green "Latest packages have been installed!"
