@@ -8,7 +8,7 @@ url = require 'url'
 request.Promise = Promise
 
 module.exports = (name, mirror) ->
-    link = url.resolve mirror, "/-/package/#{name}/dist-tags"
+    link = url.resolve mirror, "/-/package/#{encodeURIComponent(name)}/dist-tags"
     debug '[Request Link]', link
 
     request link
