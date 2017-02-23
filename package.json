@@ -6,10 +6,16 @@
   "bin": {
     "npm-up": "./bin/bin.js"
   },
+  "nofile": {
+    "preRequire": [
+      "coffee-script/register"
+    ]
+  },
   "preferGlobal": true,
   "scripts": {
     "prepublish": "no build -a",
-    "test": "node ci.js"
+    "test": "node ci.js",
+    "build": "no build"
   },
   "repository": {
     "type": "git",
@@ -35,19 +41,19 @@
   "homepage": "https://github.com/dracupid/npm-up",
   "dependencies": {
     "chalk": "latest",
-    "cli-spinner": "^0.2.5",
+    "cli-spinner": "^0.2.6",
     "commander": "^2.9.0",
     "global-npm": "latest",
     "kiss-request": "^0.1.0",
-    "nofs": "0.11.17",
+    "nofs": "0.11.20",
     "semver": "latest",
     "underscore": "^1.8.3"
   },
   "devDependencies": {
     "coffee-script": "latest",
-    "coffeelint": "1.15.7",
+    "coffeelint": "1.16.0",
     "dracupid-no": "git+https://github.com/dracupid/dracupid-no.git",
-    "nokit": "0.22.28"
+    "nokit": "0.23.22"
   },
   "engines": {
     "node": ">=0.10.0"
