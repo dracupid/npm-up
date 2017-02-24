@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-  - "0.12"
+  - 4
   - "stable"
 
 before_install:
@@ -8,7 +8,7 @@ before_install:
   - "npm config set loglevel error"
 
 before_script:
-  - "npm install js2coffee@0.3.5 mocha@2.0.0 mkdirp@0.4.0 jdb@0.4.0 -g"
+  - "npm install js2coffee@0.3.5 mocha@2.0.0 mkdirp@0.4.0 jdb@0.4.0 @ysmood/material-ui -g"
   - "npm install js2coffee@0.3.5 mocha@2.0.0 mkdirp@0.4.0 jdb@0.4.0 -D"
   - "npm i . -g"
   - "ls"

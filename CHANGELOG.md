@@ -1,3 +1,8 @@
+v2.5.0
+======
+- support scoped-packages
+- update dependencies
+
 v2.4.0
 ======
 - fix: broken -t param
