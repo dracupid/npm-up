@@ -2,7 +2,7 @@
 
 request = require 'kiss-request'
 {Promise} = require 'nofs'
-{debug} = require './util'
+{debug, isNPMRegistry, getRegistry} = require './util'
 url = require 'url'
 
 request.Promise = Promise
@@ -20,7 +20,11 @@ module.exports = (name, mirror) ->
             debug '[TIMEOUT]'
             Promise.reject new Error "Request to #{mirror} timeout. Try to use an alternative registry by -m <mirror>"
         else if e.code is 'UNWANTED_STATUS_CODE'
-            debug '[UNWANTED_STATUS_CODE]', e, '; link: ', link
-            Promise.resolve null
+            if e.statusCode == 404 and not isNPMRegistry(mirror)
+                debug '[FALLBACK NPM]'
+                module.exports(name, getRegistry('npm'))
+            else
+                debug '[UNWANTED_STATUS_CODE]', e, '; link: ', link
+                Promise.resolve null
         else
             Promise.reject e

@@ -112,5 +112,8 @@ module.exports = {
                     null
             .filter (f) -> not not f
 
+    isNPMRegistry: (url) ->
+        url.indexOf('.npmjs.org') > 0
+
     promisify: fs.PromiseUtils.promisify
 }
