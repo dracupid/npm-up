@@ -43,12 +43,12 @@ function format(str){
 }
 %>
 ```
-<%= format(help[2])%>
+<%= format(help[3])%>
 ```
 
 #### Options:
 ```
-<%= format(help[3])%>
+<%= format(help[2])%>
 ```
 
 ## Use a mirror registry

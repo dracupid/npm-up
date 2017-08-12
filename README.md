@@ -41,11 +41,11 @@ If no options are configured, it will only check the latest version and do nothi
 ```
 clean   clean cache
 dump    dump cache
+
 ```
 
 #### Options:
 ```
--h, --help                          output usage information
 -V, --version                       output the version number
 -g, --global                        Check global packages
 -A, --All                           Check all projects in sub directories, depth is 1
@@ -65,6 +65,8 @@ dump    dump cache
 -t, --tag <tag>                     Dist-tag used as the version to be updated
 -e, --exclude <list>                Excluded packages list, split by comma or space
 -o, --only <list>                   Included packages list, split by comma or space
+-p --exclude-locked                 Exclude all locked packages
+-h, --help                          output usage information
 ```
 
 ## Use a mirror registry
