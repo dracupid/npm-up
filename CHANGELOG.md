@@ -1,3 +1,9 @@
+v2.6.0
+======
+- add: use new `-p --exclude-locked` option to exclude all locked packages.
+- fix: use `--no-save` when installing packages (> [npm@5.0.0](https://github.com/npm/npm/releases/tag/v5.0.0)), which will disturb npm-up's behaviour.
+- update dependencies
+
 v2.5.0
 ======
 - support scoped-packages

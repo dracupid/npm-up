@@ -43,6 +43,7 @@ cmder
         (list) -> list.split /,|\s/
     .option '-o, --only <list>', "Included packages list, split by comma or space",
         (list) -> list.split /,|\s/
+    .option '-p --exclude-locked', "Exclude all locked packages"
 
 cmder.parse process.argv
 

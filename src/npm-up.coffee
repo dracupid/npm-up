@@ -30,6 +30,7 @@ parseOpts = (opts = {}) ->
         warning: true
         mirror: ''
         tag: 'latest'
+        excludeLocked: no
 
     opts.mirror = util.getRegistry opts.mirror
 
@@ -49,6 +50,9 @@ parsePackage = (name, ver, type) ->
         return null
 
     if name in option.exclude
+        return null
+
+    if option.excludeLocked and semver.valid(ver)
         return null
 
     if ver.indexOf('//') > 0
