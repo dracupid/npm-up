@@ -244,6 +244,7 @@ module.exports = (opt, checkUpdate = false) ->
     npmOpt =
         loglevel: option.logLevel
         global: not not opt.global
+        save: false
 
     if option.mirror
         npmOpt.registry = option.mirror
