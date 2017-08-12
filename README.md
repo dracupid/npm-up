@@ -41,7 +41,6 @@ If no options are configured, it will only check the latest version and do nothi
 ```
 clean   clean cache
 dump    dump cache
-
 ```
 
 #### Options:

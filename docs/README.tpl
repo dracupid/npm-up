@@ -39,7 +39,7 @@ If no options are configured, it will only check the latest version and do nothi
 #### commands:
 <%
 function format(str){
-    return str.replace(/\n\n/g, '').replace(/\n    /g, '\n').replace('    ', '')
+    return str.replace(/\n\n/g, '').replace(/\n    /g, '\n').replace('    ', '').trim()
 }
 %>
 ```
