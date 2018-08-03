@@ -1,3 +1,7 @@
+v2.6.1
+====
+- update dependencies
+
 v2.6.0
 ======
 - add: use new `-p --exclude-locked` option to exclude all locked packages.
