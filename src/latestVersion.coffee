@@ -27,4 +27,5 @@ module.exports = (name, mirror) ->
                 debug '[UNWANTED_STATUS_CODE]', e, '; link: ', link
                 Promise.resolve null
         else
+            debug '[ERROR]', e
             Promise.reject e
