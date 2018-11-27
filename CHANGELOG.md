@@ -1,3 +1,7 @@
+v2.6.2
+====
+- skip failed request
+
 v2.6.1
 ====
 - update dependencies

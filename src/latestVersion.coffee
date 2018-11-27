@@ -17,15 +17,16 @@ module.exports = (name, mirror) ->
         JSON.parse(data) or null
     .catch (e) ->
         if e.code is 'TIMEOUT'
-            debug '[TIMEOUT]'
+            debug '[TIMEOUT]', name
             Promise.reject new Error "Request to #{mirror} timeout. Try to use an alternative registry by -m <mirror>"
         else if e.code is 'UNWANTED_STATUS_CODE'
             if e.statusCode == 404 and not isNPMRegistry(mirror)
-                debug '[FALLBACK NPM]'
+                debug '[FALLBACK NPM]', name
                 module.exports(name, getRegistry('npm'))
             else
-                debug '[UNWANTED_STATUS_CODE]', e, '; link: ', link
+                debug '[UNWANTED_STATUS_CODE]', name, e, '; link: ', link
                 Promise.resolve null
         else
-            debug '[ERROR]', e
-            Promise.reject e
+            debug '[ERROR]', name, e
+            Promise.resolve null
+            # Promise.reject e
