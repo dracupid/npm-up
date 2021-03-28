@@ -8,7 +8,7 @@
   },
   "nofile": {
     "preRequire": [
-      "coffee-script/register"
+      "coffeescript/register"
     ]
   },
   "preferGlobal": true,

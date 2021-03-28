@@ -1,4 +1,4 @@
-# nofile-pre-require: coffee-script/register
+# nofile-pre-require: coffeescript/register
 
 kit = require 'nokit'
 drives = kit.require 'drives'
