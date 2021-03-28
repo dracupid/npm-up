@@ -253,17 +253,20 @@ module.exports = (opt, checkUpdate = false) ->
     if option.mirror
         npmOpt.registry = option.mirror
 
-    util.promisify(npm.load) npmOpt
-    .then ->
-        option.mirror = npm.config.get('registry')[..-2]
+    new Promise (resolve, reject) ->
+        npm.load ->
+            for key, val of npmOpt
+                npm.config.set(key, val)
 
-        if option.mirror.indexOf('.npmjs.org') < 0
-            util.logWarn "Please ensure that the mirror is in sync with #{util.getRegistry "npm"}"
+            option.mirror = npm.config.get('registry')[..-2]
 
-        promise =
-            if opt.global then npmUpGlobal()
-            else if opt.All then npmUpSubDir()
-            else npmUp()
-        if checkUpdate
-            p = require('./updateSelf')(option.mirror)
-            promise.then -> p.log()
+            if option.mirror.indexOf('.npmjs.org') < 0
+                util.logWarn "Please ensure that the mirror is in sync with #{util.getRegistry "npm"}"
+
+            promise =
+                if opt.global then npmUpGlobal()
+                else if opt.All then npmUpSubDir()
+                else npmUp()
+            if checkUpdate
+                p = require('./updateSelf')(option.mirror)
+                promise.then -> p.log()
