@@ -26,8 +26,8 @@ install:
   - ps: Install-Product node $env:nodejs_version
   - npm config set loglevel error
   - npm install
-  - npm install js2coffee@0.3.5 mocha@2.0.0 mkdirp@0.4.0 jdb@0.4.0 @ysmood/material-ui -D
-  - npm install js2coffee@0.3.5 mocha@2.0.0 mkdirp@0.4.0 jdb@0.4.0 @ysmood/material-ui -g
+  - npm install js2coffee@0.3.5 mocha@2.0.0 mkdirp@0.4.0 jdb@0.4.0 @babel/cli -D
+  - npm install js2coffee@0.3.5 mocha@2.0.0 mkdirp@0.4.0 jdb@0.4.0 @babel/cli -g
   - npm i . -g
 
 #---------------------------------#
