@@ -8,7 +8,7 @@
   },
   "nofile": {
     "preRequire": [
-      "coffeescript/register"
+      "coffee-script/register"
     ]
   },
   "preferGlobal": true,
@@ -51,7 +51,7 @@
   },
   "devDependencies": {
     "coffeelint": "2.1.0",
-    "coffeescript": "latest",
+    "coffee-script": "latest",
     "dracupid-no": "https://github.com/dracupid/dracupid-no.git",
     "nokit": "0.27.12"
   },
